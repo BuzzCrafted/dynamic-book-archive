@@ -315,31 +315,31 @@ $dba_book_single_icon = static function (string $icon): string {
 				<div class="flex min-w-0 flex-col gap-4">
 					<dl class="space-y-0">
 						<?php if (!empty($author_display)) : ?>
-							<div class="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-2.5 text-base sm:grid-cols-[9rem_1fr]">
+							<div class="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-1 text-base sm:grid-cols-[9rem_1fr]">
 								<dt class="font-main tracking-wider text-book-secondary"><?php esc_html_e('Author:', 'dynamic-book-archive'); ?></dt>
 								<dd class="font-main text-book-primary"><?php echo esc_html($author_display); ?></dd>
 							</div>
 						<?php endif; ?>
 						<?php if (!empty($year_label)) : ?>
-							<div class="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-2.5 text-base sm:grid-cols-[9rem_1fr]">
+							<div class="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-1 text-base sm:grid-cols-[9rem_1fr]">
 								<dt class="font-main tracking-wider text-book-secondary"><?php esc_html_e('Year:', 'dynamic-book-archive'); ?></dt>
 								<dd class="font-main text-book-primary"><?php echo esc_html($year_label); ?></dd>
 							</div>
 						<?php endif; ?>
 						<?php if (!empty($book_language)) : ?>
-							<div class="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-2.5 text-base sm:grid-cols-[9rem_1fr]">
+							<div class="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-1 text-base sm:grid-cols-[9rem_1fr]">
 								<dt class="font-main tracking-wider text-book-secondary"><?php esc_html_e('Language:', 'dynamic-book-archive'); ?></dt>
 								<dd class="font-main text-book-primary"><?php echo esc_html($book_language); ?></dd>
 							</div>
 						<?php endif; ?>
 						<?php if (!empty($category_label)) : ?>
-							<div class="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-2.5 text-base sm:grid-cols-[9rem_1fr]">
+							<div class="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-1 text-base sm:grid-cols-[9rem_1fr]">
 								<dt class="font-main tracking-wider text-book-secondary"><?php esc_html_e('Category:', 'dynamic-book-archive'); ?></dt>
 								<dd class="font-main text-book-primary"><?php echo esc_html($category_label); ?></dd>
 							</div>
 						<?php endif; ?>
 						<?php if (!empty($collection_label)) : ?>
-							<div class="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-2.5 text-base sm:grid-cols-[9rem_1fr]">
+							<div class="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-1 text-base sm:grid-cols-[9rem_1fr]">
 								<dt class="font-main tracking-wider text-book-secondary"><?php esc_html_e('Collection:', 'dynamic-book-archive'); ?></dt>
 								<dd class="font-main text-book-primary"><?php echo esc_html($collection_label); ?></dd>
 							</div>
@@ -351,7 +351,7 @@ $dba_book_single_icon = static function (string $icon): string {
 				<?php if (count($quick_items) > 0) : ?>
 					<aside class="rounded-lg border text-book-primary border-book-secondary/50 p-4" aria-label="<?php esc_attr_e('Quick facts', 'dynamic-book-archive'); ?>">
 						<h2 class="mb-3 font-display text-sm font-semibold uppercase tracking-[0.2em] text-book-secondary"><?php esc_html_e('Quick info', 'dynamic-book-archive'); ?></h2>
-						<ul class="m-0 flex list-none flex-col gap-4 p-0">
+						<ul class="m-0 flex list-none flex-col gap-2 p-0">
 							<?php foreach ($quick_items as $item) : ?>
 								<li class="flex place-items-center gap-2 text-sm leading-relaxed text-book-primary">
 									<?php echo $dba_book_single_icon($item['icon']); ?>

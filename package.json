@@ -11,11 +11,13 @@
 		"build:js": "esbuild src/js/navigation.js src/js/book-single-gallery.js src/js/book-archive-toolbar-selects.js src/js/customizer.js --outdir=assets/js --entry-names=[name].min --minify --target=es2018",
 		"watch:js": "esbuild src/js/navigation.js src/js/book-single-gallery.js src/js/book-archive-toolbar-selects.js src/js/customizer.js --outdir=assets/js --entry-names=[name].min --minify --target=es2018 --watch",
 		"watch": "concurrently -n css,images,vendor,js \"npm run watch:css\" \"npm run watch:images\" \"npm run watch:vendor\" \"npm run watch:js\"",
-		"bundle": "npm run build:css && npm run build:js"
+		"bundle:composer": "composer install --no-dev --optimize-autoloader --no-interaction",
+		"bundle": "npm run build:css && npm run build:js && npm run build:images && npm run bundle:composer && node scripts/bundle.mjs"
 	},
 	"devDependencies": {
 		"@tailwindcss/cli": "^4.1.0",
 		"@tailwindcss/typography": "^0.5.16",
+		"cpx2": "^8.0.2",
 		"esbuild": "^0.25.0",
 		"tailwindcss": "^4.1.0"
 	}
