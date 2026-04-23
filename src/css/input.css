@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+@source '../../*.php';
+@source '../../inc/**/*.php';
+@source '../../template-parts/**/*.php';
+
+@import './theme.css';
+@import './parts/base.css';
+@import './components/site-navigation.css';
+@import './components/post-navigation.css';
+@import './components/book-archive-ajax.css';
+@import './components/book-archive-toolbar-selects.css';

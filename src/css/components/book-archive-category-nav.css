@@ -1,0 +1,31 @@
+@layer components {
+	.book-archive-category-nav {
+		@apply mx-auto w-full max-w-4xl px-4 py-6;
+	}
+
+	.book-archive-category-nav__list {
+		@apply m-0 flex list-none flex-wrap items-center justify-center gap-3 p-0;
+	}
+
+	.book-archive-category-nav__item {
+		@apply m-0 p-0;
+	}
+
+	.book-archive-category-nav__link {
+		@apply inline-flex min-h-10 items-center justify-center rounded-md border border-library-primary/70 bg-transparent px-4 py-2 text-center text-sm font-medium tracking-wide text-library-primary no-underline transition-[color,background-color,border-color,box-shadow] duration-200 font-display;
+	}
+
+	.book-archive-category-nav__link:focus-visible {
+		@apply outline-2 outline-offset-2 outline-library-primary;
+	}
+
+	.book-archive-category-nav__link--current, .book-archive-category-nav__link:not(.book-archive-category-nav__link--current):hover  {
+		@apply bg-linear-to-r from-library-nav-gradient-from from-0% via-library-primary via-32% to-library-nav-gradient-to to-100% border-library-nav-border text-library-secondary shadow-library-nav-current-inset;
+	}
+
+	@media (hover: hover) {
+		.book-archive-category-nav__link--current:hover {
+			@apply bg-linear-to-r from-library-nav-gradient-from from-0% via-library-primary via-38% to-library-nav-gradient-to to-100% shadow-library-nav-current-hover-inset;
+		}
+	}
+}

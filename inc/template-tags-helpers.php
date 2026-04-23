@@ -1,0 +1,443 @@
+<?php
+/**
+ * Global template tag wrappers for templates and child themes.
+ *
+ * @package Dynamic_Book_Archive
+ */
+
+declare(strict_types=1);
+
+if ( ! defined( 'DBA_BOOK_CATEGORY_TAXONOMY' ) ) {
+	define( 'DBA_BOOK_CATEGORY_TAXONOMY', 'book_category' );
+}
+
+use DBA\TemplateTags\Book_Archive_Category_Nav;
+use DBA\TemplateTags\Book_Archive_Intro;
+use DBA\TemplateTags\Book_Archive_Pagination;
+use DBA\TemplateTags\Breadcrumb_Presenter;
+use DBA\TemplateTags\Breadcrumb_Trail;
+use DBA\TemplateTags\Entry_Template_Tags;
+
+if ( ! function_exists( 'dba_posted_on' ) ) :
+	/**
+	 * Prints HTML with meta information for the current post-date/time.
+	 */
+	function dba_posted_on(): void {
+		Entry_Template_Tags::posted_on();
+	}
+endif;
+
+if ( ! function_exists( 'dba_posted_by' ) ) :
+	/**
+	 * Prints HTML with meta information for the current author.
+	 */
+	function dba_posted_by(): void {
+		Entry_Template_Tags::posted_by();
+	}
+endif;
+
+if ( ! function_exists( 'dba_entry_footer' ) ) :
+	/**
+	 * Prints HTML with meta information for categories, tags and comments.
+	 */
+	function dba_entry_footer(): void {
+		Entry_Template_Tags::entry_footer();
+	}
+endif;
+
+if ( ! function_exists( 'dba_post_thumbnail' ) ) :
+	/**
+	 * Displays an optional post thumbnail.
+	 */
+	function dba_post_thumbnail(): void {
+		Entry_Template_Tags::post_thumbnail();
+	}
+endif;
+
+if ( ! function_exists( 'dba_finalize_breadcrumb_items' ) ) :
+	/**
+	 * Applies pagination to the last crumb URL and exposes items for filtering.
+	 *
+	 * @param array<int, array{label: string, url: string}> $items Breadcrumb items.
+	 * @return array<int, array{label: string, url: string}>
+	 */
+	function dba_finalize_breadcrumb_items( array $items ): array {
+		return Breadcrumb_Trail::finalize_items( $items );
+	}
+endif;
+
+if ( ! function_exists( 'dba_get_breadcrumb_label_from_primary_menu_for_archive' ) ) :
+	/**
+	 * Breadcrumb label for a post type archive: use the same title as the active primary nav item.
+	 *
+	 * @param WP_Post_Type $pto Post type object for the current archive.
+	 */
+	function dba_get_breadcrumb_label_from_primary_menu_for_archive( WP_Post_Type $pto ): string {
+		return Breadcrumb_Trail::label_from_primary_menu_for_archive( $pto );
+	}
+endif;
+
+if ( ! function_exists( 'dba_get_breadcrumb_items' ) ) :
+	/**
+	 * Builds the breadcrumb trail (label + URL for each segment; last segment is the current page).
+	 *
+	 * @return array<int, array{label: string, url: string}>
+	 */
+	function dba_get_breadcrumb_items(): array {
+		return Breadcrumb_Trail::get_items();
+	}
+endif;
+
+if ( ! function_exists( 'dba_breadcrumbs' ) ) :
+	/**
+	 * Prints an accessible breadcrumb trail (skipped on the non-paged front page).
+	 *
+	 * Hooks: `dba_show_breadcrumbs`, `dba_breadcrumb_items` (see dba_get_breadcrumb_items()).
+	 */
+	function dba_breadcrumbs(): void {
+		Breadcrumb_Presenter::render();
+	}
+endif;
+
+if ( ! function_exists( 'dba_print_breadcrumb_schema' ) ) :
+	/**
+	 * Outputs BreadcrumbList JSON-LD for supported views (not 404).
+	 */
+	function dba_print_breadcrumb_schema(): void {
+		Breadcrumb_Presenter::print_schema();
+	}
+endif;
+
+if ( ! function_exists( 'dba_resolve_book_category_term_from_book_cat_query_var' ) ) :
+	/**
+	 * Resolves the `book_cat` public query var to a `book_category` term (slug or hierarchical path).
+	 *
+	 * @param string $raw Raw value from {@see get_query_var()} `book_cat`.
+	 */
+	function dba_resolve_book_category_term_from_book_cat_query_var( string $raw ): ?WP_Term {
+		$raw = trim( rawurldecode( $raw ), '/' );
+		if ( '' === $raw ) {
+			return null;
+		}
+
+		$parts     = array_values( array_filter( explode( '/', $raw ) ) );
+		$leaf_slug = (string) end( $parts );
+		if ( '' === $leaf_slug ) {
+			return null;
+		}
+
+		if ( ! taxonomy_exists( DBA_BOOK_CATEGORY_TAXONOMY ) ) {
+			return null;
+		}
+
+		$term = get_term_by( 'slug', $leaf_slug, DBA_BOOK_CATEGORY_TAXONOMY );
+		return $term instanceof WP_Term ? $term : null;
+	}
+endif;
+
+if ( ! function_exists( 'dba_get_book_archive_filtered_category' ) ) :
+	/**
+	 * Active book category on the Library: taxonomy archive ({@see get_term_link()}) or transient `book_cat` before redirect to the plain archive.
+	 *
+	 * @return WP_Term|null
+	 */
+	function dba_get_book_archive_filtered_category(): ?WP_Term {
+		if ( is_tax( DBA_BOOK_CATEGORY_TAXONOMY ) ) {
+			$obj = get_queried_object();
+			return $obj instanceof WP_Term ? $obj : null;
+		}
+
+		if ( ! is_post_type_archive( 'book' ) ) {
+			return null;
+		}
+
+		$raw = get_query_var( 'book_cat' );
+		if ( ( ! is_string( $raw ) || '' === $raw ) && isset( $_GET['book_cat'] ) && is_string( $_GET['book_cat'] ) ) {
+			$raw = sanitize_text_field( wp_unslash( (string) $_GET['book_cat'] ) );
+		}
+
+		if ( ! is_string( $raw ) || '' === $raw ) {
+			return null;
+		}
+
+		return dba_resolve_book_category_term_from_book_cat_query_var( $raw );
+	}
+endif;
+
+if ( ! function_exists( 'dba_get_book_post_type_archive_url' ) ) :
+	/**
+	 * Post type archive URL for `book` without permalink rewrite placeholders (CPT uses `book/%book_category%` slug).
+	 */
+	function dba_get_book_post_type_archive_url(): string {
+		$raw = get_post_type_archive_link( 'book' );
+		if ( ! is_string( $raw ) || '' === $raw ) {
+			return home_url( '/' );
+		}
+
+		$normalized = str_replace( '%book_category%', '', $raw );
+		$normalized = (string) preg_replace( '#([^:])//+#', '$1/', $normalized );
+		$normalized = user_trailingslashit( untrailingslashit( $normalized ) );
+
+		return $normalized;
+	}
+endif;
+
+if ( ! function_exists( 'dba_get_book_category_book_cat_path' ) ) :
+	/**
+	 * Slug path for the `book_cat` query var (ancestor slugs + term slug).
+	 */
+	function dba_get_book_category_book_cat_path( WP_Term $term ): string {
+		$slugs = array( $term->slug );
+		$t     = $term;
+		while ( $t->parent > 0 ) {
+			$parent = get_term( $t->parent, $term->taxonomy );
+			if ( ! $parent instanceof WP_Term || is_wp_error( $parent ) ) {
+				break;
+			}
+			array_unshift( $slugs, $parent->slug );
+			$t = $parent;
+		}
+
+		return implode( '/', $slugs );
+	}
+endif;
+
+if ( ! function_exists( 'dba_get_book_post_type_archive_filter_url' ) ) :
+	/**
+	 * Public book post type archive URL with optional pagination only (no `book_cat` query).
+	 *
+	 * Category filtering uses client `data-*` attributes and the books REST archive; `$term` is ignored for the URL.
+	 *
+	 * @param WP_Term|null $term  Unused; kept for call-site compatibility.
+	 * @param int          $paged Page number (min 1).
+	 */
+	function dba_get_book_post_type_archive_filter_url( ?WP_Term $term, int $paged = 1 ): string {
+		unset( $term );
+		$base = dba_get_book_post_type_archive_url();
+		if ( ! is_string( $base ) || '' === $base ) {
+			return home_url( '/' );
+		}
+
+		$paged = max( 1, $paged );
+		$url   = user_trailingslashit( untrailingslashit( $base ) );
+
+		if ( $paged > 1 ) {
+			$url .= user_trailingslashit( 'page/' . (string) $paged );
+		}
+
+		return $url;
+	}
+endif;
+
+if ( ! function_exists( 'dba_get_book_archive_filtered_category_id' ) ) :
+	/**
+	 * Term ID for the active book-archive category filter, or 0 for “All”.
+	 */
+	function dba_get_book_archive_filtered_category_id(): int {
+		$term = dba_get_book_archive_filtered_category();
+		return $term instanceof WP_Term ? (int) $term->term_id : 0;
+	}
+endif;
+
+if ( ! function_exists( 'dba_get_book_archive_category_filter_url' ) ) :
+	/**
+	 * Canonical book category archive URL ({@see get_term_link()}).
+	 */
+	function dba_get_book_archive_category_filter_url( WP_Term $term, int $paged = 1 ): string {
+		$url = get_term_link( $term );
+		if ( is_wp_error( $url ) || ! is_string( $url ) ) {
+			return home_url( '/' );
+		}
+
+		$paged = max( 1, $paged );
+		if ( $paged > 1 ) {
+			$url = add_query_arg( 'paged', $paged, $url );
+		}
+
+		return $url;
+	}
+endif;
+
+if ( ! function_exists( 'dba_get_book_archive_distinct_publication_years' ) ) :
+	/**
+	 * Distinct publication years from published books (publication_date meta), newest first.
+	 *
+	 * Cached 12 hours.
+	 *
+	 * @return array<int, int>
+	 */
+	function dba_get_book_archive_distinct_publication_years(): array {
+		$key    = 'dba_book_archive_pub_years_v1';
+		$cached = get_transient( $key );
+		if ( false !== $cached && is_array( $cached ) ) {
+			$out = array();
+			foreach ( $cached as $v ) {
+				$y = (int) $v;
+				if ( $y >= 1900 && $y <= 2100 ) {
+					$out[] = $y;
+				}
+			}
+			return array_values( array_unique( $out ) );
+		}
+
+		global $wpdb;
+
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- identifiers are $wpdb table names.
+		$sql = "
+			SELECT DISTINCT YEAR( CAST( {$wpdb->postmeta}.meta_value AS DATE ) ) AS y
+			FROM {$wpdb->postmeta}
+			INNER JOIN {$wpdb->posts} ON {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id
+			WHERE {$wpdb->postmeta}.meta_key = %s
+			AND {$wpdb->posts}.post_type = %s
+			AND {$wpdb->posts}.post_status = 'publish'
+			AND {$wpdb->postmeta}.meta_value != ''
+			HAVING y IS NOT NULL AND y BETWEEN 1900 AND 2100
+			ORDER BY y DESC
+		";
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- $sql uses placeholders for values.
+		$col = $wpdb->get_col( $wpdb->prepare( $sql, 'publication_date', 'book' ) );
+
+		if ( ! is_array( $col ) ) {
+			$col = array();
+		}
+
+		$years = array();
+		foreach ( $col as $v ) {
+			$y = (int) $v;
+			if ( $y >= 1900 && $y <= 2100 ) {
+				$years[] = $y;
+			}
+		}
+
+		$years = array_values( array_unique( $years ) );
+		rsort( $years, SORT_NUMERIC );
+
+		set_transient( $key, $years, 12 * HOUR_IN_SECONDS );
+
+		return $years;
+	}
+endif;
+
+if ( ! function_exists( 'dba_the_book_archive_intro' ) ) :
+	/**
+	 * Book archive intro (default tagline or category description): {@see template-parts/book/archive/intro.php}.
+	 *
+	 * @param array<string, mixed> $template_part_args Optional args (e.g. `page_header_embed`, `intro_wrapper_class`).
+	 */
+	function dba_the_book_archive_intro( array $template_part_args = [] ): void {
+		Book_Archive_Intro::render( $template_part_args );
+	}
+endif;
+
+if ( ! function_exists( 'dba_the_book_archive_category_nav' ) ) :
+	/**
+	 * Category filter links for the book archive: loads {@see template-parts/book/archive/category-nav.php}.
+	 */
+	function dba_the_book_archive_category_nav(): void {
+		Book_Archive_Category_Nav::render();
+	}
+endif;
+
+if ( ! function_exists( 'dba_get_book_gallery_image_ids' ) ) :
+	/**
+	 * Image attachment IDs for a book: ordered `book_gallery` meta (books-cpt 1.3.0+); falls back to the featured image when the meta is empty.
+	 *
+	 * @return array<int, int>
+	 */
+	function dba_get_book_gallery_image_ids( int $post_id ): array {
+		$ids = array();
+
+		$raw = get_post_meta( $post_id, 'book_gallery', true );
+		if ( is_array( $raw ) ) {
+			foreach ( $raw as $v ) {
+				$id = (int) $v;
+				if ( $id > 0 && ! in_array( $id, $ids, true ) && wp_attachment_is_image( $id ) ) {
+					$ids[] = $id;
+				}
+			}
+		}
+
+		if ( empty( $ids ) ) {
+			$thumb = (int) get_post_thumbnail_id( $post_id );
+			if ( $thumb > 0 && wp_attachment_is_image( $thumb ) ) {
+				$ids[] = $thumb;
+			}
+		}
+
+		return $ids;
+	}
+endif;
+
+if ( ! function_exists( 'dba_the_book_pagination' ) ) :
+	/**
+	 * Pagination for the book archive: builds link data and loads {@see template-parts/book/archive/pagination.php}.
+	 */
+	function dba_the_book_pagination(): void {
+		Book_Archive_Pagination::render();
+	}
+endif;
+
+if ( ! function_exists( 'dba_get_inline_icon' ) ) :
+	/**
+	 * Returns an inline SVG icon from `/assets/images/icons/` wrapped in an `<i>` element.
+	 *
+	 * Supports icons in subfolders via a `/`-separated path (e.g. `bx/bx-book`).
+	 * Returns an empty string if the icon is missing or the path is invalid.
+	 *
+	 * @param string $name  Icon path (without `.svg`) relative to `/assets/images/icons/`, e.g. `search-icon` or `bx/bx-book`.
+	 * @param string $class CSS classes applied to the wrapping `<i>`.
+	 */
+	function dba_get_inline_icon( string $name, string $class = '' ): string {
+		$segments = array();
+		foreach ( explode( '/', trim( $name, '/' ) ) as $segment ) {
+			if ( '' === $segment || '.' === $segment || '..' === $segment ) {
+				return '';
+			}
+			$clean = sanitize_file_name( $segment );
+			if ( '' === $clean ) {
+				return '';
+			}
+			$segments[] = $clean;
+		}
+
+		if ( empty( $segments ) ) {
+			return '';
+		}
+
+		$base = trailingslashit( get_template_directory() ) . 'assets/images/icons/';
+		$path = $base . implode( '/', $segments ) . '.svg';
+
+		$real_path = realpath( $path );
+		$real_base = realpath( $base );
+		if ( false === $real_path || false === $real_base || 0 !== strpos( $real_path, $real_base . DIRECTORY_SEPARATOR ) ) {
+			return '';
+		}
+
+		if ( ! is_readable( $real_path ) ) {
+			return '';
+		}
+
+		$svg = file_get_contents( $real_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local theme asset.
+		if ( false === $svg || '' === $svg ) {
+			return '';
+		}
+
+		return sprintf( '<i class="%s">%s</i>', esc_attr( $class ), $svg );
+	}
+endif;
+
+if ( ! function_exists( 'dba_the_inline_icon' ) ) :
+	/**
+	 * Outputs an inline SVG icon from `/assets/images/icons/` wrapped in an `<i>` element.
+	 *
+	 * Thin `the_`-style wrapper around {@see dba_get_inline_icon()}.
+	 *
+	 * @param string $name  Icon path (without `.svg`) relative to `/assets/images/icons/`, e.g. `search-icon` or `bx/bx-book`.
+	 * @param string $class CSS classes applied to the wrapping `<i>`.
+	 */
+	function dba_the_inline_icon( string $name, string $class = '' ): void {
+		echo dba_get_inline_icon( $name, $class ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted theme-bundled SVG markup; class is escaped in the getter.
+	}
+endif;

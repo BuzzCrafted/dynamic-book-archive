@@ -1,0 +1,36 @@
+# Dependencies
+/node_modules/
+/vendor/
+/bundle/
+/__inc/
+/__template-parts/
+/__assets/
+
+# Logs and debug
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# PHP tooling
+.phpunit.result.cache
+.php-cs-fixer.cache
+
+# Optional local tooling
+.tool-versions
