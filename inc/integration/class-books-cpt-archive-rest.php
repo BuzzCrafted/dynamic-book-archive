@@ -136,7 +136,7 @@ final class Books_Cpt_Archive_Rest {
 		if ( $query->have_posts() ) {
 			while ( $query->have_posts() ) {
 				$query->the_post();
-				get_template_part( 'template-parts/content', 'archive-book' );
+				get_template_part( 'template-parts/book/archive/card' );
 			}
 		} else {
 			get_template_part( 'template-parts/content/none' );
