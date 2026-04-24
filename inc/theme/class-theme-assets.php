@@ -67,9 +67,6 @@ final class Theme_Assets {
 	}
 
 	/**
-	 * Slim Select for library toolbar sort/year selects (depends on books-cpt archive script when present).
-	 */
-	/**
 	 * Gallery prev/next for singular books.
 	 */
 	private static function maybe_enqueue_book_single_gallery(): void {

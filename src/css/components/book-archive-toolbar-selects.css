@@ -1,40 +1,52 @@
-/* Slim Select tokens for library toolbar (vendor: assets/vendor/slim-select/slimselect.css). */
+/* Slim Select in archive dialogs (dropdown appended to `<dialog>` for top-layer stacking). */
 
 @layer components {
-	/*
-	 * Triggers live in .book-archive-rest__toolbar-controls (positioning now inlined on
-	 * the PHP markup as `relative z-20 overflow-visible`); dropdown may be portaled to body.
-	 * Scope tokens by the class names copied from each native <select> onto .ss-main / .ss-content.
-	 */
-	.ss-main.book-archive-rest__toolbar-sort,
-	.ss-content.book-archive-rest__toolbar-sort,
-	.ss-main.book-archive-rest__toolbar-year,
-	.ss-content.book-archive-rest__toolbar-year {
+	/* Map SlimSelect :root variables to theme (vendor defaults are light-theme). */
+	dialog#book-archive-dialog-sort,
+	dialog#book-archive-dialog-filter {
+		--ss-bg-color: var(--color-filters-background);
+		--ss-font-color: var(--color-filters-text);
+		--ss-font-placeholder-color: rgb(from var(--color-filters-text) r g b / 0.55);
+		--ss-border-color: var(--color-border-main);
+		--ss-primary-color: var(--color-filters-link-background);
+		--ss-focus-color: rgb(from var(--color-filters-link-background) r g b / 0.75);
+	}
+
+	dialog#book-archive-dialog-sort .ss-main,
+	dialog#book-archive-dialog-sort .ss-content,
+	dialog#book-archive-dialog-filter .ss-main,
+	dialog#book-archive-dialog-filter .ss-content {
 		--ss-main-height: auto;
 		--ss-content-height: min(16rem, 40vh);
 		--ss-border-radius: 0.375rem;
 	}
 
+	dialog#book-archive-dialog-filter .ss-content,
+	dialog#book-archive-dialog-sort .ss-content {
+		z-index: 50;
+	}
 
-	.js-book-archive-sort,
-	.js-book-archive-author,
-	.js-book-archive-tag,
-	.js-book-archive-year-min,
-	.js-book-archive-year-max {
-		    .ss-arrow{
-				path{
-					@apply stroke-filters-text!;
-				}
-			}
-			.ss-list{
-				.ss-option{
-					@apply hover:bg-filters-link-background! hover:text-filters-link! text-filters-text!;
-				}
-				.ss-option:not(.ss-disabled).ss-selected {
-					@apply bg-filters-link-background! text-filters-link!;
-				}
-			}
-		}
+	dialog#book-archive-dialog-sort .ss-main .ss-arrow path,
+	dialog#book-archive-dialog-filter .ss-main .ss-arrow path {
+		@apply stroke-filters-text!;
+	}
+
+	dialog#book-archive-dialog-sort .ss-list .ss-option,
+	dialog#book-archive-dialog-filter .ss-list .ss-option {
+		@apply text-filters-text!;
+	}
+
+	dialog#book-archive-dialog-sort .ss-list .ss-option:hover,
+	dialog#book-archive-dialog-filter .ss-list .ss-option:hover {
+		@apply bg-filters-link-background! text-filters-link!;
+	}
+
+	dialog#book-archive-dialog-sort .ss-list .ss-option:not(.ss-disabled).ss-selected,
+	dialog#book-archive-dialog-filter .ss-list .ss-option:not(.ss-disabled).ss-selected {
+		@apply bg-filters-link-background! text-filters-link!;
+	}
+
+	/* Dual publication-year range: gradient track + stacked range inputs. */
 
 	.dba-year-range {
 		--dba-year-range-track: rgb(from var(--color-filters-text) r g b / 0.22);
@@ -44,7 +56,6 @@
 	}
 
 	.dba-year-range__sliders {
-		/* defaults updated by JS */
 		--dba-min: 0;
 		--dba-max: 100;
 	}
@@ -56,7 +67,6 @@
 		top: 50%;
 		transform: translateY(-50%);
 		z-index: 0;
-		/* Decorative only: must not sit above inputs or it captures drags (dual-range “stops after once”). */
 		pointer-events: none;
 		height: 0.35rem;
 		border-radius: 9999px;
@@ -123,3 +133,4 @@
 			0 2px 10px 0 rgb(0 0 0 / 0.35);
 	}
 }
+
