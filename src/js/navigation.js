@@ -1,5 +1,5 @@
 /**
- * Mobile / drawer toggle for `#site-navigation` (underscores-style menu markup).
+ * Mobile overlay toggle for `#site-navigation` (panel `#primary-menu-panel` with `.js-menu`).
  */
 (function () {
 	const nav = document.getElementById('site-navigation');
@@ -7,8 +7,8 @@
 		return;
 	}
 
-	const toggleButton = nav.getElementsByTagName('button')[0];
-	if (!toggleButton) {
+	const toggleButton = nav.querySelector('.js-menu-toggle');
+	if (!toggleButton || !(toggleButton instanceof HTMLButtonElement)) {
 		return;
 	}
 
@@ -18,12 +18,34 @@
 		return;
 	}
 
+	const closeButton = menu.querySelector('.js-menu-close');
+	const bodyOpenClass = 'mobile-menu-open';
+
+	function setOpen(isOpen) {
+		menu.classList.toggle('hidden', !isOpen);
+		toggleButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+		document.body.classList.toggle(bodyOpenClass, isOpen);
+		if (isOpen) {
+			if (closeButton instanceof HTMLElement) {
+				closeButton.focus();
+			}
+		} else {
+			toggleButton.focus();
+		}
+	}
+
 	toggleButton.addEventListener('click', function (event) {
 		event.stopPropagation();
-		menu.classList.toggle('hidden');
-		const isOpen = !menu.classList.contains('hidden');
-		toggleButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+		const willOpen = menu.classList.contains('hidden');
+		setOpen(willOpen);
 	});
+
+	if (closeButton instanceof HTMLButtonElement) {
+		closeButton.addEventListener('click', function (event) {
+			event.stopPropagation();
+			setOpen(false);
+		});
+	}
 
 	document.addEventListener('keydown', function (event) {
 		if (menu.classList.contains('hidden')) {
@@ -33,9 +55,7 @@
 			return;
 		}
 		event.preventDefault();
-		menu.classList.add('hidden');
-		toggleButton.setAttribute('aria-expanded', 'false');
-		toggleButton.focus();
+		setOpen(false);
 	});
 
 	document.addEventListener('click', function (event) {
@@ -44,8 +64,7 @@
 		}
 		const target = event.target;
 		if (target instanceof Node && !nav.contains(target)) {
-			menu.classList.add('hidden');
-			toggleButton.setAttribute('aria-expanded', 'false');
+			setOpen(false);
 		}
 	});
 })();
