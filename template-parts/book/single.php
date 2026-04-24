@@ -184,12 +184,12 @@ $dba_book_single_icon = static function (string $icon): string {
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class('text-white/90'); ?>>
-	<a class="font-main my-6 inline-flex items-center gap-2 text-sm font-medium tracking-widest text-book-primary no-underline transition hover:text-book-secondary" href="<?php echo esc_url($archive_url); ?>">
+	<a class="font-main my-2 md:my-4 lg:my-6 inline-flex items-center gap-1 md:gap-2 text-sm font-medium tracking-widest text-book-primary no-underline transition hover:text-book-secondary" href="<?php echo esc_url($archive_url); ?>">
 		<span aria-hidden="true">←</span>
 		<?php echo esc_html($library_back_label); ?>
 	</a>
 
-	<div class="grid gap-6 lg:grid-cols-[3fr_4fr] sm:grid-cols-1">
+	<div class="grid gap-1 md:gap-2 lg:gap-6 lg:grid-cols-[3fr_4fr] sm:grid-cols-1">
 		<?php if (count($gallery_ids) > 0) : ?>
 			<div class="flex flex-col self-start rounded-md shadow-main" data-book-gallery<?php echo $thumbs_capped ? ' data-book-gallery-thumbs-capped="1"' : ''; ?>>
 				<span id="book-gallery-status-<?php echo esc_attr((string) $post_id); ?>" class="sr-only" data-book-gallery-status aria-live="polite"></span>
@@ -235,7 +235,7 @@ $dba_book_single_icon = static function (string $icon): string {
 				</div>
 
 				<?php if (count($gallery_ids) > 1) : ?>
-					<div class="flex flex-col gap-2 shadow-main-top p-2">
+					<div class="hidden md:flex flex-col gap-2 shadow-main-top p-2">
 						<?php
 						$tablist_class = 'flex w-full gap-2 [scrollbar-width:thin]';
 						if ($thumb_rail_rtl) {
@@ -302,7 +302,7 @@ $dba_book_single_icon = static function (string $icon): string {
 			</div>
 		<?php endif; ?>
 
-		<div class="flex min-w-0 flex-col gap-12">
+		<div class="flex min-w-0 flex-col gap-4 md:gap-6 lg:gap-12">
 			<header>
 				<?php if (!empty($title_japanese)) : ?>
 					<h1 class="font-display text-4xl font-bold leading-tight text-book-primary sm:text-4xl md:text-4xl"><?php echo esc_html($title_japanese); ?></h1>
@@ -350,7 +350,7 @@ $dba_book_single_icon = static function (string $icon): string {
 				</div>
 
 				<?php if (count($quick_items) > 0) : ?>
-					<aside class="rounded-lg border text-book-primary border-book-secondary/50 p-4" aria-label="<?php esc_attr_e('Quick facts', 'dynamic-book-archive'); ?>">
+					<aside class="rounded-lg mt-4 md:mt-0 border text-book-primary border-book-secondary/50 p-4" aria-label="<?php esc_attr_e('Quick facts', 'dynamic-book-archive'); ?>">
 						<h2 class="mb-3 font-display text-sm font-semibold uppercase tracking-[0.2em] text-book-secondary"><?php esc_html_e('Quick info', 'dynamic-book-archive'); ?></h2>
 						<ul class="m-0 flex list-none flex-col gap-2 p-0">
 							<?php foreach ($quick_items as $item) : ?>
@@ -371,7 +371,7 @@ $dba_book_single_icon = static function (string $icon): string {
 			<?php if (!empty(trim($content))) : ?>
 				<section aria-labelledby="book-desc-heading-<?php echo esc_attr((string) $post_id); ?>">
 					<h2 id="book-desc-heading-<?php echo esc_attr((string) $post_id); ?>" class="font-display text-sm font-semibold uppercase tracking-[0.25em] text-book-secondary"><?php esc_html_e('Description', 'dynamic-book-archive'); ?></h2>
-					<div class="prose prose-invert prose-headings:font-display prose-headings:text-book-primary prose-p:my-4 mt-2 max-w-none font-main text-lg leading-[1.75] text-book-primary">
+					<div class="prose prose-invert prose-headings:font-display prose-headings:text-book-primary prose-p:my-4 lg:prose-p:my-6 mt-2 max-w-none font-main text-base md:text-lg leading-relaxed md:leading-[1.75] text-book-primary">
 						<?php
 						the_content();
 						?>
@@ -384,7 +384,7 @@ $dba_book_single_icon = static function (string $icon): string {
 			<?php if (count($tags) > 0) : ?>
 				<section aria-labelledby="book-tags-heading-<?php echo esc_attr((string) $post_id); ?>">
 					<h2 id="book-tags-heading-<?php echo esc_attr((string) $post_id); ?>" class="font-display text-sm font-semibold uppercase tracking-[0.25em] text-book-secondary"><?php esc_html_e('Tags', 'dynamic-book-archive'); ?></h2>
-					<div class="mt-3 flex flex-wrap gap-2">
+					<div class="mt-4 flex flex-wrap gap-1 md:gap-2 justify-center md:justify-start">
 						<?php
 						foreach ($tags as $term) {
 							if (! $term instanceof WP_Term) {

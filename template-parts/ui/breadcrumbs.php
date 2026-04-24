@@ -28,7 +28,7 @@ if ( count( $breadcrumb_items ) < 2 ) {
 
 ?>
 
-		<nav class="breadcrumbs py-3" aria-label="<?php esc_attr_e( 'Breadcrumb', 'dynamic-book-archive' ); ?>">
+		<nav class="breadcrumbs py-3 px-2 md:px-4 lg:px-0" aria-label="<?php esc_attr_e( 'Breadcrumb', 'dynamic-book-archive' ); ?>">
 			<ol class="m-0 flex list-none flex-wrap items-center gap-y-1 p-0 text-sm text-breadcrumbs-text">
 				<?php
 				$last_index = count( $breadcrumb_items ) - 1;

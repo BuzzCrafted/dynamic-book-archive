@@ -67,6 +67,6 @@ declare(strict_types=1);
 			</div>
 
 		</header>
-        <div class="container max-w-[1440px] lg:px-30 mx-auto">
+        <div class="container max-w-[1440px] px-2 md:px-4 lg:px-30 mx-auto">
 		     <?php dba_breadcrumbs(); ?>
   

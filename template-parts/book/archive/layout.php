@@ -34,7 +34,7 @@ $book_archive_years = function_exists('dba_get_book_archive_distinct_publication
 	: array();
 ?>
 
-<div class="mx-auto pb-16 flex w-full flex-1 flex-col md:flex-row">
+<div class="mx-auto pb-4 md:pb-8 lg:pb-16 flex w-full flex-1 flex-col md:flex-row">
 	<main
 		id="primary"
 		class="js-book-archive group flex-1"
@@ -101,7 +101,7 @@ $book_archive_years = function_exists('dba_get_book_archive_distinct_publication
 
 		<div class="js-book-archive-stage js-book-archive-stage-body contain-[layout] backface-hidden">
 			<?php if (have_posts()) : ?>
-				<div class="js-book-archive-grid grid auto-rows-max grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-[3%] gap-y-[4%] w-full pb-12 content-start items-stretch motion-safe:transition-[opacity,filter,transform] motion-safe:duration-200 motion-safe:ease-out group-aria-busy:pointer-events-none motion-safe:group-data-book-archive-dim:opacity-[.86] motion-safe:group-data-book-archive-dim:blur-[2px] motion-safe:group-data-book-archive-dim:scale-[.992] motion-safe:group-data-book-archive-dim:will-change-[opacity,filter,transform]">
+				<div class="js-book-archive-grid grid auto-rows-max grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-1 md:gap-x-2 lg:gap-x-[3%] gap-y-1 md:gap-y-2 lg:gap-y-[4%] w-full pb-2 md:pb-4 lg:pb-12 content-start items-stretch motion-safe:transition-[opacity,filter,transform] motion-safe:duration-200 motion-safe:ease-out group-aria-busy:pointer-events-none motion-safe:group-data-book-archive-dim:opacity-[.86] motion-safe:group-data-book-archive-dim:blur-[2px] motion-safe:group-data-book-archive-dim:scale-[.992] motion-safe:group-data-book-archive-dim:will-change-[opacity,filter,transform]">
 					<?php
 					while (have_posts()) :
 						the_post();
@@ -110,7 +110,7 @@ $book_archive_years = function_exists('dba_get_book_archive_distinct_publication
 					?>
 				</div>
 
-				<div class="js-book-archive-pagination mt-7 mb-10 group-aria-busy:pointer-events-none">
+				<div class="js-book-archive-pagination mt-2 md:mt-4 lg:mt-7 mb-2 md:mb-4 lg:mb-10 group-aria-busy:pointer-events-none">
 					<?php dba_the_book_pagination(); ?>
 				</div>
 			<?php else : ?>
