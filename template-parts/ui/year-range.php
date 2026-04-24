@@ -1,13 +1,6 @@
 <?php
 /**
- * Dual-handle publication year range (native `<input type="range">` × 2 + track).
- *
- * Loaded via {@see get_template_part()} with `$args`:
- * - `variant` (string): `real` — compact hidden sync controls; `staging` — filter dialog with tooltips + scale.
- * - `year_floor` (int), `year_ceiling` (int): bounds from DB-backed distinct years.
- * - `label_any` (string): translated label for `data-label-any` and real (sr-only) range summaries.
- * - `input_year_min_id` (string), `input_year_max_id` (string): unique input IDs.
- * - `input_min_class` (string), `input_max_class` (string): classes on min/max inputs (must include existing `js-*` hooks).
+ * Dual-handle publication year range.
  *
  * @package Dynamic_Book_Archive
  */
@@ -69,40 +62,44 @@ if ( $is_staging ) {
 		<div class="mb-3">
 			<span class="block text-xs font-semibold uppercase tracking-wider text-filters-text/80"><?php esc_html_e( 'Years', 'dynamic-book-archive' ); ?></span>
 		</div>
-		<div class="dba-year-range__sliders relative mb-7 h-5 px-1 sm:px-2">
-			<label class="sr-only" for="<?php echo esc_attr( $input_year_min_id ); ?>"><?php esc_html_e( 'Filter by published year (from)', 'dynamic-book-archive' ); ?></label>
-			<input
-				id="<?php echo esc_attr( $input_year_min_id ); ?>"
-				type="range"
-				class="<?php echo esc_attr( trim( $input_min_class . ' dba-year-range__input' ) ); ?>"
-				min="<?php echo esc_attr( $floor_s ); ?>"
-				max="<?php echo esc_attr( $ceil_s ); ?>"
-				value="<?php echo esc_attr( $floor_s ); ?>"
-				step="1"
-				aria-label="<?php echo esc_attr__( 'From year', 'dynamic-book-archive' ); ?>" />
-			<label class="sr-only" for="<?php echo esc_attr( $input_year_max_id ); ?>"><?php esc_html_e( 'Filter by published year (to)', 'dynamic-book-archive' ); ?></label>
-			<input
-				id="<?php echo esc_attr( $input_year_max_id ); ?>"
-				type="range"
-				class="<?php echo esc_attr( trim( $input_max_class . ' dba-year-range__input' ) ); ?>"
-				min="<?php echo esc_attr( $floor_s ); ?>"
-				max="<?php echo esc_attr( $ceil_s ); ?>"
-				value="<?php echo esc_attr( $ceil_s ); ?>"
-				step="1"
-				aria-label="<?php echo esc_attr__( 'To year', 'dynamic-book-archive' ); ?>" />
-			<div class="dba-year-range__track" aria-hidden="true"></div>
-			<span class="js-year-range-tooltip-min dba-year-range__tooltip-min pointer-events-none absolute left-0 top-full z-10 mt-1 min-w-[2.25rem] rounded-md bg-heading px-2 py-1 text-center text-xs font-bold tabular-nums text-surface shadow-sm" aria-hidden="true"></span>
-			<span class="js-year-range-tooltip-max dba-year-range__tooltip-max pointer-events-none absolute left-0 top-full z-10 mt-1 min-w-[2.25rem] rounded-md bg-heading px-2 py-1 text-center text-xs font-bold tabular-nums text-surface shadow-sm" aria-hidden="true"></span>
-		</div>
-		<div class="js-year-range-scale -mt-0.5 flex w-full items-center text-xs tabular-nums text-filters-text/55" aria-hidden="true">
-			<?php foreach ( $scale_ticks as $i => $tick ) : ?>
-				<?php if ( $i > 0 ) : ?>
-			<span class="flex min-h-[0.875rem] min-w-0 flex-1 items-center justify-center">
-				<span class="size-1 shrink-0 rounded-full bg-filters-text/40"></span>
-			</span>
-				<?php endif; ?>
-			<span class="shrink-0 leading-none"><?php echo esc_html( (string) $tick ); ?></span>
-			<?php endforeach; ?>
+		<div class="dba-year-range__sliders relative px-1 pb-2 sm:px-2">
+			<div class="relative z-10 h-5">
+				<label class="sr-only" for="<?php echo esc_attr( $input_year_min_id ); ?>"><?php esc_html_e( 'Filter by published year (from)', 'dynamic-book-archive' ); ?></label>
+				<input
+					id="<?php echo esc_attr( $input_year_min_id ); ?>"
+					type="range"
+					class="<?php echo esc_attr( trim( $input_min_class . ' dba-year-range__input' ) ); ?>"
+					min="<?php echo esc_attr( $floor_s ); ?>"
+					max="<?php echo esc_attr( $ceil_s ); ?>"
+					value="<?php echo esc_attr( $floor_s ); ?>"
+					step="1"
+					aria-label="<?php echo esc_attr__( 'From year', 'dynamic-book-archive' ); ?>" />
+				<label class="sr-only" for="<?php echo esc_attr( $input_year_max_id ); ?>"><?php esc_html_e( 'Filter by published year (to)', 'dynamic-book-archive' ); ?></label>
+				<input
+					id="<?php echo esc_attr( $input_year_max_id ); ?>"
+					type="range"
+					class="<?php echo esc_attr( trim( $input_max_class . ' dba-year-range__input' ) ); ?>"
+					min="<?php echo esc_attr( $floor_s ); ?>"
+					max="<?php echo esc_attr( $ceil_s ); ?>"
+					value="<?php echo esc_attr( $ceil_s ); ?>"
+					step="1"
+					aria-label="<?php echo esc_attr__( 'To year', 'dynamic-book-archive' ); ?>" />
+				<div class="dba-year-range__track" aria-hidden="true"></div>
+			</div>
+			<div class="js-year-range-scale mt-0.5 flex w-full items-center text-xs tabular-nums text-filters-text/60" aria-hidden="true">
+				<?php foreach ( $scale_ticks as $i => $tick ) : ?>
+					<?php if ( $i > 0 ) : ?>
+				<span class="flex min-h-3 min-w-0 flex-1 items-center justify-center">
+					<span class="size-1 shrink-0 rounded-full bg-filters-text/45"></span>
+				</span>
+					<?php endif; ?>
+				<span class="shrink-0 leading-none"><?php echo esc_html( (string) $tick ); ?></span>
+				<?php endforeach; ?>
+			</div>
+			<div class="pointer-events-none relative mt-2 min-h-[2.125rem]">
+				<span class="js-year-range-tooltip-min dba-year-range__tooltip-min absolute left-0 top-0 z-10 min-w-[2.25rem] rounded-md bg-heading px-2 py-1 text-center text-xs font-bold tabular-nums text-surface shadow-sm" aria-hidden="true"></span>
+				<span class="js-year-range-tooltip-max dba-year-range__tooltip-max pointer-events-none absolute left-0 top-0 z-10 min-w-[2.25rem] rounded-md bg-heading px-2 py-1 text-center text-xs font-bold tabular-nums text-surface shadow-sm" aria-hidden="true"></span>
+			</div>
 		</div>
 	<?php else : ?>
 		<span class="js-book-archive-year-min-label sr-only"></span>

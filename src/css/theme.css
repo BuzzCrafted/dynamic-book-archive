@@ -47,7 +47,7 @@
 	--color-book-archive-category-nav-link-hover: var(--c-bronze-100);
 	--color-book-archive-category-nav-text: var(--c-bronze-200);
 
-	/* Book archive category nav — active/hover plaque */
+	/* Book archive category nav */
 	--color-book-archive-category-nav-current-text: var(--c-ink-900);
 	--color-book-archive-category-nav-current-border: color-mix(in oklch, var(--c-bronze-200) 78%, var(--c-bronze-400) 22%);
 

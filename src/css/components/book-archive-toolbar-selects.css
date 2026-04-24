@@ -51,8 +51,8 @@
 	.dba-year-range {
 		--dba-year-range-track: rgb(from var(--color-filters-text) r g b / 0.22);
 		--dba-year-range-fill: var(--color-filters-link-background);
-		--dba-year-range-thumb: #fff;
-		--dba-year-range-thumb-ring: rgb(from var(--color-filters-text) r g b / 0.28);
+		--dba-year-range-thumb: var(--color-filters-link-background); 
+		--dba-year-range-thumb-ring: var(--color-filters-link-background);
 	}
 
 	.dba-year-range__tooltip-min::before,
@@ -124,9 +124,8 @@
 		margin-top: -0.35rem;
 		border-radius: 0.25rem;
 		background: var(--dba-year-range-thumb);
-		box-shadow:
-			0 0 0 1px var(--dba-year-range-thumb-ring),
-			0 2px 8px 0 rgb(0 0 0 / 0.22);
+		opacity: 1;
+		box-shadow: 0 0 0 1px var(--dba-year-range-thumb-ring);
 	}
 
 	.dba-year-range__input::-moz-range-track {
@@ -142,9 +141,8 @@
 		border: 0;
 		border-radius: 0.25rem;
 		background: var(--dba-year-range-thumb);
-		box-shadow:
-			0 0 0 1px var(--dba-year-range-thumb-ring),
-			0 2px 8px 0 rgb(0 0 0 / 0.22);
+		opacity: 1;
+		box-shadow: 0 0 0 1px var(--dba-year-range-thumb-ring);
 	}
 }
 
