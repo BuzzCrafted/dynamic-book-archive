@@ -8,11 +8,6 @@
 
 declare(strict_types=1);
 
-if (! is_singular('book')) {
-	get_template_part( 'template-parts/content', 'archive-book' );
-	return;
-}
-
 $post_id = get_the_ID();
 
 $title_japanese  = (string) get_post_meta($post_id, 'title_japanese', true);
@@ -41,9 +36,15 @@ $thumb_limit     = 5;
 $thumbs_capped   = $gallery_count > $thumb_limit;
 $thumb_rail_rtl  = $gallery_count < $thumb_limit;
 
-$pub_ts         = !empty($publication_raw) ? strtotime($publication_raw) : false;
-$year_gregorian = (false !== $pub_ts) ? (int) gmdate('Y', (int) $pub_ts) : 0;
-$year_label     = $year_gregorian > 0 ? (string) $year_gregorian : '';
+$publication_raw_trimmed  = trim($publication_raw);
+$pub_ts                   = '' !== $publication_raw_trimmed ? strtotime($publication_raw_trimmed) : false;
+$is_publication_year_only = (bool) preg_match('/^\d{4}$/', $publication_raw_trimmed);
+$publication_label        = '';
+if (false !== $pub_ts) {
+	$publication_label = $is_publication_year_only
+		? date_i18n('Y', (int) $pub_ts)
+		: date_i18n((string) get_option('date_format'), (int) $pub_ts);
+}
 
 $author_display = $book_author;
 if (!empty($author_japanese) && !empty($book_author)) {
@@ -320,10 +321,10 @@ $dba_book_single_icon = static function (string $icon): string {
 								<dd class="font-main text-book-primary"><?php echo esc_html($author_display); ?></dd>
 							</div>
 						<?php endif; ?>
-						<?php if (!empty($year_label)) : ?>
+						<?php if (!empty($publication_label)) : ?>
 							<div class="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-1 text-base sm:grid-cols-[9rem_1fr]">
-								<dt class="font-main tracking-wider text-book-secondary"><?php esc_html_e('Year:', 'dynamic-book-archive'); ?></dt>
-								<dd class="font-main text-book-primary"><?php echo esc_html($year_label); ?></dd>
+								<dt class="font-main tracking-wider text-book-secondary"><?php esc_html_e('Published:', 'dynamic-book-archive'); ?></dt>
+								<dd class="font-main text-book-primary"><?php echo esc_html($publication_label); ?></dd>
 							</div>
 						<?php endif; ?>
 						<?php if (!empty($book_language)) : ?>
