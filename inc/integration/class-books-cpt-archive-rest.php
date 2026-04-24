@@ -166,17 +166,7 @@ final class Books_Cpt_Archive_Rest {
 		$format = 'page/%#%/';
 
 		$links = paginate_links(
-			array(
-				'base'      => $base,
-				'format'    => $format,
-				'total'     => $total,
-				'current'   => $current,
-				'type'      => 'array',
-				'mid_size'  => 2,
-				'end_size'  => 1,
-				'prev_text' => __( '< Previous', 'dynamic-book-archive' ),
-				'next_text' => __( 'Next >', 'dynamic-book-archive' ),
-			)
+			dba_get_book_archive_paginate_links_args( $total, $current, $base, $format )
 		);
 
 		if ( ! is_array( $links ) ) {

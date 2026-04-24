@@ -35,17 +35,7 @@ final class Book_Archive_Pagination {
 		}
 		$current = max( 1, $paged );
 
-		$links = paginate_links(
-			array(
-				'total'     => $total,
-				'current'   => $current,
-				'type'      => 'array',
-				'mid_size'  => 2,
-				'end_size'  => 1,
-				'prev_text' => __( '< Previous', 'dynamic-book-archive' ),
-				'next_text' => __( 'Next >', 'dynamic-book-archive' ),
-			)
-		);
+		$links = paginate_links( dba_get_book_archive_paginate_links_args( $total, $current ) );
 
 		if ( ! is_array( $links ) ) {
 			return;

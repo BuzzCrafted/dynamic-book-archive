@@ -370,6 +370,42 @@ if ( ! function_exists( 'dba_get_book_gallery_image_ids' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'dba_get_book_archive_paginate_links_args' ) ) :
+	/**
+	 * Arguments for {@see paginate_links()} on the book archive (SSR or REST-shaped URLs).
+	 *
+	 * When there are more than five pages, uses a tighter numeric window (more ellipsis).
+	 *
+	 * @param int         $total   Total page count (>= 1).
+	 * @param int         $current Current page (>= 1).
+	 * @param string|null $base    Optional `base` for paginate_links (REST archive URL + %_%).
+	 * @param string|null $format  Optional `format` (e.g. page/%#%/) when `base` is set.
+	 * @return array<string, mixed>
+	 */
+	function dba_get_book_archive_paginate_links_args( int $total, int $current, ?string $base = null, ?string $format = null ): array {
+		$total   = max( 1, $total );
+		$current = max( 1, $current );
+		$compact = $total > 5;
+
+		$args = array(
+			'total'     => $total,
+			'current'   => $current,
+			'type'      => 'array',
+			'mid_size'  => $compact ? 1 : 2,
+			'end_size'  => 1,
+			'prev_text' => __( '< Previous', 'dynamic-book-archive' ),
+			'next_text' => __( 'Next >', 'dynamic-book-archive' ),
+		);
+
+		if ( is_string( $base ) && '' !== $base && is_string( $format ) && '' !== $format ) {
+			$args['base']   = $base;
+			$args['format'] = $format;
+		}
+
+		return $args;
+	}
+endif;
+
 if ( ! function_exists( 'dba_the_book_pagination' ) ) :
 	/**
 	 * Pagination for the book archive: builds link data and loads {@see template-parts/book/archive/pagination.php}.
