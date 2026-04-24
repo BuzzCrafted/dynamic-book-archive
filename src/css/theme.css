@@ -23,6 +23,10 @@
 
 	--color-border-main: var(--c-bronze-200);
 
+	/* Site navigation */
+	--color-site-navigation-primary: var(--c-bronze-200);
+	--color-site-navigation-secondary: var(--c-bronze-400);
+
 	/* Card */
 	--color-card-text: var(--c-bronze-100);
 	--color-card-highlight: rgb(from var(--c-bronze-300) r g b / 0.85);

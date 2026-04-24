@@ -15,6 +15,7 @@
 		"bundle": "npm run build:css && npm run build:js && npm run build:images && npm run bundle:composer && node scripts/bundle.mjs"
 	},
 	"devDependencies": {
+		"concurrently": "^9.1.2",
 		"@tailwindcss/cli": "^4.1.0",
 		"@tailwindcss/typography": "^0.5.16",
 		"cpx2": "^8.0.2",

@@ -26,8 +26,8 @@ declare(strict_types=1);
 			<?php esc_html_e('Skip to content', 'dynamic-book-archive'); ?>
 		</a>
 
-		<header id="masthead" class="site-header shadow-[0_0_1px_1px_rgba(214,201,163,0.30)] py-4">
-			<div class="max-w-[1440px] lg:px-30 grid grid-cols-12 mx-auto md:items-center lg:gap-6 text-heading">
+		<header id="masthead" class="site-header shadow-[0_0_1px_1px_rgba(214,201,163,0.30)] py-4 px-2 md:px-4 lg:px-0">
+			<div class="max-w-[1440px] lg:px-30 flex justify-between md:grid grid-cols-12 mx-auto md:items-center lg:gap-6 text-heading">
 				<div class="col-span-12 flex items-center gap-3 md:col-start-2 md:col-span-3">
 					<div class="w-10 shrink-0">
 						<a class="no-underline text-inherit hover:no-underline" href="<?php echo esc_url(home_url('/')); ?>" rel="home">
@@ -49,8 +49,9 @@ declare(strict_types=1);
 				</div>
 
 				<nav id="site-navigation" class="col-span-12 flex flex-wrap items-center justify-end gap-x-10 gap-y-2 text-[11px] tracking-[0.2em] md:col-start-5 md:col-span-8">
-					<button class="menu-toggle inline-flex items-center rounded-md border border-library-primary-dark/50 bg-library-primary-light px-3 py-2 text-sm font-medium text-library-secondary md:hidden" aria-controls="primary-menu" aria-expanded="false">
-						<?php esc_html_e('Menu', 'dynamic-book-archive'); ?>
+					<button class="menu-toggle inline-flex items-center rounded-md border bg-primary px-3 py-2  font-medium text-site-navigation-secondary md:hidden" aria-controls="primary-menu" aria-expanded="false">
+						<span class="sr-only"><?php esc_html_e('Menu', 'dynamic-book-archive'); ?></span>
+						<?php dba_the_inline_icon('bx/bx-menu', 'size-6 shrink-0'); ?>
 					</button>
 					<?php
 					wp_nav_menu(
@@ -58,7 +59,7 @@ declare(strict_types=1);
 							'theme_location' => 'menu-1',
 							'menu_id'        => 'primary-menu',
 							'container'      => false,
-							'menu_class'     => 'menu flex flex-col gap-2 text-sm md:flex-row md:items-center md:gap-6',
+							'menu_class'     => 'js-menu hidden md:flex flex-col gap-2 text-sm md:flex-row md:items-center md:gap-6',
 							'fallback_cb'    => false,
 						)
 					);

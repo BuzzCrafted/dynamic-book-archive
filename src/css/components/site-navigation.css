@@ -4,9 +4,13 @@
 		@apply hidden md:block;
 	}
 
-	#site-navigation {
-		@apply inline-flex items-center gap-1;
+	@media (width < 48rem) {
+		#site-navigation.toggled {
+			@apply rounded-sm bg-library-primary-light/40 px-1 py-2;
+		}
+	}
 
+	#site-navigation {
 		.menu-item {
 			@apply relative text-lg tracking-[0.2em] uppercase font-bold pb-3;
 			isolation: isolate;
