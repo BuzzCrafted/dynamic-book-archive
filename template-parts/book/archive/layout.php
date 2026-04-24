@@ -32,6 +32,28 @@ $book_archive_category_slug = ($filter_term instanceof WP_Term) ? (string) $filt
 $book_archive_years = function_exists('dba_get_book_archive_distinct_publication_years')
 	? dba_get_book_archive_distinct_publication_years()
 	: array();
+
+$book_archive_year_ceiling = (int) ( $book_archive_years[0] ?? 0 );
+$book_archive_year_floor   = (int) ( $book_archive_years[ count( $book_archive_years ) - 1 ] ?? 0 );
+if ( $book_archive_year_floor <= 0 ) {
+	$book_archive_year_floor = 1900;
+}
+if ( $book_archive_year_ceiling <= 0 ) {
+	$book_archive_year_ceiling = (int) gmdate( 'Y' );
+}
+if ( $book_archive_year_floor > $book_archive_year_ceiling ) {
+	$tmp                       = $book_archive_year_floor;
+	$book_archive_year_floor   = $book_archive_year_ceiling;
+	$book_archive_year_ceiling = $tmp;
+}
+
+$book_archive_authors = function_exists( 'dba_get_book_archive_distinct_authors' )
+	? dba_get_book_archive_distinct_authors()
+	: array();
+
+$book_archive_tags = function_exists( 'dba_get_book_archive_distinct_tags' )
+	? dba_get_book_archive_distinct_tags()
+	: array();
 ?>
 
 <div class="mx-auto pb-4 md:pb-8 lg:pb-16 flex w-full flex-1 flex-col md:flex-row">
@@ -44,7 +66,12 @@ $book_archive_years = function_exists('dba_get_book_archive_distinct_publication
 		data-books-cpt-search=""
 		data-books-cpt-orderby="date"
 		data-books-cpt-order="desc"
-		data-books-cpt-year="0">
+		data-books-cpt-author=""
+		data-books-cpt-tag=""
+		data-books-cpt-year-floor="<?php echo esc_attr( (string) $book_archive_year_floor ); ?>"
+		data-books-cpt-year-ceil="<?php echo esc_attr( (string) $book_archive_year_ceiling ); ?>"
+		data-books-cpt-year-min="0"
+		data-books-cpt-year-max="0">
 		<div class="js-book-archive-stage js-book-archive-stage-head contain-[layout] backface-hidden">
 			<div class="mx-auto flex flex-col">
 				<header class="flex min-h-0 flex-col justify-center transition-all transition-discrete">
@@ -69,15 +96,76 @@ $book_archive_years = function_exists('dba_get_book_archive_distinct_publication
 								<option value="date:desc"><?php esc_html_e('Sort by Date', 'dynamic-book-archive'); ?></option>
 								<option value="title:asc"><?php esc_html_e('Sort by Title', 'dynamic-book-archive'); ?></option>
 							</select>
-							<label class="sr-only" for="book-archive-toolbar-year"><?php esc_html_e('Filter by year', 'dynamic-book-archive'); ?></label>
+
+							<label class="sr-only" for="book-archive-toolbar-author"><?php esc_html_e('Filter by author', 'dynamic-book-archive'); ?></label>
 							<select
-								id="book-archive-toolbar-year"
-								class="js-book-archive-year w-fit! min-w-34 rounded-md! border-none! bg-filters-background! px-3! py-2! text-sm! text-filters-text! shadow-main focus:outline-none! focus:ring-0! focus-visible:outline-none! focus-visible:ring-0!">
-								<option value="0"><?php esc_html_e('All years', 'dynamic-book-archive'); ?></option>
-								<?php foreach ($book_archive_years as $pub_year) : ?>
-									<option value="<?php echo esc_attr((string) (int) $pub_year); ?>"><?php echo esc_html((string) (int) $pub_year); ?></option>
+								id="book-archive-toolbar-author"
+								class="js-book-archive-author w-fit! min-w-34 rounded-md! border-none! bg-filters-background! px-3! py-2! text-sm! text-filters-text! shadow-main focus:outline-none! focus:ring-0! focus-visible:outline-none! focus-visible:ring-0!">
+								<option value=""><?php esc_html_e( 'All authors', 'dynamic-book-archive' ); ?></option>
+								<?php foreach ( $book_archive_authors as $author ) : ?>
+									<?php if ( ! is_string( $author ) || '' === trim( $author ) ) : ?>
+										<?php continue; ?>
+									<?php endif; ?>
+									<option value="<?php echo esc_attr( $author ); ?>"><?php echo esc_html( $author ); ?></option>
 								<?php endforeach; ?>
 							</select>
+
+							<label class="sr-only" for="book-archive-toolbar-tag"><?php esc_html_e( 'Filter by tag', 'dynamic-book-archive' ); ?></label>
+							<select
+								id="book-archive-toolbar-tag"
+								class="js-book-archive-tag w-fit! min-w-34 rounded-md! border-none! bg-filters-background! px-3! py-2! text-sm! text-filters-text! shadow-main focus:outline-none! focus:ring-0! focus-visible:outline-none! focus-visible:ring-0!">
+								<option value=""><?php esc_html_e( 'All tags', 'dynamic-book-archive' ); ?></option>
+								<?php foreach ( $book_archive_tags as $tag ) : ?>
+									<?php
+									$tag_slug = is_array( $tag ) && isset( $tag['slug'] ) && is_string( $tag['slug'] ) ? $tag['slug'] : '';
+									$tag_name = is_array( $tag ) && isset( $tag['name'] ) && is_string( $tag['name'] ) ? $tag['name'] : '';
+									?>
+									<?php if ( '' === $tag_slug || '' === $tag_name ) : ?>
+										<?php continue; ?>
+									<?php endif; ?>
+									<option value="<?php echo esc_attr( $tag_slug ); ?>"><?php echo esc_html( $tag_name ); ?></option>
+								<?php endforeach; ?>
+							</select>
+
+							<div
+								class="dba-year-range w-full rounded-md bg-filters-background px-3 py-2 shadow-main sm:w-[18.5rem]"
+								data-year-floor="<?php echo esc_attr( (string) $book_archive_year_floor ); ?>"
+								data-year-ceil="<?php echo esc_attr( (string) $book_archive_year_ceiling ); ?>">
+								<div class="flex items-center justify-between gap-3">
+									<span class="text-sm text-filters-text"><?php esc_html_e( 'Years', 'dynamic-book-archive' ); ?></span>
+									<span class="text-sm text-filters-text/80 tabular-nums">
+										<span class="js-book-archive-year-min-label"><?php esc_html_e( 'Any', 'dynamic-book-archive' ); ?></span>
+										<span class="px-1 text-filters-text/50" aria-hidden="true">–</span>
+										<span class="js-book-archive-year-max-label"><?php esc_html_e( 'Any', 'dynamic-book-archive' ); ?></span>
+									</span>
+								</div>
+
+								<div class="dba-year-range__sliders relative mt-2 h-5">
+									<label class="sr-only" for="book-archive-toolbar-year-min"><?php esc_html_e( 'Filter by published year (from)', 'dynamic-book-archive' ); ?></label>
+									<input
+										id="book-archive-toolbar-year-min"
+										type="range"
+										class="js-book-archive-year-min dba-year-range__input"
+										min="<?php echo esc_attr( (string) $book_archive_year_floor ); ?>"
+										max="<?php echo esc_attr( (string) $book_archive_year_ceiling ); ?>"
+										value="<?php echo esc_attr( (string) $book_archive_year_floor ); ?>"
+										step="1"
+										aria-label="<?php echo esc_attr__( 'From year', 'dynamic-book-archive' ); ?>" />
+
+									<label class="sr-only" for="book-archive-toolbar-year-max"><?php esc_html_e( 'Filter by published year (to)', 'dynamic-book-archive' ); ?></label>
+									<input
+										id="book-archive-toolbar-year-max"
+										type="range"
+										class="js-book-archive-year-max dba-year-range__input"
+										min="<?php echo esc_attr( (string) $book_archive_year_floor ); ?>"
+										max="<?php echo esc_attr( (string) $book_archive_year_ceiling ); ?>"
+										value="<?php echo esc_attr( (string) $book_archive_year_ceiling ); ?>"
+										step="1"
+										aria-label="<?php echo esc_attr__( 'To year', 'dynamic-book-archive' ); ?>" />
+
+									<div class="dba-year-range__track" aria-hidden="true"></div>
+								</div>
+							</div>
 						</div>
 					</div>
 

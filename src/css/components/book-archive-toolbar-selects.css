@@ -16,7 +16,11 @@
 	}
 
 
-	.js-book-archive-year, .js-book-archive-sort{
+	.js-book-archive-sort,
+	.js-book-archive-author,
+	.js-book-archive-tag,
+	.js-book-archive-year-min,
+	.js-book-archive-year-max {
 		    .ss-arrow{
 				path{
 					@apply stroke-filters-text!;
@@ -31,4 +35,91 @@
 				}
 			}
 		}
+
+	.dba-year-range {
+		--dba-year-range-track: rgb(from var(--color-filters-text) r g b / 0.22);
+		--dba-year-range-fill: var(--color-filters-link-background);
+		--dba-year-range-thumb: var(--color-filters-link-background);
+		--dba-year-range-thumb-ring: rgb(from var(--color-filters-link-background) r g b / 0.35);
+	}
+
+	.dba-year-range__sliders {
+		/* defaults updated by JS */
+		--dba-min: 0;
+		--dba-max: 100;
+	}
+
+	.dba-year-range__track {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 0;
+		/* Decorative only: must not sit above inputs or it captures drags (dual-range “stops after once”). */
+		pointer-events: none;
+		height: 0.35rem;
+		border-radius: 9999px;
+		background:
+			linear-gradient(
+				to right,
+				var(--dba-year-range-track) 0%,
+				var(--dba-year-range-track) calc(var(--dba-min) * 1%),
+				var(--dba-year-range-fill) calc(var(--dba-min) * 1%),
+				var(--dba-year-range-fill) calc(var(--dba-max) * 1%),
+				var(--dba-year-range-track) calc(var(--dba-max) * 1%),
+				var(--dba-year-range-track) 100%
+			);
+	}
+
+	.dba-year-range__input {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		z-index: 1;
+		width: 100%;
+		background: transparent;
+		pointer-events: none;
+		appearance: none;
+	}
+
+	.dba-year-range__input::-webkit-slider-runnable-track {
+		height: 0.35rem;
+		background: transparent;
+		border-radius: 9999px;
+	}
+
+	.dba-year-range__input::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		pointer-events: auto;
+		height: 0.95rem;
+		width: 0.95rem;
+		margin-top: -0.30rem;
+		border-radius: 9999px;
+		background: var(--dba-year-range-thumb);
+		box-shadow:
+			0 0 0 1px var(--dba-year-range-thumb-ring),
+			0 2px 10px 0 rgb(0 0 0 / 0.35);
+	}
+
+	.dba-year-range__input::-moz-range-track {
+		height: 0.35rem;
+		background: transparent;
+		border-radius: 9999px;
+	}
+
+	.dba-year-range__input::-moz-range-thumb {
+		pointer-events: auto;
+		height: 0.95rem;
+		width: 0.95rem;
+		border: 0;
+		border-radius: 9999px;
+		background: var(--dba-year-range-thumb);
+		box-shadow:
+			0 0 0 1px var(--dba-year-range-thumb-ring),
+			0 2px 10px 0 rgb(0 0 0 / 0.35);
+	}
 }
