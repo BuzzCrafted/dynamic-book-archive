@@ -51,8 +51,22 @@
 	.dba-year-range {
 		--dba-year-range-track: rgb(from var(--color-filters-text) r g b / 0.22);
 		--dba-year-range-fill: var(--color-filters-link-background);
-		--dba-year-range-thumb: var(--color-filters-link-background);
-		--dba-year-range-thumb-ring: rgb(from var(--color-filters-link-background) r g b / 0.35);
+		--dba-year-range-thumb: #fff;
+		--dba-year-range-thumb-ring: rgb(from var(--color-filters-text) r g b / 0.28);
+	}
+
+	.dba-year-range__tooltip-min::before,
+	.dba-year-range__tooltip-max::before {
+		content: '';
+		position: absolute;
+		bottom: 100%;
+		left: 50%;
+		width: 0;
+		height: 0;
+		transform: translateX(-50%);
+		border-width: 0 5px 6px 5px;
+		border-style: solid;
+		border-color: transparent transparent var(--color-heading) transparent;
 	}
 
 	.dba-year-range__sliders {
@@ -105,14 +119,14 @@
 		-webkit-appearance: none;
 		appearance: none;
 		pointer-events: auto;
-		height: 0.95rem;
-		width: 0.95rem;
-		margin-top: -0.30rem;
-		border-radius: 9999px;
+		height: 1.05rem;
+		width: 0.65rem;
+		margin-top: -0.35rem;
+		border-radius: 0.25rem;
 		background: var(--dba-year-range-thumb);
 		box-shadow:
 			0 0 0 1px var(--dba-year-range-thumb-ring),
-			0 2px 10px 0 rgb(0 0 0 / 0.35);
+			0 2px 8px 0 rgb(0 0 0 / 0.22);
 	}
 
 	.dba-year-range__input::-moz-range-track {
@@ -123,14 +137,14 @@
 
 	.dba-year-range__input::-moz-range-thumb {
 		pointer-events: auto;
-		height: 0.95rem;
-		width: 0.95rem;
+		height: 1.05rem;
+		width: 0.65rem;
 		border: 0;
-		border-radius: 9999px;
+		border-radius: 0.25rem;
 		background: var(--dba-year-range-thumb);
 		box-shadow:
 			0 0 0 1px var(--dba-year-range-thumb-ring),
-			0 2px 10px 0 rgb(0 0 0 / 0.35);
+			0 2px 8px 0 rgb(0 0 0 / 0.22);
 	}
 }
 

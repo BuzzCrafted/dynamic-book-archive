@@ -58,12 +58,12 @@
 			wrap.querySelector('.js-book-archive-year-max-label') ||
 			wrap.querySelector('.js-staging-year-max-label');
 		const track = wrap.querySelector('.dba-year-range__track');
+		const tooltipMin = wrap.querySelector('.js-year-range-tooltip-min');
+		const tooltipMax = wrap.querySelector('.js-year-range-tooltip-max');
 
 		if (
 			!(minInput instanceof HTMLInputElement) ||
 			!(maxInput instanceof HTMLInputElement) ||
-			!(minLabel instanceof HTMLElement) ||
-			!(maxLabel instanceof HTMLElement) ||
 			!(track instanceof HTMLElement)
 		) {
 			return;
@@ -80,6 +80,12 @@
 			return Math.min(yearCeil, Math.max(yearFloor, Math.floor(v)));
 		}
 
+		/** Keep tooltip centers inside the track so -translateX(50%) does not clip at modal edges. */
+		function clampTooltipPct(pct) {
+			const edge = 7;
+			return Math.min(100 - edge, Math.max(edge, pct));
+		}
+
 		function update() {
 			let vMin = clamp(parseInt(String(minInput.value), 10));
 			let vMax = clamp(parseInt(String(maxInput.value), 10));
@@ -91,14 +97,29 @@
 			minInput.value = String(vMin);
 			maxInput.value = String(vMax);
 
-			minLabel.textContent = vMin <= yearFloor ? anyLabel : String(vMin);
-			maxLabel.textContent = vMax >= yearCeil ? anyLabel : String(vMax);
+			if (minLabel instanceof HTMLElement) {
+				minLabel.textContent = vMin <= yearFloor ? anyLabel : String(vMin);
+			}
+			if (maxLabel instanceof HTMLElement) {
+				maxLabel.textContent = vMax >= yearCeil ? anyLabel : String(vMax);
+			}
 
 			const range = Math.max(1, yearCeil - yearFloor);
 			const pctMin = ((vMin - yearFloor) / range) * 100;
 			const pctMax = ((vMax - yearFloor) / range) * 100;
 			track.style.setProperty('--dba-min', String(pctMin));
 			track.style.setProperty('--dba-max', String(pctMax));
+
+			if (tooltipMin instanceof HTMLElement) {
+				tooltipMin.textContent = String(vMin);
+				tooltipMin.style.left = `${clampTooltipPct(pctMin)}%`;
+				tooltipMin.style.transform = 'translateX(-50%)';
+			}
+			if (tooltipMax instanceof HTMLElement) {
+				tooltipMax.textContent = String(vMax);
+				tooltipMax.style.left = `${clampTooltipPct(pctMax)}%`;
+				tooltipMax.style.transform = 'translateX(-50%)';
+			}
 		}
 
 		minInput.addEventListener('input', update, { passive: true });
@@ -202,7 +223,7 @@
 		const stagingYearMin = root.querySelector('#book-archive-toolbar-year-min-staging');
 		const stagingYearMax = root.querySelector('#book-archive-toolbar-year-max-staging');
 		const stagingYearWrap = filterDialog
-			? filterDialog.querySelector('.dba-year-range')
+			? filterDialog.querySelector('.js-staging-year-range')
 			: null;
 
 		if (!(sortDialog instanceof HTMLDialogElement)) {

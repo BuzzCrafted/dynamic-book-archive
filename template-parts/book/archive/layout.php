@@ -159,39 +159,22 @@ $book_archive_tags = function_exists( 'dba_get_book_archive_distinct_tags' )
 							<?php endforeach; ?>
 						</select>
 
-						<div
-							class="dba-year-range w-full"
-							data-year-floor="<?php echo esc_attr( (string) $book_archive_year_floor ); ?>"
-							data-year-ceil="<?php echo esc_attr( (string) $book_archive_year_ceiling ); ?>"
-							data-label-any="<?php echo esc_attr__( 'Any', 'dynamic-book-archive' ); ?>">
-							<span class="js-book-archive-year-min-label sr-only"></span>
-							<span class="js-book-archive-year-max-label sr-only"></span>
-							<div class="dba-year-range__sliders relative h-5">
-								<label class="sr-only" for="book-archive-toolbar-year-min"><?php esc_html_e( 'Filter by published year (from)', 'dynamic-book-archive' ); ?></label>
-								<input
-									id="book-archive-toolbar-year-min"
-									type="range"
-									class="js-book-archive-year-min dba-year-range__input"
-									tabindex="-1"
-									min="<?php echo esc_attr( (string) $book_archive_year_floor ); ?>"
-									max="<?php echo esc_attr( (string) $book_archive_year_ceiling ); ?>"
-									value="<?php echo esc_attr( (string) $book_archive_year_floor ); ?>"
-									step="1"
-									aria-label="<?php echo esc_attr__( 'From year', 'dynamic-book-archive' ); ?>" />
-								<label class="sr-only" for="book-archive-toolbar-year-max"><?php esc_html_e( 'Filter by published year (to)', 'dynamic-book-archive' ); ?></label>
-								<input
-									id="book-archive-toolbar-year-max"
-									type="range"
-									class="js-book-archive-year-max dba-year-range__input"
-									tabindex="-1"
-									min="<?php echo esc_attr( (string) $book_archive_year_floor ); ?>"
-									max="<?php echo esc_attr( (string) $book_archive_year_ceiling ); ?>"
-									value="<?php echo esc_attr( (string) $book_archive_year_ceiling ); ?>"
-									step="1"
-									aria-label="<?php echo esc_attr__( 'To year', 'dynamic-book-archive' ); ?>" />
-								<div class="dba-year-range__track" aria-hidden="true"></div>
-							</div>
-						</div>
+						<?php
+						get_template_part(
+							'template-parts/ui/year-range',
+							null,
+							array(
+								'variant'           => 'real',
+								'year_floor'        => $book_archive_year_floor,
+								'year_ceiling'      => $book_archive_year_ceiling,
+								'label_any'         => __( 'Any', 'dynamic-book-archive' ),
+								'input_year_min_id' => 'book-archive-toolbar-year-min',
+								'input_year_max_id' => 'book-archive-toolbar-year-max',
+								'input_min_class'   => 'js-book-archive-year-min',
+								'input_max_class'   => 'js-book-archive-year-max',
+							)
+						);
+						?>
 					</div>
 
 					<dialog id="book-archive-dialog-sort" class="relative z-50 hidden w-[min(100vw-2rem,24rem)] max-h-[min(90dvh,36rem)] gap-5 overflow-visible rounded-2xl border-0 bg-surface p-6 text-body shadow-main backdrop:bg-page/80 sm:p-7 open:m-0 open:flex open:max-h-[min(90dvh,36rem)] open:flex-col open:fixed open:inset-auto" aria-labelledby="book-archive-dialog-sort-title">
@@ -231,7 +214,7 @@ $book_archive_tags = function_exists( 'dba_get_book_archive_distinct_tags' )
 								</form>
 							</div>
 						</div>
-						<div class="min-h-0 flex-1 overflow-y-auto overflow-x-clip overscroll-contain">
+						<div class="min-h-0 flex-1 overflow-y-auto overscroll-contain">
 							<div class="flex flex-col gap-5">
 								<div class="flex flex-col">
 									<label class="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-filters-text/80" for="book-archive-toolbar-author-staging"><?php esc_html_e( 'Author', 'dynamic-book-archive' ); ?></label>
@@ -242,43 +225,22 @@ $book_archive_tags = function_exists( 'dba_get_book_archive_distinct_tags' )
 									<select id="book-archive-toolbar-tag-staging" class="mt-0 w-full appearance-auto rounded-lg border border-border-main bg-filters-background px-3 py-2.5 text-sm text-filters-text shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-filters-link/50"></select>
 								</div>
 								<div class="flex flex-col">
-									<div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-										<span class="mb-0 block text-xs font-semibold uppercase tracking-wider text-filters-text/80"><?php esc_html_e( 'Publication years', 'dynamic-book-archive' ); ?></span>
-										<span class="text-sm font-medium tabular-nums text-filters-text/90">
-											<span class="js-staging-year-min-label"><?php esc_html_e( 'Any', 'dynamic-book-archive' ); ?></span>
-											<span class="px-1 text-filters-text/45" aria-hidden="true">–</span>
-											<span class="js-staging-year-max-label"><?php esc_html_e( 'Any', 'dynamic-book-archive' ); ?></span>
-										</span>
-									</div>
-									<div
-										class="dba-year-range mt-3 w-full rounded-lg border border-border-main/50 bg-filters-background px-3 py-4 shadow-sm"
-										data-year-floor="<?php echo esc_attr( (string) $book_archive_year_floor ); ?>"
-										data-year-ceil="<?php echo esc_attr( (string) $book_archive_year_ceiling ); ?>"
-										data-label-any="<?php echo esc_attr__( 'Any', 'dynamic-book-archive' ); ?>">
-										<div class="dba-year-range__sliders relative h-5">
-											<label class="sr-only" for="book-archive-toolbar-year-min-staging"><?php esc_html_e( 'Filter by published year (from)', 'dynamic-book-archive' ); ?></label>
-											<input
-												id="book-archive-toolbar-year-min-staging"
-												type="range"
-												class="dba-year-range__input js-staging-year-min"
-												min="<?php echo esc_attr( (string) $book_archive_year_floor ); ?>"
-												max="<?php echo esc_attr( (string) $book_archive_year_ceiling ); ?>"
-												value="<?php echo esc_attr( (string) $book_archive_year_floor ); ?>"
-												step="1"
-												aria-label="<?php echo esc_attr__( 'From year', 'dynamic-book-archive' ); ?>" />
-											<label class="sr-only" for="book-archive-toolbar-year-max-staging"><?php esc_html_e( 'Filter by published year (to)', 'dynamic-book-archive' ); ?></label>
-											<input
-												id="book-archive-toolbar-year-max-staging"
-												type="range"
-												class="dba-year-range__input js-staging-year-max"
-												min="<?php echo esc_attr( (string) $book_archive_year_floor ); ?>"
-												max="<?php echo esc_attr( (string) $book_archive_year_ceiling ); ?>"
-												value="<?php echo esc_attr( (string) $book_archive_year_ceiling ); ?>"
-												step="1"
-												aria-label="<?php echo esc_attr__( 'To year', 'dynamic-book-archive' ); ?>" />
-											<div class="dba-year-range__track" aria-hidden="true"></div>
-										</div>
-									</div>
+									<?php
+									get_template_part(
+										'template-parts/ui/year-range',
+										null,
+										array(
+											'variant'           => 'staging',
+											'year_floor'        => $book_archive_year_floor,
+											'year_ceiling'      => $book_archive_year_ceiling,
+											'label_any'         => __( 'Any', 'dynamic-book-archive' ),
+											'input_year_min_id' => 'book-archive-toolbar-year-min-staging',
+											'input_year_max_id' => 'book-archive-toolbar-year-max-staging',
+											'input_min_class'   => 'js-staging-year-min',
+											'input_max_class'   => 'js-staging-year-max',
+										)
+									);
+									?>
 								</div>
 							</div>
 						</div>
