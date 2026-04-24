@@ -27,7 +27,6 @@ final class Theme_Bootstrap {
 		Content_Width::register_hooks();
 		Theme_Widgets::register_hooks();
 		Theme_Assets::register_hooks();
-		Book_Archive_Query::register_hooks();
 		Book_Archive_Canonical_Redirect::register_hooks();
 		Book_Archive_Template_Routing::register_hooks();
 		Books_Cpt_Archive_Rest::register_hooks();

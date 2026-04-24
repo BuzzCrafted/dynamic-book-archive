@@ -115,6 +115,10 @@ if ( ! function_exists( 'dba_resolve_book_category_term_from_book_cat_query_var'
 	 * @param string $raw Raw value from {@see get_query_var()} `book_cat`.
 	 */
 	function dba_resolve_book_category_term_from_book_cat_query_var( string $raw ): ?WP_Term {
+		if ( function_exists( 'books_cpt_resolve_book_category_term_from_book_cat_path' ) ) {
+			return books_cpt_resolve_book_category_term_from_book_cat_path( $raw );
+		}
+
 		$raw = trim( rawurldecode( $raw ), '/' );
 		if ( '' === $raw ) {
 			return null;
