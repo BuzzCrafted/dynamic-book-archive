@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace DBA\Integration;
 
-use DBA\TemplateTags\Breadcrumb_Trail;
+use DBA\Presenters\Breadcrumb_Items_Presenter;
+use DBA\Presenters\Book_Card_Presenter;
+use DBA\TemplateTags\Breadcrumb_Renderer;
 use \WP_Query;
 use \WP_Term;
 
@@ -33,9 +35,9 @@ final class Books_Cpt_Archive_Rest {
 	 */
 	public static function filter_rest_response_breadcrumb_html( array $payload, WP_Query $query, ?WP_Term $term ): array {
 		unset( $query );
-		$items = Breadcrumb_Trail::get_book_post_type_breadcrumb_items( $term );
+		$items = Breadcrumb_Items_Presenter::for_book_archive( $term );
 
-		$payload['breadcrumb_html']  = Breadcrumb_Trail::render_breadcrumbs_markup( $items );
+		$payload['breadcrumb_html']  = Breadcrumb_Renderer::render_markup( $items );
 		$payload['active_term_slug'] = $term instanceof WP_Term ? (string) $term->slug : '';
 
 		return $payload;
@@ -134,9 +136,11 @@ final class Books_Cpt_Archive_Rest {
 		unset( $term );
 		ob_start();
 		if ( $query->have_posts() ) {
-			while ( $query->have_posts() ) {
-				$query->the_post();
-				get_template_part( 'template-parts/book/archive/card' );
+			foreach ( $query->posts as $p ) {
+				$post_id = isset( $p->ID ) ? (int) $p->ID : 0;
+				if ( $post_id > 0 ) {
+					get_template_part( 'template-parts/book/archive/card', null, Book_Card_Presenter::from_post_id( $post_id ) );
+				}
 			}
 		} else {
 			get_template_part( 'template-parts/content/none' );
@@ -165,38 +169,12 @@ final class Books_Cpt_Archive_Rest {
 		$base   = esc_url_raw( trailingslashit( untrailingslashit( $archive ) ) ) . '%_%';
 		$format = 'page/%#%/';
 
-		$links = paginate_links(
+		$pagination = \DBA\Presenters\Pagination_Presenter::build_from_paginate_links_args(
 			dba_get_book_archive_paginate_links_args( $total, $current, $base, $format )
 		);
-
-		if ( ! is_array( $links ) ) {
+		if ( ! is_array( $pagination ) ) {
 			return '';
 		}
-
-		$prev_html = '';
-		$next_html = '';
-		$numbers   = array();
-
-		foreach ( $links as $link ) {
-			if ( ! is_string( $link ) ) {
-				continue;
-			}
-			if ( str_contains( $link, 'prev page-numbers' ) ) {
-				$prev_html = $link;
-				continue;
-			}
-			if ( str_contains( $link, 'next page-numbers' ) ) {
-				$next_html = $link;
-				continue;
-			}
-			$numbers[] = $link;
-		}
-
-		$pagination = array(
-			'prev_html' => $prev_html,
-			'next_html' => $next_html,
-			'numbers'   => $numbers,
-		);
 
 		ob_start();
 		set_query_var( 'dba_book_pagination', $pagination );

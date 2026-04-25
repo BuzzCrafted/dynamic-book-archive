@@ -11,6 +11,9 @@
 
 declare(strict_types=1);
 
+use DBA\Presenters\Book_Archive_Page_Presenter;
+
 get_header();
-get_template_part( 'template-parts/book/archive/layout' );
+$vm = Book_Archive_Page_Presenter::build();
+get_template_part( 'template-parts/book/archive/page', null, $vm );
 get_footer();

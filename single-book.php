@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+use DBA\Presenters\Book_Single_Presenter;
+
 get_header();
 ?>
 
@@ -15,7 +17,9 @@ get_header();
 		<?php
 		while (have_posts()) :
 			the_post();
-			get_template_part('template-parts/book/single');
+			$post_id = get_the_ID();
+			$vm      = Book_Single_Presenter::build_from_post_id( (int) $post_id );
+			get_template_part( 'template-parts/book/single/page', null, $vm );
 		endwhile;
 		?>
 	</main>

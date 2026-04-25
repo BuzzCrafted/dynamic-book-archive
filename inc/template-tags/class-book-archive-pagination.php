@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace DBA\TemplateTags;
 
+use DBA\Presenters\Pagination_Presenter;
+
 /**
  * Builds paginate_links data for the book archive UI.
  */
@@ -35,36 +37,12 @@ final class Book_Archive_Pagination {
 		}
 		$current = max( 1, $paged );
 
-		$links = paginate_links( dba_get_book_archive_paginate_links_args( $total, $current ) );
-
-		if ( ! is_array( $links ) ) {
+		$pagination = Pagination_Presenter::build_from_paginate_links_args(
+			dba_get_book_archive_paginate_links_args( $total, $current )
+		);
+		if ( ! is_array( $pagination ) ) {
 			return;
 		}
-
-		$prev_html = '';
-		$next_html = '';
-		$numbers   = array();
-
-		foreach ( $links as $link ) {
-			if ( ! is_string( $link ) ) {
-				continue;
-			}
-			if ( str_contains( $link, 'prev page-numbers' ) ) {
-				$prev_html = $link;
-				continue;
-			}
-			if ( str_contains( $link, 'next page-numbers' ) ) {
-				$next_html = $link;
-				continue;
-			}
-			$numbers[] = $link;
-		}
-
-		$pagination = array(
-			'prev_html' => $prev_html,
-			'next_html' => $next_html,
-			'numbers'   => $numbers,
-		);
 
 		set_query_var( 'dba_book_pagination', $pagination );
 		get_template_part(

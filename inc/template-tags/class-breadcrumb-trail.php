@@ -82,26 +82,11 @@ final class Breadcrumb_Trail {
 	}
 
 	/**
-	 * Renders {@see template-parts/ui/breadcrumbs.php} for a pre-built item list.
+	 * Applies pagination to the last crumb URL and exposes items for filtering.
 	 *
 	 * @param array<int, array{label: string, url: string}> $items Breadcrumb items.
+	 * @return array<int, array{label: string, url: string}>
 	 */
-	public static function render_breadcrumbs_markup( array $items ): string {
-		if ( count( $items ) < 2 ) {
-			return '';
-		}
-		ob_start();
-		get_template_part(
-			'template-parts/ui/breadcrumbs',
-			null,
-			array(
-				'items' => $items,
-			)
-		);
-
-		return (string) ob_get_clean();
-	}
-
 	public static function finalize_items( array $items ): array {
 		if ( array() !== $items ) {
 			$paged = (int) get_query_var( 'paged' );
