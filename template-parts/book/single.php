@@ -27,6 +27,10 @@ $book_dimensions = trim((string) get_post_meta($post_id, 'dimensions', true)) ?:
 $book_binding    = trim((string) get_post_meta($post_id, 'binding', true)) ?: '0';
 $book_condition  = trim((string) get_post_meta($post_id, 'condition', true)) ?: '0';
 $book_publisher  = trim((string) get_post_meta($post_id, 'publisher', true)) ?: '';
+$book_price      = trim((string) get_post_meta($post_id, 'price', true));
+if ('' === $book_price) {
+	$book_price = trim((string) get_post_meta($post_id, 'book_price', true));
+}
 
 $gallery_ids = function_exists('dba_get_book_gallery_image_ids') ? dba_get_book_gallery_image_ids($post_id) : array();
 $gallery_ids = array_values(array_filter(array_map('intval', $gallery_ids), 'wp_attachment_is_image'));
@@ -108,53 +112,83 @@ if ($pto instanceof WP_Post_Type) {
 
 $quick_items = array();
 
-if (!empty($book_pages)) {
+if ('' !== $book_pages) {
 	$quick_items[] = array(
 		/* translators: %s: page count. */
 		'text' => sprintf(__('%s pages', 'dynamic-book-archive'), $book_pages),
 		'icon' => 'pages',
 	);
 }
-if (!empty($book_dimensions)) {
+$book_dimensions_display = trim($book_dimensions);
+if ('' !== $book_dimensions_display && '0 cm' !== strtolower($book_dimensions_display) && '0' !== $book_dimensions_display) {
 	$quick_items[] = array(
-		'text' => $book_dimensions,
+		'text' => $book_dimensions_display,
 		'icon' => 'size',
 	);
 }
-if ($has_slipcase) {
-	$quick_items[] = array(
-		'text' => __('Slipcase', 'dynamic-book-archive'),
-		'icon' => 'slipcase',
-	);
-}
-if (!empty($book_language)) {
+if ('' !== $book_language) {
 	$quick_items[] = array(
 		'text' => $book_language,
 		'icon' => 'language',
 	);
 }
-if (!empty($book_binding)) {
+$book_binding_display = trim($book_binding);
+if ('' !== $book_binding_display && '0' !== $book_binding_display) {
 	$quick_items[] = array(
-		'text' => $book_binding,
+		'text' => $book_binding_display,
 		'icon' => 'binding',
 	);
 }
-if (!empty($book_condition)) {
-	$quick_items[] = array(
-		'text' => $book_condition,
-		'icon' => 'condition',
+
+$book_condition_display = trim($book_condition);
+$edition_details_trimmed = trim($edition_details);
+$edition_lines           = array();
+if ('' !== $publication_label) {
+	$edition_lines[] = array(
+		'label' => __('Published:', 'dynamic-book-archive'),
+		'value' => $publication_label,
 	);
 }
-if (!empty($edition_details)) {
-	$quick_items[] = array(
-		'text' => $edition_details,
-		'icon' => 'note',
+if ('' !== $book_publisher) {
+	$edition_lines[] = array(
+		'label' => __('Publisher:', 'dynamic-book-archive'),
+		'value' => $book_publisher,
+	);
+}
+if ('' !== $edition_details_trimmed) {
+	$edition_lines[] = array(
+		'label' => __('Edition:', 'dynamic-book-archive'),
+		'value' => $edition_details_trimmed,
+	);
+}
+if ('' !== $book_condition_display && '0' !== $book_condition_display) {
+	$edition_lines[] = array(
+		'label' => __('Condition:', 'dynamic-book-archive'),
+		'value' => $book_condition_display,
 	);
 }
 if ($is_signed) {
-	$quick_items[] = array(
-		'text' => __('Signed copy', 'dynamic-book-archive'),
-		'icon' => 'signed',
+	$edition_lines[] = array(
+		'label' => __('Signed:', 'dynamic-book-archive'),
+		'value' => __('Signed copy', 'dynamic-book-archive'),
+	);
+}
+if ($has_slipcase) {
+	$edition_lines[] = array(
+		'label' => __('Slipcase:', 'dynamic-book-archive'),
+		'value' => __('Yes', 'dynamic-book-archive'),
+	);
+}
+if ($has_dust_jacket) {
+	$edition_lines[] = array(
+		'label' => __('Dust jacket:', 'dynamic-book-archive'),
+		'value' => __('Yes', 'dynamic-book-archive'),
+	);
+}
+if ('' !== $book_price) {
+	$edition_lines[] = array(
+		'label' => __('Price:', 'dynamic-book-archive'),
+		'value' => $book_price,
 	);
 }
 
@@ -166,14 +200,10 @@ if ($is_signed) {
  */
 $dba_book_single_icon = static function (string $icon): string {
 	$icons = array(
-		'pages' => 'bx/bx-book-open',
-		'size' => 'bx/bx-book',
-		'binding' => 'bx/bx-bookmark-alt',
+		'pages'    => 'bx/bx-book-open',
+		'size'     => 'bx/bx-book',
+		'binding'  => 'bx/bx-bookmark-alt',
 		'language' => 'bx/bx-globe',
-		'condition' => 'bx/bx-x-circle',
-		'note' => 'bx/bx-note',
-		'signed' => 'bx/bx-pen',
-		'slipcase' => 'bx/bx-food-menu',
 	);
 
 	if (isset($icons[$icon])) {
@@ -193,7 +223,7 @@ $dba_book_single_icon = static function (string $icon): string {
 		<?php if (count($gallery_ids) > 0) : ?>
 			<div class="flex flex-col self-start rounded-md shadow-main" data-book-gallery<?php echo $thumbs_capped ? ' data-book-gallery-thumbs-capped="1"' : ''; ?>>
 				<span id="book-gallery-status-<?php echo esc_attr((string) $post_id); ?>" class="sr-only" data-book-gallery-status aria-live="polite"></span>
-				<div class="relative aspect-2/3 overflow-hidden bg-page/50">
+				<div class="relative h-(--book-single-gallery-stage-height) w-full overflow-hidden rounded-md bg-page/50">
 					<?php if (count($gallery_ids) > 1) : ?>
 						<button type="button" class="absolute left-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full shadow-main bg-page/50 text-heading backdrop-blur-sm transition hover:bg-page hover:shadow-bronze-glow hover:text-body disabled:pointer-events-none disabled:opacity-30" data-book-gallery-prev aria-controls="book-gallery-slides-<?php echo esc_attr((string) $post_id); ?>">
 							<span class="sr-only"><?php esc_html_e('Previous image', 'dynamic-book-archive'); ?></span>
@@ -213,7 +243,7 @@ $dba_book_single_icon = static function (string $icon): string {
 								'large',
 								false,
 								array(
-									'class'    => 'h-full w-full bg-main/30 object-contain object-top rounded-md',
+									'class'    => 'h-full w-full bg-main/30 object-contain object-center',
 									'loading'  => 0 === $idx ? 'eager' : 'lazy',
 									'decoding' => 'async',
 								)
@@ -312,25 +342,13 @@ $dba_book_single_icon = static function (string $icon): string {
 				<?php endif; ?>
 			</header>
 
-			<div class="grid gap-3 lg:grid-cols-[2fr_1fr]">
+			<div class="grid grid-cols-1 gap-3 items-start lg:grid-cols-[2fr_1fr]">
 				<div class="flex min-w-0 flex-col gap-4">
 					<dl class="space-y-0">
 						<?php if (!empty($author_display)) : ?>
 							<div class="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-1 text-base sm:grid-cols-[9rem_1fr]">
 								<dt class="font-main tracking-wider text-book-secondary"><?php esc_html_e('Author:', 'dynamic-book-archive'); ?></dt>
 								<dd class="font-main text-book-primary"><?php echo esc_html($author_display); ?></dd>
-							</div>
-						<?php endif; ?>
-						<?php if (!empty($publication_label)) : ?>
-							<div class="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-1 text-base sm:grid-cols-[9rem_1fr]">
-								<dt class="font-main tracking-wider text-book-secondary"><?php esc_html_e('Published:', 'dynamic-book-archive'); ?></dt>
-								<dd class="font-main text-book-primary"><?php echo esc_html($publication_label); ?></dd>
-							</div>
-						<?php endif; ?>
-						<?php if (!empty($book_language)) : ?>
-							<div class="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-1 text-base sm:grid-cols-[9rem_1fr]">
-								<dt class="font-main tracking-wider text-book-secondary"><?php esc_html_e('Language:', 'dynamic-book-archive'); ?></dt>
-								<dd class="font-main text-book-primary"><?php echo esc_html($book_language); ?></dd>
 							</div>
 						<?php endif; ?>
 						<?php if (!empty($category_label)) : ?>
@@ -350,13 +368,13 @@ $dba_book_single_icon = static function (string $icon): string {
 				</div>
 
 				<?php if (count($quick_items) > 0) : ?>
-					<aside class="rounded-lg mt-4 md:mt-0 border text-book-primary border-book-secondary/50 p-4" aria-label="<?php esc_attr_e('Quick facts', 'dynamic-book-archive'); ?>">
+					<aside class="mt-4 self-start rounded-lg border border-book-secondary/50 p-4 text-book-primary md:mt-0" aria-label="<?php esc_attr_e('Quick facts', 'dynamic-book-archive'); ?>">
 						<h2 class="mb-3 font-display text-sm font-semibold uppercase tracking-[0.2em] text-book-secondary"><?php esc_html_e('Quick info', 'dynamic-book-archive'); ?></h2>
 						<ul class="m-0 flex list-none flex-col gap-2 p-0">
 							<?php foreach ($quick_items as $item) : ?>
 								<li class="flex place-items-center gap-2 text-sm leading-relaxed text-book-primary">
 									<?php echo $dba_book_single_icon($item['icon']); ?>
-									<span class="text-book-primary"><?php echo ($item['text']); ?></span>
+									<span class="text-book-primary"><?php echo esc_html($item['text']); ?></span>
 								</li>
 							<?php endforeach; ?>
 						</ul>
@@ -380,6 +398,20 @@ $dba_book_single_icon = static function (string $icon): string {
 				</section>
 			<?php endif; ?>
 
+			<?php if (count($edition_lines) > 0) : ?>
+				<section aria-labelledby="book-edition-heading-<?php echo esc_attr((string) $post_id); ?>">
+					<h2 id="book-edition-heading-<?php echo esc_attr((string) $post_id); ?>" class="font-display text-sm font-semibold uppercase tracking-[0.25em] text-book-secondary"><?php esc_html_e('Edition details', 'dynamic-book-archive'); ?></h2>
+					<dl class="mt-2 space-y-0">
+						<?php foreach ($edition_lines as $row) : ?>
+							<div class="grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-1 text-base sm:grid-cols-[9rem_1fr]">
+								<dt class="font-main tracking-wider text-book-secondary"><?php echo esc_html($row['label']); ?></dt>
+								<dd class="font-main text-book-primary"><?php echo esc_html($row['value']); ?></dd>
+							</div>
+						<?php endforeach; ?>
+					</dl>
+					<hr class="mt-4 h-px w-full shrink-0 border-0 bg-linear-to-r from-transparent from-0% via-book-primary/85 via-38% to-transparent to-100% [box-shadow:0_0_12px_color-mix(in_oklch,var(--color-book-primary)_35%,transparent)]" role="presentation" />
+				</section>
+			<?php endif; ?>
 
 			<?php if (count($tags) > 0) : ?>
 				<section aria-labelledby="book-tags-heading-<?php echo esc_attr((string) $post_id); ?>">

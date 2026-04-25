@@ -6,6 +6,9 @@
 	--c-ink-900: #181715;
 	--c-ink-950: #131313;
 	--c-black: #000;
+
+	/* Single book: main gallery slide area (~600–700px desktop, responsive on small viewports). */
+	--book-single-gallery-stage-height: clamp(16rem, 42vmin, 43.75rem);
 }
 
 @theme {
