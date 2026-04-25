@@ -118,7 +118,8 @@ if ( ! function_exists( 'dba_resolve_book_category_term_from_book_cat_query_var'
 	 */
 	function dba_resolve_book_category_term_from_book_cat_query_var( string $raw ): ?WP_Term {
 		if ( function_exists( 'books_cpt_resolve_book_category_term_from_book_cat_path' ) ) {
-			return books_cpt_resolve_book_category_term_from_book_cat_path( $raw );
+			$term = call_user_func( 'books_cpt_resolve_book_category_term_from_book_cat_path', $raw );
+			return $term instanceof WP_Term ? $term : null;
 		}
 
 		$raw = trim( rawurldecode( $raw ), '/' );
