@@ -37,4 +37,27 @@
 		--tw-prose-invert-headings: var(--color-library-primary);
 		--tw-prose-invert-links: var(--color-library-primary-light);
 	}
+
+	/*
+	 * Book single: force typography plugin prose tokens to book palette.
+	 * Ensures `strong`, etc. don't fall back to library colors inside the single-book description.
+	 */
+	body.single-book .prose,
+	body.post-type-book .prose {
+		--tw-prose-body: var(--color-book-primary);
+		--tw-prose-headings: var(--color-book-primary);
+		--tw-prose-lead: var(--color-book-primary);
+		--tw-prose-links: var(--color-book-secondary);
+		--tw-prose-bold: var(--color-book-primary);
+		--tw-prose-counters: var(--color-book-primary);
+		--tw-prose-bullets: var(--color-book-primary);
+		--tw-prose-quotes: var(--color-book-primary);
+		--tw-prose-captions: color-mix(in oklch, var(--color-book-primary) 75%, transparent);
+		--tw-prose-code: var(--color-book-primary);
+
+		--tw-prose-invert-body: var(--color-book-primary);
+		--tw-prose-invert-headings: var(--color-book-primary);
+		--tw-prose-invert-links: var(--color-book-secondary);
+		--tw-prose-invert-bold: var(--color-book-primary);
+	}
 }

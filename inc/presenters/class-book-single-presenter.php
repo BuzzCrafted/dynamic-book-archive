@@ -172,9 +172,11 @@ final class Book_Single_Presenter {
 			);
 		}
 		if ( '' !== $edition_details_trimmed ) {
+			$edition_parts = self::split_edition_details_lines( $edition_details_trimmed );
 			$edition_lines[] = array(
 				'label' => __( 'Edition:', 'dynamic-book-archive' ),
 				'value' => $edition_details_trimmed,
+				'value_lines' => count( $edition_parts ) > 1 ? $edition_parts : array(),
 			);
 		}
 		if ( '' !== $book_condition_display && '0' !== $book_condition_display ) {
@@ -254,6 +256,36 @@ final class Book_Single_Presenter {
 		return $is_year_only
 			? date_i18n( 'Y', (int) $ts )
 			: date_i18n( (string) get_option( 'date_format' ), (int) $ts );
+	}
+
+	/**
+	 * @return array<int, string>
+	 */
+	private static function split_edition_details_lines( string $raw ): array {
+		$raw = trim( wp_strip_all_tags( $raw ) );
+		if ( '' === $raw ) {
+			return array();
+		}
+
+		$raw = html_entity_decode( $raw, ENT_QUOTES, 'UTF-8' );
+		$raw = (string) preg_replace( "/\\x{00A0}/u", ' ', $raw ); // NBSP → regular space.
+
+		$normalize = static function ( string $v ): string {
+			$v = html_entity_decode( $v, ENT_QUOTES, 'UTF-8' );
+			$v = (string) preg_replace( "/\\x{00A0}/u", ' ', $v );
+			$v = trim( $v );
+			return $v;
+		};
+
+		$parts = preg_split( "/\\R+/", $raw ) ?: array();
+		$parts = array_values( array_filter( array_map( $normalize, $parts ), static fn( string $v ): bool => '' !== $v ) );
+
+		if ( count( $parts ) <= 1 ) {
+			$parts = preg_split( '/\\s*;\\s*/', $raw ) ?: array();
+			$parts = array_values( array_filter( array_map( $normalize, $parts ), static fn( string $v ): bool => '' !== $v ) );
+		}
+
+		return $parts;
 	}
 }
 

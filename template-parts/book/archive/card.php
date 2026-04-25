@@ -31,7 +31,7 @@ if ( '' === $permalink ) {
 
 <article id="post-<?php echo esc_attr( (string) $post_id ); ?>" class="group relative min-h-0 w-full p-2 rounded-lg bg-surface transition-shadow duration-300 shadow-main hover:shadow-main-hover before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:p-px before:content-[''] before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100 before:bg-(image:--image-card-highlight) before:mask-[linear-gradient(#000,#000),linear-gradient(#000,#000)] before:[-webkit-mask-image:linear-gradient(#000,#000),linear-gradient(#000,#000)] before:[mask-clip:content-box,border-box] before:[-webkit-mask-clip:content-box,border-box] before:mask-exclude">
 	<a href="<?php echo esc_url( $permalink ); ?>" class="flex w-full min-h-0 items-stretch gap-2 text-card-text no-underline">
-		<div class="relative min-w-0 flex-1 self-center overflow-hidden aspect-2/3">
+		<div class="relative min-w-0 flex-1 self-center overflow-hidden aspect-3/4">
 			<?php
 			if ( '' !== $thumbnail_html ) {
 				echo $thumbnail_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitized by WP thumbnail renderer.
@@ -40,12 +40,12 @@ if ( '' === $permalink ) {
 					'<img src="%1$s" alt="%2$s" class="%3$s" width="1301" height="1209" loading="lazy" decoding="async" />',
 					esc_url( $placeholder_url ),
 					esc_attr__( 'No cover image', 'dynamic-book-archive' ),
-					esc_attr( 'h-full w-full object-cover object-left' )
+					esc_attr( 'h-full w-full object-cover object-center' )
 				);
 			}
 			?>
 		</div>
-		<div class="flex min-w-0 flex-1 flex-col justify-center gap-2 overflow-hidden">
+		<div class="flex min-w-0 flex-1 flex-col justify-center gap-1 overflow-hidden leading-snug">
 			<?php if ( '' !== $title_japanese ) : ?>
 				<h2 class="font-display text-xl uppercase leading-tight tracking-[0.4px]"><?php echo esc_html( $title_japanese ); ?></h2>
 			<?php endif; ?>

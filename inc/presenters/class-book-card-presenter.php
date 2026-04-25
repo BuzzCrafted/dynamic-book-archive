@@ -48,7 +48,7 @@ final class Book_Card_Presenter {
 			$thumb_html = get_the_post_thumbnail(
 				$post,
 				'large',
-				array( 'class' => '!h-full !w-full object-cover object-left' )
+				array( 'class' => '!h-full !w-full object-cover object-center' )
 			);
 			$thumb_html = is_string( $thumb_html ) ? $thumb_html : '';
 		}

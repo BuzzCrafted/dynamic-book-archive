@@ -53,14 +53,14 @@ $gallery_count = count( $ids );
 		<?php endif; ?>
 		<div id="book-gallery-slides-<?php echo esc_attr( (string) $post_id ); ?>" class="contents">
 			<?php
-			$slide_class = 'absolute inset-0 m-0 z-0 opacity-0 transition-opacity duration-300 pointer-events-none aria-[hidden=false]:pointer-events-auto aria-[hidden=false]:z aria-[hidden=false]:opacity-100';
+			$slide_class = 'absolute inset-0 m-0 z-0 flex items-center justify-center bg-main/30 opacity-0 transition-opacity duration-300 pointer-events-none aria-[hidden=false]:pointer-events-auto aria-[hidden=false]:z aria-[hidden=false]:opacity-100';
 			foreach ( $ids as $idx => $img_id ) {
 				$img_html = wp_get_attachment_image(
 					(int) $img_id,
 					'large',
 					false,
 					array(
-						'class'    => 'h-full w-full bg-main/30 object-contain object-center',
+						'class'    => 'max-h-full max-w-full h-auto w-auto object-contain object-center',
 						'loading'  => 0 === $idx ? 'eager' : 'lazy',
 						'decoding' => 'async',
 					)

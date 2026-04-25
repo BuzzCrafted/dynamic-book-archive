@@ -33,20 +33,48 @@ $dd_class  = 'font-main text-book-primary';
 			}
 			$label = isset( $row['label'] ) && is_string( $row['label'] ) ? $row['label'] : '';
 			$value = isset( $row['value'] ) && is_string( $row['value'] ) ? $row['value'] : '';
+			$value_lines = isset( $row['value_lines'] ) && is_array( $row['value_lines'] ) ? $row['value_lines'] : array();
+			$value_lines = array_values(
+				array_filter(
+					array_map( 'strval', $value_lines ),
+					static function ( string $v ): bool {
+						$v = html_entity_decode( $v, ENT_QUOTES, 'UTF-8' );
+						$v = (string) preg_replace( "/\\x{00A0}/u", ' ', $v );
+						return '' !== trim( $v );
+					}
+				)
+			);
+
 			if ( '' === $label || '' === $value ) {
 				continue;
 			}
-			get_template_part(
-				'template-parts/ui/dl-row',
-				null,
-				array(
-					'label'     => $label,
-					'value'     => $value,
-					'row_class' => $row_class,
-					'dt_class'  => $dt_class,
-					'dd_class'  => $dd_class,
-				)
-			);
+
+			if ( count( $value_lines ) > 0 ) {
+				?>
+				<div class="<?php echo esc_attr( $row_class ); ?>">
+					<dt class="<?php echo esc_attr( $dt_class ); ?>"><?php echo esc_html( $label ); ?></dt>
+					<dd class="<?php echo esc_attr( $dd_class ); ?>">
+						<ul class="m-0 flex list-none flex-col gap-1 p-0 text-sm leading-relaxed">
+							<?php foreach ( $value_lines as $line ) : ?>
+								<li><?php echo esc_html( $line ); ?></li>
+							<?php endforeach; ?>
+						</ul>
+					</dd>
+				</div>
+				<?php
+			} else {
+				get_template_part(
+					'template-parts/ui/dl-row',
+					null,
+					array(
+						'label'     => $label,
+						'value'     => $value,
+						'row_class' => $row_class,
+						'dt_class'  => $dt_class,
+						'dd_class'  => $dd_class,
+					)
+				);
+			}
 			?>
 		<?php endforeach; ?>
 	</dl>
