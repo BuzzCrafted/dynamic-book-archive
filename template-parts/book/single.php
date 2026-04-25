@@ -193,7 +193,7 @@ $dba_book_single_icon = static function (string $icon): string {
 		<?php if (count($gallery_ids) > 0) : ?>
 			<div class="flex flex-col self-start rounded-md shadow-main" data-book-gallery<?php echo $thumbs_capped ? ' data-book-gallery-thumbs-capped="1"' : ''; ?>>
 				<span id="book-gallery-status-<?php echo esc_attr((string) $post_id); ?>" class="sr-only" data-book-gallery-status aria-live="polite"></span>
-				<div class="relative aspect-700/650 l overflow-hidden bg-page/50">
+				<div class="relative aspect-2/3 overflow-hidden bg-page/50">
 					<?php if (count($gallery_ids) > 1) : ?>
 						<button type="button" class="absolute left-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full shadow-main bg-page/50 text-heading backdrop-blur-sm transition hover:bg-page hover:shadow-bronze-glow hover:text-body disabled:pointer-events-none disabled:opacity-30" data-book-gallery-prev aria-controls="book-gallery-slides-<?php echo esc_attr((string) $post_id); ?>">
 							<span class="sr-only"><?php esc_html_e('Previous image', 'dynamic-book-archive'); ?></span>
@@ -206,14 +206,14 @@ $dba_book_single_icon = static function (string $icon): string {
 					<?php endif; ?>
 					<div id="book-gallery-slides-<?php echo esc_attr((string) $post_id); ?>" class="contents">
 						<?php
-						$slide_class = 'absolute m-0 z-0 opacity-0 transition-opacity duration-300 pointer-events-none aria-[hidden=false]:pointer-events-auto aria-[hidden=false]:z aria-[hidden=false]:opacity-100';
+						$slide_class = 'absolute inset-0 m-0 z-0 opacity-0 transition-opacity duration-300 pointer-events-none aria-[hidden=false]:pointer-events-auto aria-[hidden=false]:z aria-[hidden=false]:opacity-100';
 						foreach ($gallery_ids as $idx => $img_id) {
 							$img_html = wp_get_attachment_image(
 								$img_id,
 								'large',
 								false,
 								array(
-									'class'    => 'h-full w-full bg-main/30 object-contain object-center rounded-md',
+									'class'    => 'h-full w-full bg-main/30 object-contain object-top rounded-md',
 									'loading'  => 0 === $idx ? 'eager' : 'lazy',
 									'decoding' => 'async',
 								)
