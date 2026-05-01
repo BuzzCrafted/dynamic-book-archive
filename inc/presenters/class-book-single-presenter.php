@@ -19,6 +19,9 @@ use WP_Term;
  */
 final class Book_Single_Presenter {
 	/**
+	 * Build the view model for the single book page.
+	 *
+	 * @param int $post_id The post ID.
 	 * @return array<string, mixed>
 	 */
 	public static function build_from_post_id( int $post_id ): array {
@@ -37,7 +40,6 @@ final class Book_Single_Presenter {
 		$has_dust_jacket = (bool) get_post_meta( $post_id, 'has_dust_jacket', true );
 		$has_slipcase    = (bool) get_post_meta( $post_id, 'has_slipcase', true );
 
-		// Optional fields (may exist from imports even if not registered in books-cpt).
 		$book_language   = trim( (string) get_post_meta( $post_id, 'book_language', true ) ) ?: 'Japanese';
 		$book_pages      = trim( (string) get_post_meta( $post_id, 'pages', true ) ) ?: '1';
 		$book_dimensions = trim( (string) get_post_meta( $post_id, 'dimensions', true ) ) ?: '0 cm';
@@ -45,7 +47,8 @@ final class Book_Single_Presenter {
 		$book_condition  = trim( (string) get_post_meta( $post_id, 'condition', true ) ) ?: '0';
 		$book_publisher  = trim( (string) get_post_meta( $post_id, 'publisher', true ) ) ?: '';
 		$book_price      = trim( (string) get_post_meta( $post_id, 'price', true ) );
-		if ( '' === $book_price ) {
+
+		if ( empty( $book_price ) ) {
 			$book_price = trim( (string) get_post_meta( $post_id, 'book_price', true ) );
 		}
 

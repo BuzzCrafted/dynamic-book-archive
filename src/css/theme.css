@@ -3,12 +3,18 @@
 	--c-bronze-200: #e0c9b7;
 	--c-bronze-300: #d6c9a3;
 	--c-bronze-400: #af937d;
+
+	--c-ink-100:#0E0E0D;
+	--c-ink-200:#191918;
+	--c-ink-300:#2A2A2A;
+
 	--c-ink-900: #181715;
 	--c-ink-950: #131313;
+
 	--c-black: #000;
 
-	/* Single book: main gallery slide area (~600–700px desktop, responsive on small viewports). */
-	--book-single-gallery-stage-height: clamp(16rem, 42vmin, 43.75rem);
+	--c-gold-100: #A6824A;
+	--c-gold-200: #D0A55F;
 }
 
 @theme {
@@ -17,63 +23,63 @@
 
 
 	/* Main colors */
-	--color-heading: var(--c-bronze-400);
-	--color-body: var(--c-bronze-200);
-	--color-page: var(--c-ink-950);
-	--color-surface: var(--c-ink-900);
-	--color-link: var(--c-bronze-400);
-	--color-link-hover: var(--c-bronze-200);
+	--color-heading: var(--c-gold-200);
+	--color-body: var(--c-gold-100);	
+	--color-page: var(--c-ink-100);
+	--color-surface: var(--c-ink-200);
+	--color-link: var(--c-gold-200);
+	--color-link-hover: var(--c-gold-100);
 
-	--color-border-main: var(--c-bronze-200);
+	--color-border-main: var(--c-gold-200);
 
 	/* Site navigation */
-	--color-site-navigation-primary: var(--c-bronze-200);
-	--color-site-navigation-secondary: var(--c-bronze-400);
+	--color-site-navigation-primary: var(--c-gold-200);
+	--color-site-navigation-secondary: var(--c-gold-100);
 
 	/* Card */
-	--color-card-text: var(--c-bronze-100);
+	--color-card-text: var(--c-gold-100);
 	--color-card-highlight: rgb(from var(--c-bronze-300) r g b / 0.85);
 
 	/* Shared shadow ingredients (consumed by --shadow-main*) */
-	--color-shadow-ring: rgb(from var(--c-bronze-300) r g b / 0.20);
-	--color-shadow-glow: rgb(from var(--c-bronze-300) r g b / 0.22);
-	--color-shadow-deep: rgb(from var(--c-black) r g b / 0.75);
-	--color-shadow-mid: rgb(from var(--c-black) r g b / 0.45);
+	--color-shadow-ring: rgb(from var(--c-gold-200) r g b / 0.20);
+	--color-shadow-glow: rgb(from var(--c-gold-200) r g b / 0.22);
+	--color-shadow-deep: rgb(from var(--c-ink-300) r g b / 0.75);
+	--color-shadow-mid: rgb(from var(--c-ink-300) r g b / 0.45);
 
 	/* Breadcrumbs */
-	--color-breadcrumbs-link: var(--c-bronze-400);
-	--color-breadcrumbs-link-hover: var(--c-bronze-200);
-	--color-breadcrumbs-text: var(--c-bronze-200);
+	--color-breadcrumbs-link: var(--c-gold-200);
+	--color-breadcrumbs-link-hover: var(--c-gold-100);
+	--color-breadcrumbs-text: var(--c-gold-100);
 
 	/* Book archive category nav */
-	--color-book-archive-category-nav-link: var(--c-bronze-200);
-	--color-book-archive-category-nav-link-hover: var(--c-bronze-100);
-	--color-book-archive-category-nav-text: var(--c-bronze-200);
+	--color-book-archive-category-nav-link: var(--c-gold-200);
+	--color-book-archive-category-nav-link-hover: var(--c-gold-100);
+	--color-book-archive-category-nav-text: var(--c-gold-100);
 
 	/* Book archive category nav */
-	--color-book-archive-category-nav-current-text: var(--c-ink-900);
-	--color-book-archive-category-nav-current-border: color-mix(in oklch, var(--c-bronze-200) 78%, var(--c-bronze-400) 22%);
+	--color-book-archive-category-nav-current-text: var(--c-ink-100);
+	--color-book-archive-category-nav-current-border: color-mix(in oklch, var(--c-gold-200) 78%, var(--c-gold-100) 22%);
 
 	--image-book-archive-category-nav-current:
-		linear-gradient(to right, #9f7d58 0%, #e9c397 50%, #9f7d58 100%);
+		linear-gradient(to right, #A6824A 0%, #D0A55F 50%, #A6824A 100%);
 	--image-book-archive-category-nav-current-hover:
 		linear-gradient(to right, #9f7d58 0%, color-mix(in oklch, #e9c397 85%, white) 50%, #9f7d58 100%);
 
 	--shadow-book-archive-category-nav-current:
-		0 2px 8px 0 color-mix(in oklch, var(--c-bronze-400) 60%, transparent);
+		0 2px 8px 0 color-mix(in oklch, var(--c-gold-200) 60%, transparent);
 	--shadow-book-archive-category-nav-current-hover:
-		0 2px 10px 0 color-mix(in oklch, var(--c-bronze-400) 65%, transparent);
+		0 2px 10px 0 color-mix(in oklch, var(--c-gold-200) 65%, transparent);
 
 	/* Filters */
 	--color-filters-link: var(--c-ink-900);
-	--color-filters-link-hover: var(--c-bronze-100);
-	--color-filters-text: var(--c-bronze-200);
-	--color-filters-background: var(--c-ink-950);
-	--color-filters-link-background: var(--c-bronze-200);
+	--color-filters-link-hover: var(--c-gold-100);
+	--color-filters-text: var(--c-gold-200);
+	--color-filters-background: var(--c-ink-200);
+	--color-filters-link-background: var(--c-gold-200);
 
 	/* Single book */
-	--color-book-primary: var(--c-bronze-200);
-	--color-book-secondary: var(--c-bronze-400);
+	--color-book-primary: var(--c-gold-200);
+	--color-book-secondary: var(--c-gold-100);
 
 
 	/* Site navigation */
@@ -105,56 +111,6 @@
 	--color-library-primary-dark: oklch(0.533 0.0542 63.45);
 	--color-library-secondary: oklch(0.153 0.00564 39.28);
 
-	/* Book archive — active tab gradient endpoints (left highlight → right depth) 
-	--color-library-nav-gradient-from: color-mix(in oklch, var(--color-library-primary-light) 85%, white);
-	--color-library-nav-gradient-to: color-mix(in oklch, var(--color-library-primary-dark) 78%, var(--color-library-secondary) 22%);
-	--color-library-nav-border: color-mix(in oklch, var(--color-library-primary-dark) 75%, var(--color-library-secondary) 25%);
-   */
-	/* Book archive active category tab: 
-	--image-library-nav-current-bg:
-		radial-gradient(130% 100% at 18% 8%,
-			oklch(1 0 0 / 0.22) 0%,
-			oklch(1 0 0 / 0.06) 38%,
-			transparent 62%),
-		linear-gradient(to right,
-			var(--color-library-nav-gradient-from) 0%,
-			var(--color-library-primary-light) 32%,
-			var(--color-library-primary) 62%,
-			var(--color-library-nav-gradient-to) 100%);
-	--image-library-nav-current-hover-bg:
-		radial-gradient(130% 100% at 18% 8%,
-			oklch(1 0 0 / 0.26) 0%,
-			oklch(1 0 0 / 0.08) 38%,
-			transparent 62%),
-		linear-gradient(to right,
-			var(--color-library-nav-gradient-from) 0%,
-			var(--color-library-primary-light) 30%,
-			var(--color-library-primary) 58%,
-			var(--color-library-nav-gradient-to) 100%);
-
-	--shadow-library-nav-current-inset:
-		inset 0 1px 0 0 oklch(1 0 0 / 0.32),
-		inset 0 -2px 5px 0 color-mix(in oklch, var(--color-library-secondary) 28%, transparent),
-		inset 3px 3px 14px -2px oklch(1 0 0 / 0.12),
-		inset -2px -3px 16px -2px color-mix(in oklch, var(--color-library-primary-dark) 45%, transparent),
-		inset 0 0 0 1px color-mix(in oklch, var(--color-library-primary-light) 35%, transparent);
-	--shadow-library-nav-current-hover-inset:
-		inset 0 1px 0 0 oklch(1 0 0 / 0.36),
-		inset 0 -2px 5px 0 color-mix(in oklch, var(--color-library-secondary) 24%, transparent),
-		inset 3px 3px 16px -2px oklch(1 0 0 / 0.14),
-		inset -2px -3px 18px -2px color-mix(in oklch, var(--color-library-primary-dark) 42%, transparent),
-		inset 0 0 0 1px color-mix(in oklch, var(--color-library-primary-light) 40%, transparent);
-
-		*/
-
-	/* Surfaces + shadows  
-	--color-library-surface-glow: oklch(0.42 0.08 48 / 0.35);
-	--color-library-shadow-inset-edge: oklch(0.45 0.03 55 / 0.15);
-	--color-library-shadow-ring: oklch(0.55 0.1 55 / 0.25);
-	--color-library-shadow-glow: oklch(0.58 0.14 58 / 0.35);
-	--color-library-shadow-inset-soft: oklch(0.65 0.12 60 / 0.12);
-	*/
-
 	/* Shadows */
 	--shadow-main:
 		0 0 0 1px var(--color-shadow-ring),
@@ -168,10 +124,10 @@
 		0 -24px 60px -15px var(--color-shadow-deep),
 		0 -12px 24px -8px var(--color-shadow-mid);
 	--shadow-bronze-glow:
-		0 0 0 1px color-mix(in srgb, var(--c-bronze-100) 70%, transparent),
-		0 0 0 3px color-mix(in srgb, var(--c-bronze-300) 25%, transparent),
-		0 0 30px color-mix(in srgb, var(--c-bronze-400) 45%, transparent),
-		0 12px 30px color-mix(in srgb, var(--c-black) 40%, transparent);
+		0 0 0 1px color-mix(in srgb, var(--c-gold-100) 70%, transparent),
+		0 0 0 3px color-mix(in srgb, var(--c-gold-200) 25%, transparent),
+		0 0 30px color-mix(in srgb, var(--c-gold-100) 45%, transparent),
+		0 12px 30px color-mix(in srgb, var(--c-ink-300) 40%, transparent);
 
 	--image-card-highlight: linear-gradient(to right,
 			var(--color-card-highlight) 0%,
@@ -187,4 +143,7 @@
 	--font-size-6xl: 56px;
 	--font-size-7xl: 64px;
 	--font-size-8xl: 72px;
+
+	/* Single book */
+	--book-single-gallery-stage-height: clamp(16rem, 42vmin, 43.75rem);
 }

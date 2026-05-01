@@ -13,21 +13,70 @@ namespace DBA\Domain\Books;
  * Data access layer for distinct filter values used by the book archive UI.
  */
 final class Book_Archive_Filters_Repository {
+
+	private const TRANSIENT_PUB_YEARS = 'dba_book_archive_pub_years_v' . DBA_VERSION;
+	private const TRANSIENT_AUTHORS   = 'dba_book_archive_authors_v' . DBA_VERSION;
+	private const TRANSIENT_TAGS      = 'dba_book_archive_tags_v' . DBA_VERSION;
+
+	/**
+	 * Clear cached filter datasets when book content changes.
+	 */
+	public static function register_hooks(): void {
+		add_action( 'save_post_book', array( self::class, 'invalidate_caches_on_book_save' ), 10, 3 );
+		add_action( 'before_delete_post', array( self::class, 'invalidate_caches_on_book_delete' ), 10, 2 );
+	}
+
+	/**
+	 * Delete all book-archive filter transients.
+	 */
+	public static function invalidate_caches(): void {
+		delete_transient( self::TRANSIENT_PUB_YEARS );
+		delete_transient( self::TRANSIENT_AUTHORS );
+		delete_transient( self::TRANSIENT_TAGS );
+	}
+
+	/**
+	 * Invalidate after book insert/update (not revisions/autosaves).
+	 *
+	 * @param int      $post_id Post ID.
+	 * @param \WP_Post $post    Post object.
+	 * @param bool     $update  Whether this is an existing post being updated.
+	 */
+	public static function invalidate_caches_on_book_save( int $post_id, $post, bool $update ): void {
+		if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
+			return;
+		}
+		self::invalidate_caches();
+	}
+
+	/**
+	 * Invalidate when any post is about to be deleted; no-op unless type is `book`.
+	 *
+	 * @param int           $post_id Post ID.
+	 * @param \WP_Post|null $post    Post object.
+	 */
+	public static function invalidate_caches_on_book_delete( int $post_id, $post = null ): void {
+		if ( 'book' !== get_post_type( $post_id ) ) {
+			return;
+		}
+		self::invalidate_caches();
+	}
+
 	/**
 	 * Distinct publication years from published books (publication_date meta), newest first.
 	 *
-	 * Cached 12 hours.
+	 * Cached 1 hour; cleared on book save/update/delete.
 	 *
 	 * @return array<int, int>
 	 */
 	public static function get_distinct_publication_years(): array {
-		$key    = 'dba_book_archive_pub_years_v1';
+		$key    = self::TRANSIENT_PUB_YEARS;
 		$cached = get_transient( $key );
 		if ( false !== $cached && is_array( $cached ) ) {
 			$out = array();
 			foreach ( $cached as $v ) {
 				$y = (int) $v;
-				if ( $y >= 1900 && $y <= 2100 ) {
+				if ( $y <= 2100 ) {
 					$out[] = $y;
 				}
 			}
@@ -45,7 +94,7 @@ final class Book_Archive_Filters_Repository {
 			AND {$wpdb->posts}.post_type = %s
 			AND {$wpdb->posts}.post_status = 'publish'
 			AND {$wpdb->postmeta}.meta_value != ''
-			HAVING y IS NOT NULL AND y BETWEEN 1900 AND 2100
+			HAVING y IS NOT NULL AND y
 			ORDER BY y DESC
 		";
 		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -60,7 +109,7 @@ final class Book_Archive_Filters_Repository {
 		$years = array();
 		foreach ( $col as $v ) {
 			$y = (int) $v;
-			if ( $y >= 1900 && $y <= 2100 ) {
+			if ( $y <= 2100 ) {
 				$years[] = $y;
 			}
 		}
@@ -68,7 +117,7 @@ final class Book_Archive_Filters_Repository {
 		$years = array_values( array_unique( $years ) );
 		rsort( $years, SORT_NUMERIC );
 
-		set_transient( $key, $years, 12 * HOUR_IN_SECONDS );
+		set_transient( $key, $years, 1 * HOUR_IN_SECONDS );
 
 		return $years;
 	}
@@ -76,12 +125,12 @@ final class Book_Archive_Filters_Repository {
 	/**
 	 * Distinct `book_author` meta values from published books, A→Z.
 	 *
-	 * Cached 12 hours.
+	 * Cached 12 hours; cleared on book save/update/delete.
 	 *
 	 * @return array<int, string>
 	 */
 	public static function get_distinct_authors(): array {
-		$key    = 'dba_book_archive_authors_v1';
+		$key    = self::TRANSIENT_AUTHORS;
 		$cached = get_transient( $key );
 		if ( false !== $cached && is_array( $cached ) ) {
 			$out = array();
@@ -140,12 +189,12 @@ final class Book_Archive_Filters_Repository {
 	/**
 	 * Distinct `post_tag` terms used by published `book` posts.
 	 *
-	 * Cached 12 hours.
+	 * Cached 12 hours; cleared on book save/update/delete.
 	 *
 	 * @return array<int, array{term_id: int, slug: string, name: string}>
 	 */
 	public static function get_distinct_tags(): array {
-		$key    = 'dba_book_archive_tags_v1';
+		$key    = self::TRANSIENT_TAGS;
 		$cached = get_transient( $key );
 		if ( false !== $cached && is_array( $cached ) ) {
 			$out = array();

@@ -18,7 +18,6 @@ $ids            = isset( $gallery['ids'] ) && is_array( $gallery['ids'] ) ? $gal
 $count          = isset( $gallery['count'] ) ? (int) $gallery['count'] : count( $ids );
 $thumb_limit    = isset( $gallery['thumb_limit'] ) ? (int) $gallery['thumb_limit'] : 5;
 $thumbs_capped  = isset( $gallery['thumbs_capped'] ) ? (bool) $gallery['thumbs_capped'] : ( $count > $thumb_limit );
-$thumb_rail_rtl = isset( $gallery['thumb_rail_rtl'] ) ? (bool) $gallery['thumb_rail_rtl'] : ( $count < $thumb_limit );
 
 $ids = array_values( array_filter( array_map( 'intval', $ids ), 'wp_attachment_is_image' ) );
 
@@ -57,7 +56,7 @@ $gallery_count = count( $ids );
 			foreach ( $ids as $idx => $img_id ) {
 				$img_html = wp_get_attachment_image(
 					(int) $img_id,
-					'large',
+					'full',
 					false,
 					array(
 						'class'    => 'max-h-full max-w-full h-auto w-auto object-contain object-center',
@@ -84,20 +83,26 @@ $gallery_count = count( $ids );
 	<?php if ( $gallery_count > 1 ) : ?>
 		<div class="hidden md:flex flex-col gap-2 shadow-main-top p-2">
 			<?php
-			$tablist_class = 'flex w-full gap-2 [scrollbar-width:thin]';
-			$tablist_class .= $thumb_rail_rtl ? ' flex-row-reverse justify-start' : ' justify-end';
+			$tablist_class = 'flex w-full gap-2 [scrollbar-width:thin] justify-end';
 			?>
 			<div class="<?php echo esc_attr( $tablist_class ); ?>" role="tablist" aria-label="<?php esc_attr_e( 'Book images', 'dynamic-book-archive' ); ?>">
 				<?php
-				$thumb_class = 'relative h-30 w-22 shrink-0 hover:z-20 overflow-hidden rounded border-2 border-transparent bg-page/25 opacity-80 transition hover:opacity-100 hover:shadow-bronze-glow hover:border-none duration-200 ease-out hover:scale-120 aria-pressed:border-book-secondary aria-pressed:opacity-100 aria-pressed:ring-1 aria-pressed:ring-heading/40';
+				$thumb_class = 'relative h-30 w-22 m-1 shrink-0 hover:z-20 overflow-hidden rounded border-2 border-transparent bg-page/25 opacity-80 transition hover:opacity-100 hover:shadow-bronze-glow hover:border-none duration-200 ease-out hover:scale-120 aria-pressed:border-book-secondary aria-pressed:opacity-100 aria-pressed:ring-1 aria-pressed:ring-heading/40';
 				$thumb_count = min( $thumb_limit, $gallery_count );
 				for ( $idx = 0; $idx < $thumb_count; $idx++ ) {
 					$img_id = (int) $ids[ $idx ];
+					$thumb_meta = wp_get_attachment_metadata( $img_id );
+					$thumb_w    = is_array( $thumb_meta ) && isset( $thumb_meta['width'] ) ? (int) $thumb_meta['width'] : 0;
+					$thumb_h    = is_array( $thumb_meta ) && isset( $thumb_meta['height'] ) ? (int) $thumb_meta['height'] : 0;
+					$is_portrait = $thumb_w > 0 && $thumb_h > $thumb_w;
+					$thumb_img_class = $is_portrait
+						? 'h-auto w-full object-contain'
+						: 'h-full w-full object-center object-cover';
 					$thumb_html = wp_get_attachment_image(
 						$img_id,
-						'thumbnail',
+						'full',
 						false,
-						array( 'class' => 'h-full w-full object-cover' )
+						array( 'class' => $thumb_img_class )
 					);
 					if ( '' === $thumb_html ) {
 						continue;

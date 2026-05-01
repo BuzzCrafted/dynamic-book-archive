@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace DBA\Theme;
 
 use DBA\Customizer\Theme_Customizer;
+use DBA\Domain\Books\Book_Archive_Filters_Repository;
 use DBA\Integration\Books_Cpt_Archive_Rest;
 use DBA\Media\Svg_Upload;
 use DBA\TemplateTags\Breadcrumb_Presenter;
@@ -23,6 +24,7 @@ final class Theme_Bootstrap {
 	 * Register hooks for all theme components.
 	 */
 	public static function init(): void {
+		Book_Archive_Filters_Repository::register_hooks();
 		Theme_Setup::register_hooks();
 		Content_Width::register_hooks();
 		Theme_Widgets::register_hooks();

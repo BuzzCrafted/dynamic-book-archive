@@ -25,7 +25,7 @@ $year_ceiling = isset( $years['ceiling'] ) ? (int) $years['ceiling'] : (int) gmd
 <div class="js-book-archive-stage js-book-archive-stage-head contain-[layout] backface-hidden">
 	<div class="mx-auto flex flex-col">
 		<header class="flex min-h-0 flex-col justify-center transition-all transition-discrete">
-			<h1 class="js-book-archive-title py-4 text-center text-3xl font-semibold uppercase tracking-tight text-library-primary group-aria-busy:pointer-events-none">
+			<h1 class="js-book-archive-title py-4 text-center text-3xl font-semibold uppercase tracking-tight text-heading group-aria-busy:pointer-events-none">
 				<span class="js-book-archive-title-value inline-block min-w-0"><?php echo esc_html( $title ); ?></span>
 			</h1>
 			<?php

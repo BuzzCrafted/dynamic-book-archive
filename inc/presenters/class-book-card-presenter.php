@@ -1,6 +1,6 @@
 <?php
 /**
- * Book card presenter (archive grid item).
+ * Book card presenter for the archive grid.
  *
  * @package Dynamic_Book_Archive
  */
@@ -47,8 +47,8 @@ final class Book_Card_Presenter {
 		if ( has_post_thumbnail( $post ) ) {
 			$thumb_html = get_the_post_thumbnail(
 				$post,
-				'large',
-				array( 'class' => '!h-full !w-full object-cover object-center' )
+				'full',
+				array( 'class' => 'size-full max-h-none object-cover object-center' )
 			);
 			$thumb_html = is_string( $thumb_html ) ? $thumb_html : '';
 		}
@@ -64,6 +64,20 @@ final class Book_Card_Presenter {
 		);
 	}
 
+	/**
+	 * Default model for empty book card.
+	 *
+	 * @param int $post_id The post ID.
+	 * @return array{
+	 *   post_id:int,
+	 *   permalink:string,
+	 *   title:string,
+	 *   title_japanese:string,
+	 *   publication_label:string,
+	 *   thumbnail_html:string,
+	 *   placeholder_url:string
+	 * }
+	 */
 	private static function empty_model( int $post_id ): array {
 		return array(
 			'post_id'         => $post_id,
@@ -76,6 +90,12 @@ final class Book_Card_Presenter {
 		);
 	}
 
+	/**
+	 * Format the publication date label.
+	 *
+	 * @param string $raw The raw publication date.
+	 * @return string The formatted publication date label.
+	 */
 	private static function format_publication_date_label( string $raw ): string {
 		$raw = trim( $raw );
 		if ( '' === $raw ) {

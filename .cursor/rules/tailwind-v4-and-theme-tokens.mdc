@@ -1,0 +1,24 @@
+---
+description: Prefer Tailwind v4 utilities, js-* DOM hooks, and existing theme tokens
+alwaysApply: true
+---
+
+# Styling and DOM hooks
+
+## Tailwind CSS v4 first
+
+- Prefer **Tailwind v4 utility classes** in markup (`class="..."`) over ad‑hoc custom CSS classes.
+- Add **custom CSS** only when utilities cannot express the design (complex selectors, one-off animations, third-party overrides). Keep bespoke class names minimal and purposeful.
+
+## JavaScript hooks
+
+- Use dedicated classes prefixed with **`js-`** for DOM queries and behavior (e.g. `js-archive-filters`, `js-year-range`). Do not rely on styling or Tailwind classes as JS selectors.
+
+## Theme variables
+
+- Reuse tokens from **`src/css/theme.css`**: `:root` (`--c-*`, layout tokens) and `@theme` (`--color-*`, `--font-*`, shadows, etc.).
+- In Tailwind arbitrary values, prefer theme-backed CSS variables, e.g. `text-(--color-body)`, `bg-(--color-page)`.
+
+## New tokens
+
+- **Do not invent new theme variables** without confirmation. If no suitable token exists, **ask** whether to extend `theme.css` (and how to name/group the token) before adding one.
