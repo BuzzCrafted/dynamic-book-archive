@@ -28,17 +28,15 @@ declare(strict_types=1);
 
 		<header id="masthead" class="site-header shadow-[0_0_1px_1px_rgba(214,201,163,0.30)] py-4 px-2 md:px-4 lg:px-0">
 			<div class="max-w-[1440px] lg:px-30 flex justify-between mx-auto items-center text-heading">
-				<div class="flex items-center gap-3">
-					<div class="w-15 shrink-0">
-						<a class="no-underline text-inherit hover:no-underline" href="<?php echo esc_url(home_url('/')); ?>" rel="home">
-							<?php the_custom_logo(); ?>
-						</a>
+				<div class="flex items-center gap-4">
+					<div class="w-16 md:w-20 shrink-0">
+						<?php dba_the_site_logo(); ?>
 					</div>
-					<div class="flex flex-col gap-y-2">
-						<h1 class="site-title font-display text-lg not-italic font-bold leading-[normal] tracking-[0.4px] uppercase">
+					<div class="flex flex-col gap-y-3">
+						<h1 class="site-title font-display text-base md:text-lg not-italic font-bold leading-[normal] tracking-[0.4px] uppercase">
 							Robert C. Gruzanski
 						</h1>
-						<sup class="site-description inline-flex items-center justify-between text-[12px] not-italic font-bold leading-[normal] tracking-[0.24px] uppercase">
+						<sup class="site-description inline-flex items-center justify-between text-[10px] md:text-xs not-italic font-bold leading-[normal] tracking-[0.24px] uppercase">
 							<span>Student</span>
 							<span>&bull;</span>
 							<span>Historian</span>

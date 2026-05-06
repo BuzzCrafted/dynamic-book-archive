@@ -1,0 +1,96 @@
+.chain-divider {
+	--height: 14px;
+	--handle-width: 130px;
+	--handle-width-sm: 48px;
+
+	position: relative;
+	width: 100%;
+	height: var(--height);
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		height: 100%;
+		z-index: 2;
+
+		right: 0;
+		width: var(--handle-width-sm);
+		@media (min-width: 768px) {
+			width: var(--handle-width);
+		}
+
+		background: url("../../assets/images/decor/chain/bronze/right-handle.webp") no-repeat right center;
+		background-size: contain;
+	}
+
+	&::before {
+		content: ""!important;
+		position: absolute;
+		top: 0;
+		height: 100%;
+		z-index: 2;
+
+		left: 0;
+		width: var(--handle-width-sm) !important;
+		@media (min-width: 768px) {
+			width: var(--handle-width) !important;
+		}
+		background: url("../../assets/images/decor/chain/bronze/left-handle.webp") no-repeat left center;
+		background-size: contain;
+	}
+
+	&.silver {
+		.chain-divider-content {
+			background-image: url("../../assets/images/decor/chain/silver/chains.webp");
+		}
+
+		&::before {
+			background: url("../../assets/images/decor/chain/silver/left-handle.webp") no-repeat left center;
+			background-size: contain;
+		}
+
+		&::after {
+			background: url("../../assets/images/decor/chain/silver/right-handle.webp") no-repeat right center;
+			background-size: contain;
+		}
+	}
+
+	&.gold {
+		.chain-divider-content {
+			background-image: url("../../assets/images/decor/chain/gold/chains.webp");
+		}
+
+		&::before {
+			background: url("../../assets/images/decor/chain/gold/left-handle.webp") no-repeat left center;
+			background-size: contain;
+		}
+
+		&::after {
+			background: url("../../assets/images/decor/chain/gold/right-handle.webp") no-repeat right center;
+			background-size: contain;
+		}
+	}
+
+	.chain-divider-content {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		left: var(--handle-width-sm);
+		right: var(--handle-width-sm);
+		@media (min-width: 768px) {
+			left: var(--handle-width);
+			right: var(--handle-width);
+		}
+		height: 70% !important;
+		@media (min-width: 768px) {
+			height: 78% !important;
+		}
+
+		background-image: url("../../assets/images/decor/chain/bronze/chains.webp");
+		background-repeat: repeat-x;
+		background-position: left center;
+		background-size: contain;
+		background-color: transparent !important;
+	}
+}

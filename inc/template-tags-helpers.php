@@ -442,3 +442,46 @@ if ( ! function_exists( 'dba_the_inline_icon' ) ) :
 		echo dba_get_inline_icon( $name, $class ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted theme-bundled SVG markup; class is escaped in the getter.
 	}
 endif;
+
+if ( ! function_exists( 'dba_the_site_logo' ) ) :
+	/**
+	 * Prints the custom logo: home link wrapping the logo image.
+	 *
+	 * @param string $img_class              CSS classes for the `<img>` element.
+	 * @param bool   $use_alternative_logo   When true, uses the Customizer "Alternative logo" (footer); falls back to the main logo if unset.
+	 */
+	function dba_the_site_logo( string $img_class = 'w-full h-auto object-contain', bool $use_alternative_logo = false ): void {
+		$logo_id = 0;
+
+		if ( $use_alternative_logo ) {
+			$alt = get_theme_mod( 'dba_alternative_logo', 0 );
+			if ( is_numeric( $alt ) && (int) $alt > 0 ) {
+				$logo_id = (int) $alt;
+			}
+			if ( $logo_id <= 0 ) {
+				$primary = get_theme_mod( 'custom_logo', 0 );
+				$logo_id = ( is_numeric( $primary ) && (int) $primary > 0 ) ? (int) $primary : 0;
+			}
+		} else {
+			$primary = get_theme_mod( 'custom_logo' );
+			$logo_id = ( is_numeric( $primary ) && (int) $primary > 0 ) ? (int) $primary : 0;
+		}
+
+		if ( $logo_id <= 0 ) {
+			return;
+		}
+
+		$image_url = wp_get_attachment_image_url( $logo_id, 'full' );
+		if ( false === $image_url || '' === $image_url ) {
+			return;
+		}
+
+		printf(
+			'<a class="no-underline text-inherit hover:no-underline" href="%1$s" rel="home"><img src="%2$s" alt="%3$s" class="%4$s"></a>',
+			esc_url( home_url( '/' ) ),
+			esc_url( $image_url ),
+			esc_attr( get_bloginfo( 'name', 'display' ) ),
+			esc_attr( $img_class )
+		);
+	}
+endif;
