@@ -1,0 +1,30 @@
+.flash-card::after {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 1px;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent 0%,
+            rgba(166,130,74,0.10) 16%,
+            rgba(208,165,95,0.38) 50%,
+            rgba(166,130,74,0.10) 84%,
+            transparent 100%
+        );
+
+    box-shadow:
+        0 0 1px rgba(208,165,95,0.16),
+        0 0 3px rgba(208,165,95,0.08);
+
+    opacity: .95;
+}
+
+.info-cards-grid .flash-card:last-child::after {
+    display: none;
+}

@@ -211,28 +211,34 @@ endif;
 
 if ( ! function_exists( 'dba_get_book_post_type_archive_filter_url' ) ) :
 	/**
-	 * Public book post type archive URL with optional pagination only (no `book_cat` query).
+	 * Public URL for the Library with an optional category filter.
 	 *
-	 * Category filtering uses client `data-*` attributes and the books REST archive; `$term` is ignored for the URL.
+	 * “All books” uses the `book` post type archive (`/book/` with pretty permalinks). A category uses
+	 * the taxonomy term permalink ({@see get_term_link()}) so the shape follows the site’s permalink
+	 * structure (e.g. `/book-category/martial-art/`).
 	 *
-	 * @param WP_Term|null $term  Unused; kept for call-site compatibility.
+	 * @param WP_Term|null $term  Active `book_category` term, or null for “All”.
 	 * @param int          $paged Page number (min 1).
 	 */
 	function dba_get_book_post_type_archive_filter_url( ?WP_Term $term, int $paged = 1 ): string {
-		unset( $term );
+		$paged = max( 1, $paged );
+
+		if ( $term instanceof WP_Term && isset( $term->taxonomy ) && DBA_BOOK_CATEGORY_TAXONOMY === $term->taxonomy ) {
+			return dba_get_book_archive_category_filter_url( $term, $paged );
+		}
+
 		$base = dba_get_book_post_type_archive_url();
 		if ( ! is_string( $base ) || '' === $base ) {
 			return home_url( '/' );
 		}
 
-		$paged = max( 1, $paged );
-		$url   = user_trailingslashit( untrailingslashit( $base ) );
+		$archive_root = user_trailingslashit( untrailingslashit( $base ) );
 
 		if ( $paged > 1 ) {
-			$url .= user_trailingslashit( 'page/' . (string) $paged );
+			return $archive_root . user_trailingslashit( 'page/' . (string) $paged );
 		}
 
-		return $url;
+		return $archive_root;
 	}
 endif;
 

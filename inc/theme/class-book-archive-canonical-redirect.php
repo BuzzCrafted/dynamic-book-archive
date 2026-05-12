@@ -1,6 +1,6 @@
 <?php
 /**
- * Redirect `book_category` term permalinks and legacy `book_cat` query URLs to the plain book archive.
+ * Canonicalize legacy `book_cat` query URLs; optional collapse of taxonomy URLs to the plain archive.
  *
  * @package Dynamic_Book_Archive
  */
@@ -10,7 +10,8 @@ declare(strict_types=1);
 namespace DBA\Theme;
 
 /**
- * Uses `/book/` (+ optional `/page/N/`) only; category state is client-side (`data-*` + REST).
+ * Valid `book_cat` on `/book/` 301s to the `book_category` term permalink; invalid values 301 to the plain archive.
+ * Taxonomy URLs are left as-is unless {@see 'dba_redirect_book_category_taxonomy_to_book_cat'} forces a collapse to `/book/`.
  */
 final class Book_Archive_Canonical_Redirect {
 
@@ -20,7 +21,7 @@ final class Book_Archive_Canonical_Redirect {
 	}
 
 	/**
-	 * 301 away from `?book_cat=` on the book post type archive (keeps pagination path only).
+	 * 301 legacy `/book/?book_cat=…` to the term permalink when valid, or to the plain archive when invalid.
 	 */
 	public static function redirect_strip_book_cat_from_book_archive(): void {
 		if ( is_admin() || wp_doing_ajax() || wp_doing_cron() || ( function_exists( 'wp_is_json_request' ) && wp_is_json_request() ) ) {
@@ -49,19 +50,26 @@ final class Book_Archive_Canonical_Redirect {
 		}
 
 		/**
-		 * Toggle stripping `book_cat` from the book archive URL (e.g. legacy integrations).
+		 * Toggle canonicalizing `book_cat` on the book post type archive (e.g. integrations that must keep the query).
 		 *
-		 * @param bool $strip Whether to redirect to the same archive without `book_cat`.
+		 * @param bool $strip When true (default), unknown `book_cat` values redirect to the plain archive and known values to the term URL.
 		 */
 		if ( ! apply_filters( 'dba_strip_book_cat_query_from_book_archive', true ) ) {
 			return;
 		}
 
-		$paged = (int) get_query_var( 'paged' );
+		$resolved = \dba_resolve_book_category_term_from_book_cat_query_var( $raw );
+		$paged    = (int) get_query_var( 'paged' );
 		if ( $paged < 1 ) {
 			$paged = (int) get_query_var( 'page' );
 		}
 		$paged = max( 1, $paged );
+
+		if ( $resolved instanceof \WP_Term ) {
+			$target = \dba_get_book_post_type_archive_filter_url( $resolved, $paged );
+			wp_safe_redirect( $target, 301 );
+			exit;
+		}
 
 		$target = \dba_get_book_post_type_archive_filter_url( null, $paged );
 
@@ -70,7 +78,7 @@ final class Book_Archive_Canonical_Redirect {
 	}
 
 	/**
-	 * 301 to {@see dba_get_book_post_type_archive_filter_url()} (plain archive + pagination; no category query).
+	 * Optional 301 from `book_category` archives to the plain `/book/` archive (drops category in the URL).
 	 */
 	public static function redirect_taxonomy_archive_to_book_cat(): void {
 		if ( is_admin() || wp_doing_ajax() || wp_doing_cron() || ( function_exists( 'wp_is_json_request' ) && wp_is_json_request() ) ) {
@@ -90,11 +98,13 @@ final class Book_Archive_Canonical_Redirect {
 		}
 
 		/**
-		 * Toggle the redirect (e.g. debugging).
+		 * When true, send a 301 from taxonomy archives to the plain book post type archive (same page number).
 		 *
-		 * @param bool $redirect Whether to send a 301 to the plain book post type archive URL.
+		 * Default false so filtered Library URLs stay on SEO-friendly term permalinks.
+		 *
+		 * @param bool $redirect Whether to collapse taxonomy URLs to `/book/` (+ pagination).
 		 */
-		if ( ! apply_filters( 'dba_redirect_book_category_taxonomy_to_book_cat', true ) ) {
+		if ( ! apply_filters( 'dba_redirect_book_category_taxonomy_to_book_cat', false ) ) {
 			return;
 		}
 

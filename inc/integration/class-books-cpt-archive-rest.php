@@ -161,16 +161,29 @@ final class Books_Cpt_Archive_Rest {
 			return '';
 		}
 
-		unset( $term );
 		$archive = \dba_get_book_post_type_archive_url();
 		if ( ! is_string( $archive ) || '' === $archive ) {
 			return '';
 		}
-		$base   = esc_url_raw( trailingslashit( untrailingslashit( $archive ) ) ) . '%_%';
-		$format = 'page/%#%/';
+
+		$paginate_args = null;
+		if ( $term instanceof WP_Term && \DBA_BOOK_CATEGORY_TAXONOMY === $term->taxonomy ) {
+			$tlink = get_term_link( $term );
+			if ( ! is_wp_error( $tlink ) && is_string( $tlink ) && '' !== $tlink ) {
+				$base          = esc_url_raw( trailingslashit( untrailingslashit( $tlink ) ) ) . '%_%';
+				$format        = 'page/%#%/';
+				$paginate_args = dba_get_book_archive_paginate_links_args( $total, $current, $base, $format );
+			}
+		}
+
+		if ( null === $paginate_args ) {
+			$base          = esc_url_raw( trailingslashit( untrailingslashit( $archive ) ) ) . '%_%';
+			$format        = 'page/%#%/';
+			$paginate_args = dba_get_book_archive_paginate_links_args( $total, $current, $base, $format );
+		}
 
 		$pagination = \DBA\Presenters\Pagination_Presenter::build_from_paginate_links_args(
-			dba_get_book_archive_paginate_links_args( $total, $current, $base, $format )
+			$paginate_args
 		);
 		if ( ! is_array( $pagination ) ) {
 			return '';
@@ -189,7 +202,7 @@ final class Books_Cpt_Archive_Rest {
 	}
 
 	/**
-	 * Keep REST “canonical” on the book post type archive (pagination only, no `book_cat`), not taxonomy permalinks.
+	 * REST canonical URL: plain `/book/` for all books, otherwise the `book_category` term permalink.
 	 *
 	 * @param string        $url   Plugin-default URL.
 	 * @param \WP_Term|null $term  book_category term or null.

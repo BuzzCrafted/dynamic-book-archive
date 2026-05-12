@@ -1,5 +1,5 @@
 :root {
-	--c-bronze-100: #e6d7c2;
+	--c-bronze-100: #E6C1AB;
 	--c-bronze-200: #e0c9b7;
 	--c-bronze-300: #d6c9a3;
 	--c-bronze-400: #af937d;
@@ -7,6 +7,7 @@
 	--c-ink-100:#0E0E0D;
 	--c-ink-200:#191918;
 	--c-ink-300:#2A2A2A;
+	--c-ink-400:#1C1512;
 
 	--c-ink-900: #181715;
 	--c-ink-950: #131313;
@@ -15,6 +16,7 @@
 
 	--c-gold-100: #A6824A;
 	--c-gold-200: #D0A55F;
+	--c-gold-300: #ffcb77;
 }
 
 @theme {
@@ -26,9 +28,11 @@
 	--color-heading: var(--c-gold-200);
 	--color-body: var(--c-gold-100);	
 	--color-page: var(--c-ink-100);
-	--color-surface: var(--c-ink-200);
+	--color-surface: var(--c-ink-400);
 	--color-link: var(--c-gold-200);
 	--color-link-hover: var(--c-gold-100);
+	--color-link-special: var(--c-bronze-100);
+	--color-link-special-hover: var(--c-bronze-200);
 
 	--color-border-main: var(--c-gold-200);
 
@@ -47,9 +51,9 @@
 	--color-shadow-mid: rgb(from var(--c-ink-300) r g b / 0.45);
 
 	/* Breadcrumbs */
-	--color-breadcrumbs-link: var(--c-gold-200);
-	--color-breadcrumbs-link-hover: var(--c-gold-100);
-	--color-breadcrumbs-text: var(--c-gold-100);
+	--color-breadcrumbs-link: var(--c-gold-300);
+	--color-breadcrumbs-link-hover: var(--c-gold-200);
+	--color-breadcrumbs-text: var(--c-gold-200);
 
 	/* Book archive category nav */
 	--color-book-archive-category-nav-link: var(--c-gold-200);
@@ -102,15 +106,6 @@
 		0 0 8px 3px var(--color-book-pagination-shadow-glow),
 		inset 0 0 20px var(--color-book-pagination-shadow-inset-soft);
 
-	/*
-	 * Library palette — used by `.entry-content.prose` (parts/base.css) and PHP utilities
-	 * (`text-library-primary`, borders, etc.). Values match the previously shipped bundle.
-	 */
-	--color-library-primary: oklch(0.5878 0.0542 63.45);
-	--color-library-primary-light: oklch(0.8302 0.109 84.92);
-	--color-library-primary-dark: oklch(0.533 0.0542 63.45);
-	--color-library-secondary: oklch(0.153 0.00564 39.28);
-
 	/* Shadows */
 	--shadow-main:
 		0 0 0 1px var(--color-shadow-ring),
@@ -133,16 +128,8 @@
 			var(--color-card-highlight) 0%,
 			transparent 25%);
 
-	--font-size-base: 16px;
-	--font-size-lg: 18px;
-	--font-size-xl: 20px;
-	--font-size-2xl: 24px;
-	--font-size-3xl: 32px;
-	--font-size-4xl: 40px;
-	--font-size-5xl: 48px;
-	--font-size-6xl: 56px;
-	--font-size-7xl: 64px;
-	--font-size-8xl: 72px;
+	--text-xxs: .65rem;
+
 
 	/* Single book */
 	--book-single-gallery-stage-height: clamp(16rem, 42vmin, 43.75rem);

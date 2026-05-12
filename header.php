@@ -28,20 +28,16 @@ declare(strict_types=1);
 
 		<header id="masthead" class="site-header shadow-[0_0_1px_1px_rgba(214,201,163,0.30)] py-4 px-2 md:px-4 lg:px-0">
 			<div class="max-w-[1440px] lg:px-30 flex justify-between mx-auto items-center text-heading">
-				<div class="flex items-center gap-4">
+				<div class="flex items-center gap-4 px-1 md:px-0">
 					<div class="w-16 md:w-20 shrink-0">
 						<?php dba_the_site_logo(); ?>
 					</div>
 					<div class="flex flex-col gap-y-3">
-						<h1 class="site-title font-display text-base md:text-lg not-italic font-bold leading-[normal] tracking-[0.4px] uppercase">
+						<h1 class="site-title font-display text-base md:text-lg not-italic font-bold leading-[normal] tracking-[0.28px] md:tracking-[1.1px] uppercase">
 							Robert C. Gruzanski
 						</h1>
-						<sup class="site-description inline-flex items-center justify-between text-[10px] md:text-xs not-italic font-bold leading-[normal] tracking-[0.24px] uppercase">
-							<span>Student</span>
-							<span>&bull;</span>
-							<span>Historian</span>
-							<span>&bull;</span>
-							<span>Collector</span>
+						<sup class="site-description inline-flex items-center justify-between text-xs md:text-sm not-italic font-bold leading-[normal] tracking-[0.1px] md:tracking-[0.24px]">
+							<span>Curator of the Gruzanski Archives</span>
 						</sup>
 					</div>
 				</div>
@@ -74,6 +70,5 @@ declare(strict_types=1);
 			</div>
 
 		</header>
-        <div class="container max-w-[1440px] px-2 md:px-4 lg:px-30 mx-auto">
-		     <?php dba_breadcrumbs(); ?>
-  
+		<div class="container max-w-[1440px] px-2 md:px-4 lg:px-30 mx-auto">
+			<?php dba_breadcrumbs(); ?>

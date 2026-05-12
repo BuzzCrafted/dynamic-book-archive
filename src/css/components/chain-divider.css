@@ -16,16 +16,19 @@
 
 		right: 0;
 		width: var(--handle-width-sm);
+
 		@media (min-width: 768px) {
 			width: var(--handle-width);
 		}
 
-		background: url("../../assets/images/decor/chain/bronze/right-handle.webp") no-repeat right center;
+		background: url("../../assets/images/decor/chain/right-handle.webp") no-repeat right center;
 		background-size: contain;
+
+		filter: sepia(0.65) saturate(0.55) hue-rotate(340deg) brightness(0.88) contrast(1.08);
 	}
 
 	&::before {
-		content: ""!important;
+		content: "" !important;
 		position: absolute;
 		top: 0;
 		height: 100%;
@@ -33,11 +36,15 @@
 
 		left: 0;
 		width: var(--handle-width-sm) !important;
+
 		@media (min-width: 768px) {
 			width: var(--handle-width) !important;
 		}
-		background: url("../../assets/images/decor/chain/bronze/left-handle.webp") no-repeat left center;
+
+		background: url("../../assets/images/decor/chain/left-handle.webp") no-repeat left center;
 		background-size: contain;
+
+		filter: sepia(0.65) saturate(0.55) hue-rotate(340deg) brightness(0.88) contrast(1.08);
 	}
 
 	&.silver {
@@ -78,19 +85,26 @@
 		transform: translateY(-50%);
 		left: var(--handle-width-sm);
 		right: var(--handle-width-sm);
+
 		@media (min-width: 768px) {
 			left: var(--handle-width);
 			right: var(--handle-width);
 		}
+
 		height: 70% !important;
+
 		@media (min-width: 768px) {
 			height: 78% !important;
 		}
 
-		background-image: url("../../assets/images/decor/chain/bronze/chains.webp");
+		background-image: url("../../assets/images/decor/chain/chains.webp");
 		background-repeat: repeat-x;
 		background-position: left center;
 		background-size: contain;
 		background-color: transparent !important;
+
+
+		filter: sepia(0.65) saturate(0.55) hue-rotate(340deg) brightness(0.88) contrast(1.08);
+
 	}
 }

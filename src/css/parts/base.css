@@ -116,6 +116,11 @@
 
 		li {
 			@apply list-disc;
+
+
+		}
+		a {
+			@apply text-link-special hover:text-link-special-hover underline-offset-2 hover:underline;
 		}
 	}
 }
@@ -134,4 +139,7 @@
 	}
 }
 
+.vertical-text{
+	writing-mode: vertical-rl;
+}
 

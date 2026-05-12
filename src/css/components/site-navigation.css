@@ -47,8 +47,7 @@
 		}
 
 		#site-navigation .primary-menu-panel:not(.hidden) .menu-item {
-			@apply pb-2 font-medium normal-case tracking-normal;
-			font-family: var(--font-main);
+			@apply pb-2 font-medium normal-case tracking-normal font-main;
 
 			&::before,
 			&::after {
@@ -62,29 +61,20 @@
 			}
 
 			a:hover {
-				color: var(--color-link-hover);
+				@apply text-link-hover;
 			}
 		}
 	}
 
 	@media (width >= 48rem) {
 		#site-navigation .primary-menu-panel {
-			position: static;
-			z-index: auto;
-			background-image: none;
-			box-shadow: none;
-			row-gap: 0;
-			padding: 0;
-			flex-direction: row;
-			align-items: center;
-			justify-content: flex-end;
-			column-gap: 1.5rem;
+			@apply bg-transparent shadow-none gap-y-0 p-0 flex flex-row items-center justify-end gap-x-1.5 z-auto;
 		}
 	}
 
 	#site-navigation {
 		.menu-item {
-			@apply relative text-lg font-bold tracking-[0.2em] uppercase pb-3;
+			@apply relative text-lg font-bold tracking-[0.2em] uppercase px-3;
 			isolation: isolate;
 
 			/* Full-width bronze line with a bright central flare */
