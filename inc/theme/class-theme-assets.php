@@ -60,10 +60,41 @@ final class Theme_Assets {
 
 		self::maybe_enqueue_book_archive_select_assets();
 		self::maybe_enqueue_book_single_gallery();
+		self::maybe_enqueue_lightbox();
 
 		if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 			wp_enqueue_script( 'comment-reply' );
 		}
+	}
+
+	/**
+	 * GLightbox for elements with class `lightbox` (typically `<a class="lightbox" href="…">`).
+	 */
+	private static function maybe_enqueue_lightbox(): void {
+		$dir = get_template_directory();
+		$uri = get_template_directory_uri();
+
+		$css_path = $dir . '/assets/js/lightbox.min.css';
+		$js_path  = $dir . '/assets/js/lightbox.min.js';
+
+		if ( ! is_readable( $css_path ) || ! is_readable( $js_path ) ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			'dba-lightbox',
+			$uri . '/assets/js/lightbox.min.css',
+			array( 'dba-tailwind' ),
+			(string) filemtime( $css_path )
+		);
+
+		wp_enqueue_script(
+			'dba-lightbox',
+			$uri . '/assets/js/lightbox.min.js',
+			array(),
+			(string) filemtime( $js_path ),
+			true
+		);
 	}
 
 	/**
