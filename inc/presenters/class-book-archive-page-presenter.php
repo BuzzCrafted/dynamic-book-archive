@@ -68,6 +68,45 @@ final class Book_Archive_Page_Presenter {
 		$authors = Book_Archive_Filters_Repository::get_distinct_authors();
 		$tags    = Book_Archive_Filters_Repository::get_distinct_tags();
 
+		$initial_state = array(
+			'search'  => '',
+			'orderby' => 'date',
+			'order'   => 'desc',
+			'author'  => '',
+			'tag'     => '',
+			'year'    => array(
+				'floor'   => (int) $year_floor,
+				'ceiling' => (int) $year_ceiling,
+				'min'     => 0,
+				'max'     => 0,
+			),
+		);
+		if ( class_exists( 'DKO\\Books\\Service\\Books_Archive_Query_Service' ) ) {
+			$filters = \DKO\Books\Service\Books_Archive_Query_Service::parse_filters_from_public_request();
+			$tag_raw = '';
+			if ( isset( $filters['_tag_raw'] ) && is_string( $filters['_tag_raw'] ) ) {
+				$tag_raw = $filters['_tag_raw'];
+			}
+			unset( $filters['_tag_raw'] );
+			list( $tag_id, $tag_slug ) = \DKO\Books\Service\Books_Archive_Query_Service::resolve_tag_string_to_ids( $tag_raw );
+			$filters['tag_term_id'] = $tag_id;
+			$filters['tag_slug']    = $tag_slug;
+			$filters                = \DKO\Books\Service\Books_Archive_Query_Service::finalize_filter_shape( $filters );
+			$initial_state          = array(
+				'search'  => (string) $filters['search'],
+				'orderby' => (string) $filters['orderby'],
+				'order'   => (string) $filters['order'],
+				'author'  => (string) $filters['author'],
+				'tag'     => (string) $filters['tag_slug'],
+				'year'    => array(
+					'floor'   => (int) $year_floor,
+					'ceiling' => (int) $year_ceiling,
+					'min'     => (int) $filters['year_min'],
+					'max'     => (int) $filters['year_max'],
+				),
+			);
+		}
+
 		$items = array();
 		if ( $query instanceof WP_Query && $query->have_posts() ) {
 			foreach ( $query->posts as $p ) {
@@ -88,19 +127,7 @@ final class Book_Archive_Page_Presenter {
 				),
 				'paged' => (int) $paged,
 			),
-			'initial_state' => array(
-				'search'  => '',
-				'orderby' => 'date',
-				'order'   => 'desc',
-				'author'  => '',
-				'tag'     => '',
-				'year'    => array(
-					'floor'   => (int) $year_floor,
-					'ceiling' => (int) $year_ceiling,
-					'min'     => 0,
-					'max'     => 0,
-				),
-			),
+			'initial_state' => $initial_state,
 			'options' => array(
 				'sort' => array(
 					array( 'value' => 'author:asc', 'label' => __( 'Author', 'dynamic-book-archive' ) ),

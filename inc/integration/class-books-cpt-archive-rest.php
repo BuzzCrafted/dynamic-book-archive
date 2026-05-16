@@ -52,6 +52,12 @@ final class Books_Cpt_Archive_Rest {
 			return $data;
 		}
 		$data['selectors']['breadcrumbs'] = 'nav.breadcrumbs';
+		/*
+		 * books-cpt archive-filter scopes grid/title/pagination updates under busyRoot.
+		 * `.js-book-archive` alone is unsafe: another node could match first and contain no
+		 * `.js-book-archive-grid`, so REST grid_html never replaces the visible SSR grid.
+		 */
+		$data['selectors']['busyRoot'] = 'main[data-book-archive-root]';
 
 		if ( function_exists( 'dba_get_book_archive_distinct_publication_years' ) ) {
 			$data['archiveYears'] = dba_get_book_archive_distinct_publication_years();
@@ -166,25 +172,53 @@ final class Books_Cpt_Archive_Rest {
 			return '';
 		}
 
+		$extra_add_args = array();
+		if (
+			class_exists( '\DKO\Books\Service\Books_Archive_Filter_Controller' )
+			&& class_exists( '\DKO\Books\Service\Books_Archive_Query_Service' )
+		) {
+			$ctx = \DKO\Books\Service\Books_Archive_Filter_Controller::get_current_archive_filters_for_response();
+			if ( is_array( $ctx ) ) {
+				$extra_add_args = \DKO\Books\Service\Books_Archive_Query_Service::public_book_archive_url_query_args( $ctx );
+			}
+		}
+
 		$paginate_args = null;
 		if ( $term instanceof WP_Term && \DBA_BOOK_CATEGORY_TAXONOMY === $term->taxonomy ) {
 			$tlink = get_term_link( $term );
 			if ( ! is_wp_error( $tlink ) && is_string( $tlink ) && '' !== $tlink ) {
 				$base          = esc_url_raw( trailingslashit( untrailingslashit( $tlink ) ) ) . '%_%';
 				$format        = 'page/%#%/';
-				$paginate_args = dba_get_book_archive_paginate_links_args( $total, $current, $base, $format );
+				$paginate_args = dba_get_book_archive_paginate_links_args( $total, $current, $base, $format, $extra_add_args );
 			}
 		}
 
 		if ( null === $paginate_args ) {
 			$base          = esc_url_raw( trailingslashit( untrailingslashit( $archive ) ) ) . '%_%';
 			$format        = 'page/%#%/';
-			$paginate_args = dba_get_book_archive_paginate_links_args( $total, $current, $base, $format );
+			$paginate_args = dba_get_book_archive_paginate_links_args( $total, $current, $base, $format, $extra_add_args );
 		}
 
-		$pagination = \DBA\Presenters\Pagination_Presenter::build_from_paginate_links_args(
-			$paginate_args
-		);
+		$clean_pagenum_link = static function ( $result, $pagenum ) use ( $term, $archive ): string {
+			unset( $result, $pagenum );
+			if ( $term instanceof WP_Term && \DBA_BOOK_CATEGORY_TAXONOMY === $term->taxonomy ) {
+				$url = get_term_link( $term );
+				if ( ! is_wp_error( $url ) && is_string( $url ) && '' !== $url ) {
+					return untrailingslashit( esc_url_raw( $url ) );
+				}
+			}
+
+			return untrailingslashit( esc_url_raw( (string) $archive ) );
+		};
+		add_filter( 'get_pagenum_link', $clean_pagenum_link, 1, 2 );
+		try {
+			$pagination = \DBA\Presenters\Pagination_Presenter::build_from_paginate_links_args(
+				$paginate_args
+			);
+		} finally {
+			remove_filter( 'get_pagenum_link', $clean_pagenum_link, 1 );
+		}
+
 		if ( ! is_array( $pagination ) ) {
 			return '';
 		}

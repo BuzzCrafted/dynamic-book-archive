@@ -351,9 +351,10 @@ if ( ! function_exists( 'dba_get_book_archive_paginate_links_args' ) ) :
 	 * @param int         $current Current page (>= 1).
 	 * @param string|null $base    Optional `base` for paginate_links (REST archive URL + %_%).
 	 * @param string|null $format  Optional `format` (e.g. page/%#%/) when `base` is set.
+	 * @param array<string, string>|null $add_args Optional query args appended to each page link (e.g. book_search).
 	 * @return array<string, mixed>
 	 */
-	function dba_get_book_archive_paginate_links_args( int $total, int $current, ?string $base = null, ?string $format = null ): array {
+	function dba_get_book_archive_paginate_links_args( int $total, int $current, ?string $base = null, ?string $format = null, ?array $add_args = null ): array {
 		$total   = max( 1, $total );
 		$current = max( 1, $current );
 		$compact = $total > 5;
@@ -371,6 +372,10 @@ if ( ! function_exists( 'dba_get_book_archive_paginate_links_args' ) ) :
 		if ( is_string( $base ) && '' !== $base && is_string( $format ) && '' !== $format ) {
 			$args['base']   = $base;
 			$args['format'] = $format;
+		}
+
+		if ( is_array( $add_args ) && array() !== $add_args ) {
+			$args['add_args'] = $add_args;
 		}
 
 		return $args;

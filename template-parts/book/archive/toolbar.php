@@ -1,6 +1,6 @@
 <?php
 /**
- * Book archive toolbar, real controls, and dialogs (args-only).
+ * Book archive toolbar and hidden native controls (dialogs are output in header.php).
  *
  * @package Dynamic_Book_Archive
  */
@@ -16,28 +16,45 @@ $tags    = isset( $args['tags'] ) && is_array( $args['tags'] ) ? $args['tags'] :
 
 $year_floor   = isset( $args['year_floor'] ) ? (int) $args['year_floor'] : 1900;
 $year_ceiling = isset( $args['year_ceiling'] ) ? (int) $args['year_ceiling'] : (int) gmdate( 'Y' );
+$search_value = isset( $args['search'] ) && is_string( $args['search'] ) ? $args['search'] : '';
 
-$sort_options = array(
-	array( 'value' => 'author:asc', 'label' => __( 'Author', 'dynamic-book-archive' ) ),
-	array( 'value' => 'date:desc', 'label' => __( 'Date', 'dynamic-book-archive' ) ),
-	array( 'value' => 'title:asc', 'label' => __( 'Title', 'dynamic-book-archive' ) ),
-);
+$sort_options = isset( $args['sort_options'] ) && is_array( $args['sort_options'] ) ? $args['sort_options'] : array();
+if ( empty( $sort_options ) ) {
+	$sort_options = array(
+		array( 'value' => 'author:asc', 'label' => __( 'Author', 'dynamic-book-archive' ) ),
+		array( 'value' => 'date:desc', 'label' => __( 'Date', 'dynamic-book-archive' ) ),
+		array( 'value' => 'title:asc', 'label' => __( 'Title', 'dynamic-book-archive' ) ),
+	);
+}
+
+$selected_author = isset( $args['selected_author'] ) && is_string( $args['selected_author'] ) ? trim( $args['selected_author'] ) : '';
+$selected_tag    = isset( $args['selected_tag'] ) && is_string( $args['selected_tag'] ) ? trim( $args['selected_tag'] ) : '';
 
 $author_options = array(
-	array( 'value' => '', 'label' => __( 'All authors', 'dynamic-book-archive' ) ),
+	array(
+		'value'    => '',
+		'label'    => __( 'All authors', 'dynamic-book-archive' ),
+		'selected' => '' === $selected_author,
+	),
 );
 foreach ( $authors as $author ) {
 	if ( ! is_string( $author ) || '' === trim( $author ) ) {
 		continue;
 	}
+	$author_trim = trim( $author );
 	$author_options[] = array(
-		'value' => $author,
-		'label' => $author,
+		'value'    => $author_trim,
+		'label'    => $author_trim,
+		'selected' => $author_trim === $selected_author,
 	);
 }
 
 $tag_options = array(
-	array( 'value' => '', 'label' => __( 'All tags', 'dynamic-book-archive' ) ),
+	array(
+		'value'    => '',
+		'label'    => __( 'All tags', 'dynamic-book-archive' ),
+		'selected' => '' === $selected_tag,
+	),
 );
 foreach ( $tags as $tag ) {
 	$tag_slug = is_array( $tag ) && isset( $tag['slug'] ) && is_string( $tag['slug'] ) ? $tag['slug'] : '';
@@ -46,8 +63,9 @@ foreach ( $tags as $tag ) {
 		continue;
 	}
 	$tag_options[] = array(
-		'value' => $tag_slug,
-		'label' => $tag_name,
+		'value'    => $tag_slug,
+		'label'    => $tag_name,
+		'selected' => $tag_slug === $selected_tag,
 	);
 }
 
@@ -78,12 +96,15 @@ foreach ( $tags as $tag ) {
 		<div class="js-book-archive-search-wrap relative w-full min-w-48 max-w-md sm:w-auto sm:max-w-xs md:max-w-xs group-aria-busy:pointer-events-none">
 			<label class="sr-only" for="book-archive-toolbar-search"><?php esc_html_e( 'Search books', 'dynamic-book-archive' ); ?></label>
 			<input
-				type="search"
+				type="text"
+				inputmode="search"
+				enterkeyhint="search"
 				id="book-archive-toolbar-search"
 				class="js-book-archive-search search-cancel-themed w-full rounded-full shadow-main bg-filters-background py-2 pl-3 pr-10 text-sm text-filters-text placeholder:text-filters-text/50 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-filters-link"
 				placeholder="<?php echo esc_attr( __( 'Search books…', 'dynamic-book-archive' ) ); ?>"
+				value="<?php echo esc_attr( $search_value ); ?>"
 				autocomplete="off" />
-			<span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-heading" aria-hidden="true">
+			<span class="js-book-archive-search-submit pointer-events-auto absolute right-3 top-1/2 -translate-y-1/2 text-heading" aria-hidden="true">
 				<?php dba_the_inline_icon( 'search-icon', 'h-4 w-4' ); ?>
 			</span>
 		</div>
@@ -137,6 +158,8 @@ foreach ( $tags as $tag ) {
 				'variant'           => 'real',
 				'year_floor'        => $year_floor,
 				'year_ceiling'      => $year_ceiling,
+				'year_value_min'    => isset( $args['year_value_min'] ) ? (int) $args['year_value_min'] : 0,
+				'year_value_max'    => isset( $args['year_value_max'] ) ? (int) $args['year_value_max'] : 0,
 				'label_any'         => __( 'Any', 'dynamic-book-archive' ),
 				'input_year_min_id' => 'book-archive-toolbar-year-min',
 				'input_year_max_id' => 'book-archive-toolbar-year-max',
@@ -146,8 +169,5 @@ foreach ( $tags as $tag ) {
 		);
 		?>
 	</div>
-
-	<?php get_template_part( 'template-parts/book/archive/dialog-sort', null, array( 'sort_options' => $sort_options ) ); ?>
-	<?php get_template_part( 'template-parts/book/archive/dialog-filter', null, array( 'year_floor' => $year_floor, 'year_ceiling' => $year_ceiling ) ); ?>
 </div>
 

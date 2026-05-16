@@ -45,6 +45,7 @@ $items     = isset( $results['items'] ) && is_array( $results['items'] ) ? $resu
 	<main
 		id="primary"
 		class="js-book-archive group flex-1"
+		data-book-archive-root
 		data-books-cpt-category="<?php echo esc_attr( $category_attr ); ?>"
 		data-books-cpt-category-slug="<?php echo esc_attr( $category_slug ); ?>"
 		data-books-cpt-page="<?php echo esc_attr( (string) $paged ); ?>"
@@ -63,8 +64,17 @@ $items     = isset( $results['items'] ) && is_array( $results['items'] ) ? $resu
 			'template-parts/book/archive/header',
 			null,
 			array(
-				'title'   => $title,
-				'options' => $options,
+				'title'       => $title,
+				'options'     => $options,
+				'search'      => $search,
+				'orderby'     => $orderby,
+				'order'       => $order,
+				'author'      => $author,
+				'tag'         => $tag,
+				'year_min'    => $year_min,
+				'year_max'    => $year_max,
+				'year_floor'  => $year_floor,
+				'year_ceiling' => $year_ceiling,
 			)
 		);
 		?>

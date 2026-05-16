@@ -190,7 +190,7 @@
 	}
 
 	function initBookArchiveToolbar() {
-		const root = document.querySelector('.js-book-archive');
+		const root = document.querySelector('main[data-book-archive-root]');
 		if (!root) {
 			return;
 		}
