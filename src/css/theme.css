@@ -6,8 +6,9 @@
 
 	--c-ink-100:#0E0E0D;
 	--c-ink-200:#191918;
-	--c-ink-300:#2A2A2A;
+	--c-ink-300:#2E2A24;
 	--c-ink-400:#1C1512;
+
 
 	--c-ink-900: #181715;
 	--c-ink-950: #131313;
@@ -17,10 +18,12 @@
 	--c-gold-100: #A6824A;
 	--c-gold-200: #D0A55F;
 	--c-gold-300: #ffcb77;
+
+	--c-neutral-100: #B8B4AB;
 }
 
 @theme {
-	--font-display: "Cinzel", ui-serif, Georgia, serif;
+	--font-display: "EB Garamond", Sans-serif;
 	--font-main: "Lora", Charter, "Bitstream Charter", "Sitka Text", Cambria, serif;
 
 
@@ -30,11 +33,14 @@
 	--color-page: var(--c-ink-100);
 	--color-surface: var(--c-ink-400);
 	--color-link: var(--c-gold-200);
+	--color-neutral: var(--c-neutral-100);
 	--color-link-hover: var(--c-gold-100);
 	--color-link-special: var(--c-bronze-100);
 	--color-link-special-hover: var(--c-bronze-200);
 
 	--color-border-main: var(--c-gold-200);
+	--color-border-secondary: var(--c-gold-100);
+	--color-border-soft: var(--c-ink-300);
 
 	/* Site navigation */
 	--color-site-navigation-primary: var(--c-gold-200);

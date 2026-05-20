@@ -120,7 +120,7 @@
 
 		}
 		a {
-			@apply text-link-special hover:text-link-special-hover underline-offset-2 hover:underline;
+			@apply inline-flex items-center text-link-special hover:text-link-special-hover underline-offset-2 hover:underline;
 		}
 	}
 }

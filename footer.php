@@ -33,7 +33,7 @@ $book_categories_list = array_map(
 
 ?>
 <footer class="site-footer py-2 px-2 md:px-4 lg:px-0 text-heading bg-surface">
-	<div class="max-w-[1440px] lg:px-2 mx-auto pb-2">
+	<div class="max-w-[1440px] lg:px-2 mx-auto pb-4">
 		<div class="flex flex-col md:flex-row md:justify-start items-stretch gap-x-16">
 			<div class="flex justify-center md:justify-start items-center gap-2">
 				<div class="site-footer-brand-logo w-16 md:w-20 shrink-0">
@@ -55,7 +55,7 @@ $book_categories_list = array_map(
 						'theme_location' => 'menu-1',
 						'menu_id'        => 'footer-menu',
 						'container'      => false,
-						'menu_class'     => 'footer-menu flex flex-row gap-6 text-base tracking-[0.2em] uppercase',
+						'menu_class'     => 'footer-menu flex flex-row gap-6 text-base tracking-[0.2em] uppercase items-center',
 						'fallback_cb'    => false,
 					)
 				);

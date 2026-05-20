@@ -1,269 +1,135 @@
 /* Contact Form 7 — Antique Japanese Archive Style */
 
 .wpcf7 {
-    --cf7-gold: var(--c-gold-200);
-    --cf7-gold-light: var(--c-gold-300);
-    --cf7-gold-dark: var(--c-gold-100);
-  
-    --cf7-bronze-light: var(--c-bronze-100);
-    --cf7-bronze-soft: var(--c-bronze-200);
-    --cf7-bronze-muted: var(--c-bronze-400);
-  
-    --cf7-ink: var(--c-ink-100);
-    --cf7-ink-soft: var(--c-ink-200);
-    --cf7-ink-warm: var(--c-ink-400);
-    --cf7-black: var(--c-black);
-  
-    --cf7-border: rgba(208, 165, 95, .24);
-    --cf7-border-strong: rgba(208, 165, 95, .46);
-    --cf7-text: var(--c-bronze-200);
-    --cf7-text-muted: rgba(224, 201, 183, .72);
-  
-    max-width: 860px;
-    margin-inline: auto;
-    color: var(--cf7-text);
-    font-family: var(--font-homepage, serif);
+  @apply text-neutral m-auto w-full max-w-8/12 bg-transparent border border-border-secondary rounded-md;
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"],
+  input[type="date"],
+  select,
+  textarea {
+    @apply text-neutral m-auto w-full min-h-4 px-3 py-2 border border-border-secondary rounded-md outline-hidden font-[inherit] text-base leading-relaxed transition-colors duration-300 ease-in-out;
+
   }
-  
-  .cf7-archive-form {
-    position: relative;
-    padding: clamp(28px, 5vw, 28px);
-    overflow: hidden;
-  
-    background:
-      radial-gradient(circle at 50% 0%, rgba(208, 165, 95, .10), transparent 34%),
-      radial-gradient(circle at 18% 20%, rgba(230, 193, 171, .045), transparent 32%),
-      linear-gradient(180deg, var(--c-ink-200), var(--c-ink-100) 54%, var(--c-black));
-  
-    border: 1px solid var(--cf7-border);
-    border-radius: 6px;
-  
-    box-shadow:
-      inset 0 0 70px rgba(0, 0, 0, .68),
-      0 0 0 1px rgba(0, 0, 0, .72);
+
+  textarea {
+    @apply min-h-48 resize-y;
   }
-  
-  .cf7-archive-form::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  
-    background:
-      linear-gradient(90deg, rgba(208,165,95,.10), transparent 14%, transparent 86%, rgba(208,165,95,.10)),
-      radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.28) 72%, rgba(0,0,0,.52) 100%);
-  
-    opacity: .65;
+
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-neutral/90;
   }
-  
-  .cf7-archive-form > * {
-    position: relative;
-    z-index: 1;
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    @apply border-border-main;
   }
-  
-  .cf7-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 22px;
+
+  select {
+    @apply appearance-none;
   }
-  
-  .cf7-field {
-    margin-bottom: 22px;
+
+  input[type="submit"] {
+    @apply text-heading bg-transparent px-6 py-2 border border-border-soft  hover:border-border-main rounded-xs transition-colors duration-300 ease-in-out uppercase cursor-pointer tracking-wider;
+
+
   }
-  
-  .cf7-field label {
-    display: block;
-    margin-bottom: 8px;
-  
-    color: var(--cf7-gold);
-    font-size: .82rem;
-    font-weight: 600;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-  }
-  
-  .wpcf7 input[type="text"],
-  .wpcf7 input[type="email"],
-  .wpcf7 input[type="tel"],
-  .wpcf7 input[type="url"],
-  .wpcf7 input[type="number"],
-  .wpcf7 input[type="date"],
-  .wpcf7 select,
-  .wpcf7 textarea {
-    width: 100%;
-    min-height: 54px;
-    padding: 14px 16px;
-  
-    color: var(--cf7-text);
-    background:
-      linear-gradient(180deg, rgba(230,193,171,.035), rgba(0,0,0,.16)),
-      rgba(0,0,0,.32);
-  
-    border: 1px solid var(--cf7-border);
-    border-radius: 4px;
-    outline: none;
-  
-    font-family: inherit;
-    font-size: 1rem;
-    line-height: 1.45;
-  
-    box-shadow: inset 0 0 18px rgba(0,0,0,.45);
-  
-    transition:
-      border-color .25s ease,
-      box-shadow .25s ease,
-      background .25s ease;
-  }
-  
-  .wpcf7 textarea {
-    min-height: 180px;
-    resize: vertical;
-  }
-  
-  .wpcf7 select {
-    appearance: none;
-  }
-  
-  .wpcf7 input::placeholder,
-  .wpcf7 textarea::placeholder {
-    color: rgba(224, 201, 183, .42);
-  }
-  
-  .wpcf7 input:focus,
-  .wpcf7 select:focus,
-  .wpcf7 textarea:focus {
-    border-color: var(--cf7-border-strong);
-    background:
-      linear-gradient(180deg, rgba(230,193,171,.055), rgba(0,0,0,.18)),
-      rgba(0,0,0,.38);
-  
-    box-shadow:
-      inset 0 0 20px rgba(0,0,0,.55),
-      0 0 0 1px rgba(208,165,95,.16),
-      0 0 22px rgba(208,165,95,.08);
-  }
-  
-  .cf7-note {
-    margin: 8px 0 28px;
-    padding: 18px 22px;
-  
-    color: var(--cf7-text-muted);
-    text-align: center;
-    line-height: 1.6;
-  
-    border: 1px solid var(--cf7-border);
-    border-radius: 4px;
-  
-    background:
-      linear-gradient(180deg, rgba(230,193,171,.025), rgba(0,0,0,.12)),
-      rgba(0,0,0,.24);
-  }
-  
-  .cf7-submit-wrap {
-    text-align: center;
-  }
-  
-  .wpcf7 input[type="submit"] {
-    min-width: 260px;
-    padding: 17px 34px;
-  
-    color: var(--c-ink-100);
-    background:
-      linear-gradient(
-        180deg,
-        var(--c-gold-300) 0%,
-        var(--c-gold-200) 48%,
-        var(--c-gold-100) 100%
-      );
-  
-    border: 1px solid rgba(255,203,119,.48);
-    border-radius: 4px;
-  
-    font-family: inherit;
-    font-size: .95rem;
-    font-weight: 700;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-  
-    cursor: pointer;
-  
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.22),
-      0 12px 30px rgba(0,0,0,.38);
-  
-    transition:
-      transform .2s ease,
-      box-shadow .2s ease,
-      filter .2s ease;
-  }
-  
-  .wpcf7 input[type="submit"]:hover {
-    transform: translateY(-1px);
-    filter: brightness(1.05);
-  
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.3),
-      0 16px 38px rgba(0,0,0,.45);
-  }
-  
-  .wpcf7 input[type="submit"]:active {
-    transform: translateY(0);
-    filter: brightness(.96);
-  }
-  
+
   .wpcf7-spinner {
-    display: block;
-    margin: 14px auto 0;
+    @apply hidden;
   }
-  
+
   .wpcf7-not-valid-tip {
-    margin-top: 7px;
-    color: var(--c-bronze-100);
-    font-size: .85rem;
-    line-height: 1.4;
+    @apply text-link-special text-sm leading-relaxed mt-2;
   }
-  
-  .wpcf7 form .wpcf7-response-output {
-    margin: 26px 0 0;
-    padding: 16px 20px;
-  
-    color: var(--cf7-text);
-    text-align: center;
-    line-height: 1.55;
-  
-    border: 1px solid var(--cf7-border);
-    background: rgba(0,0,0,.35);
-    border-radius: 4px;
+
+  form {
+    .wpcf7-response-output {
+      @apply mt-6 px-4 py-3 border border-border-secondary rounded-md outline-hidden font-[inherit] text-base leading-relaxed shadow-[inset_0_0_18px_#000000]/45 transition-colors duration-300 ease-in-out;
+    }
+
+    &.sent .wpcf7-response-output {
+      @apply border-border-main shadow-[inset_0_0_20px_#000000]/55;
+    }
+
+    &.invalid .wpcf7-response-output,
+    &.failed .wpcf7-response-output,
+    &.aborted .wpcf7-response-output {
+      @apply border-border-secondary shadow-[inset_0_0_18px_#000000]/45;
+    }
   }
-  
-  .wpcf7 form.sent .wpcf7-response-output {
-    border-color: rgba(208,165,95,.48);
-    color: var(--c-bronze-200);
-  }
-  
-  .wpcf7 form.invalid .wpcf7-response-output,
-  .wpcf7 form.failed .wpcf7-response-output,
-  .wpcf7 form.aborted .wpcf7-response-output {
-    border-color: rgba(230,193,171,.42);
-    color: var(--c-bronze-100);
-  }
-  
+
   @media (max-width: 767px) {
-    .wpcf7 {
-      max-width: 100%;
-    }
-  
-    .cf7-archive-form {
-      padding: 26px 18px;
-    }
-  
-    .cf7-row {
-      grid-template-columns: 1fr;
-      gap: 0;
-    }
-  
-    .wpcf7 input[type="submit"] {
-      width: 100%;
-      min-width: 0;
+    @apply max-w-full;
+
+    input[type="submit"] {
+      @apply w-full min-w-0;
     }
   }
+}
+
+.cf7-archive-form {
+  @apply relative overflow-hidden p-6 flex flex-col gap-4;
+
+  p{
+    @apply p-0 m-0;
+  }
+}
+
+.cf7-row {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+}
+
+.cf7-field {
+  label {
+    @apply block mb-2 text-book-primary text-sm font-medium tracking-wider uppercase;
+  }
+}
+
+.cf7-note {
+  @apply mt-2 mb-8 px-4 py-3 border border-border-secondary rounded-md outline-hidden font-[inherit] text-base leading-relaxed shadow-[inset_0_0_18px_#000000]/45 transition-colors duration-300 ease-in-out;
+}
+
+.cf7-submit-wrap {
+  @apply text-center;
+}
+
+.cf7-submit-info {
+  @apply text-sm text-neutral/80 italic;
+}
+
+.ss-main.wpcf7-select {
+  @apply text-neutral bg-transparent border border-border-secondary rounded-md min-h-4 py-2 px-3;
+
+  &:focus-within {
+    @apply border-border-main;
+  }
+  .ss-arrow path {
+    @apply stroke-neutral;
+  }
+}
+
+.ss-content.wpcf7-select {
+
+    @apply border border-border-secondary rounded-md;
+  
+
+  &:focus-within {
+    @apply border-border-main;
+  }
+
+  .ss-list .ss-option {
+    @apply text-neutral bg-page;
+  }
+
+  .ss-list .ss-option:hover,
+  .ss-list .ss-option:not(.ss-disabled).ss-selected {
+    @apply bg-heading text-page;
+  }
+
+}
