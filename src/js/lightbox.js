@@ -3,6 +3,7 @@
  */
 import GLightbox from 'glightbox';
 import 'glightbox/dist/css/glightbox.min.css';
+import '../css/components/lightbox.css';
 
 document.addEventListener('DOMContentLoaded', function () {
 	const links = document.querySelectorAll('.lightbox');
@@ -22,5 +23,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		selector: '.lightbox',
 		loop: false,
 		touchNavigation: true,
+		// Disable click-to-zoom: our CSS already scales the image to fill the
+		// viewport via `object-fit: contain`, and GLightbox's zoom writes
+		// inline `max-width`/`max-height` that would fight the overrides.
+		zoomable: false,
 	});
 });

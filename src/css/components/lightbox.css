@@ -1,0 +1,57 @@
+/**
+ * GLightbox image-size overrides.
+ *
+ * Vendor defaults keep the image at its natural size (`width: auto`) and only
+ * cap it with `max-height: 97vh` + `object-fit: cover`, so small source files
+ * never scale up. Here we force the slide chain to fill the viewport and let
+ * `object-fit: contain` upscale the image to whichever axis hits 100vw/100dvh
+ * first while preserving aspect ratio. `!important` defends against the inline
+ * `style` GLightbox writes when zoom or custom width/height is involved.
+ */
+
+.glightbox-container .gslide,
+.glightbox-container .gslide-inner-content,
+.glightbox-container .ginner-container,
+.glightbox-container .gslide-media,
+.glightbox-container .gslide-image {
+    width: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-width: 100% !important;
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+}
+
+.glightbox-container .gslide-image {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.glightbox-container .gslide-image img {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
+    min-width: 0 !important;
+    object-fit: contain !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+@media (min-width: 769px) {
+    .glightbox-container .ginner-container {
+        flex-direction: column !important;
+    }
+
+    .glightbox-container .gslide-image img {
+        max-width: 100vw !important;
+        max-height: 100vh !important;
+        max-height: 100dvh !important;
+    }
+}
