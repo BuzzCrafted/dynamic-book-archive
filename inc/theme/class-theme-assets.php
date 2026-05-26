@@ -142,6 +142,8 @@ final class Theme_Assets {
 	 * the same request.
 	 */
 	public static function enqueue_cf7_slim_select_assets(): void {
+		self::enqueue_cf7_response_dismiss_assets();
+
 		$dir = get_template_directory();
 		$uri = get_template_directory_uri();
 
@@ -160,6 +162,27 @@ final class Theme_Assets {
 			$uri . '/assets/js/cf7-slim-select.min.js',
 			array( $slim_handle ),
 			(string) filemtime( $init_js ),
+			true
+		);
+	}
+
+	/**
+	 * Auto-dismiss CF7 success messages after a short delay.
+	 */
+	private static function enqueue_cf7_response_dismiss_assets(): void {
+		$dir = get_template_directory();
+		$uri = get_template_directory_uri();
+
+		$dismiss_js = $dir . '/assets/js/cf7-response-dismiss.min.js';
+		if ( ! is_readable( $dismiss_js ) ) {
+			return;
+		}
+
+		wp_enqueue_script(
+			'dba-cf7-response-dismiss',
+			$uri . '/assets/js/cf7-response-dismiss.min.js',
+			array(),
+			(string) filemtime( $dismiss_js ),
 			true
 		);
 	}

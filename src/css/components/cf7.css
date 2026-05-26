@@ -36,8 +36,6 @@
 
   input[type="submit"] {
     @apply text-heading bg-transparent px-6 py-2 border border-border-soft  hover:border-border-main rounded-xs transition-colors duration-300 ease-in-out uppercase cursor-pointer tracking-wider;
-
-
   }
 
   .wpcf7-spinner {
@@ -50,17 +48,21 @@
 
   form {
     .wpcf7-response-output {
-      @apply mt-6 px-4 py-3 border border-border-secondary rounded-md outline-hidden font-[inherit] text-base leading-relaxed shadow-[inset_0_0_18px_#000000]/45 transition-colors duration-300 ease-in-out;
+      @apply mt-8! px-5! py-4! border! border-border-secondary! rounded-md! bg-page/40! text-heading! text-xl! leading-relaxed! transition-all duration-500 ease-in-out;
     }
 
     &.sent .wpcf7-response-output {
-      @apply border-border-main shadow-[inset_0_0_20px_#000000]/55;
+      @apply border-border-main text-neutral bg-page/50
     }
 
     &.invalid .wpcf7-response-output,
     &.failed .wpcf7-response-output,
     &.aborted .wpcf7-response-output {
-      @apply border-border-secondary shadow-[inset_0_0_18px_#000000]/45;
+      @apply border-border-secondary text-book-primary bg-page/50;
+    }
+
+    .wpcf7-response-output.is-hiding {
+      @apply opacity-0 translate-y-2 pointer-events-none;
     }
   }
 

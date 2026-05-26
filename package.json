@@ -8,8 +8,8 @@
 		"build:images": "cpx \"src/images/**/*\" assets/images",
 		"watch:images": "cpx \"src/images/**/*\" assets/images --watch",
 		"build:vendor": "composer dump-autoload -o --no-interaction",
-		"build:js": "esbuild src/js/navigation.js src/js/book-single-gallery.js src/js/book-archive-toolbar-selects.js src/js/cf7-slim-select.js src/js/customizer.js --bundle --format=iife --outdir=assets/js --entry-names=[name].min --minify --target=es2018",
-		"watch:js": "esbuild src/js/navigation.js src/js/book-single-gallery.js src/js/book-archive-toolbar-selects.js src/js/cf7-slim-select.js src/js/customizer.js --bundle --format=iife --outdir=assets/js --entry-names=[name].min --minify --target=es2018 --watch",
+		"build:js": "esbuild src/js/navigation.js src/js/book-single-gallery.js src/js/book-archive-toolbar-selects.js src/js/cf7-slim-select.js src/js/cf7-response-dismiss.js src/js/customizer.js --bundle --format=iife --outdir=assets/js --entry-names=[name].min --minify --target=es2018",
+		"watch:js": "esbuild src/js/navigation.js src/js/book-single-gallery.js src/js/book-archive-toolbar-selects.js src/js/cf7-slim-select.js src/js/cf7-response-dismiss.js src/js/customizer.js --bundle --format=iife --outdir=assets/js --entry-names=[name].min --minify --target=es2018 --watch",
 		"watch": "concurrently -n css,images,vendor,js \"npm run watch:css\" \"npm run watch:images\" \"npm run watch:vendor\" \"npm run watch:js\"",
 		"bundle:composer": "composer install --no-dev --optimize-autoloader --no-interaction",
 		"bundle": "npm run build:css && npm run build:js && npm run build:images && npm run bundle:composer && node scripts/bundle.mjs"
