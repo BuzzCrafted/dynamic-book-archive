@@ -1,6 +1,6 @@
 /**
- * Writes bundle/<slug>/ with files required to run the theme in WordPress,
- * then zips it to bundle/<slug>.zip (single top-level folder for WP upload).
+ * Stages bundle/<slug>/, zips it to bundle/<slug>-<version>.zip (single top-level
+ * folder for WP upload), then removes the staging folder.
  */
 
 import { spawnSync } from 'node:child_process';
@@ -36,7 +36,49 @@ async function cpDir(src, dest) {
 	}
 }
 
+async function syncThemeVersion() {
+	const pkgPath = path.join(root, 'package.json');
+	const pkg = JSON.parse(await fs.readFile(pkgPath, 'utf8'));
+	const version = pkg.version;
+
+	if (!version || typeof version !== 'string') {
+		console.error('Bundle failed: package.json has no version field.');
+		process.exit(1);
+	}
+
+	const functionsPath = path.join(root, 'functions.php');
+	const functionsPhp = await fs.readFile(functionsPath, 'utf8');
+	const functionsPattern = /define\s*\(\s*'DBA_VERSION'\s*,\s*'[^']*'\s*\)\s*;/;
+	if (!functionsPattern.test(functionsPhp)) {
+		console.error('Bundle failed: could not find DBA_VERSION in functions.php.');
+		process.exit(1);
+	}
+	const functionsNext = functionsPhp.replace(
+		/(define\s*\(\s*'DBA_VERSION'\s*,\s*')[^']*('\s*\)\s*;)/,
+		`$1${version}$2`
+	);
+	if (functionsNext !== functionsPhp) {
+		await fs.writeFile(functionsPath, functionsNext);
+	}
+
+	const stylePath = path.join(root, 'style.css');
+	const styleCss = await fs.readFile(stylePath, 'utf8');
+	if (!/^Version:\s*.+$/m.test(styleCss)) {
+		console.error('Bundle failed: could not find Version in style.css.');
+		process.exit(1);
+	}
+	const styleNext = styleCss.replace(/^Version:\s*.+$/m, `Version: ${version}`);
+	if (styleNext !== styleCss) {
+		await fs.writeFile(stylePath, styleNext);
+	}
+
+	console.log(`Synced theme version to ${version}`);
+	return version;
+}
+
 async function main() {
+	const version = await syncThemeVersion();
+
 	const bundleRoot = path.join(root, 'bundle');
 	const outDir = path.join(bundleRoot, THEME_SLUG);
 
@@ -91,20 +133,19 @@ async function main() {
 		process.exit(1);
 	}
 
-	const zipPath = path.join(bundleRoot, `${THEME_SLUG}.zip`);
+	const zipPath = path.join(bundleRoot, `${THEME_SLUG}-${version}.zip`);
 	const zip = spawnSync('zip', ['-qr', zipPath, THEME_SLUG], {
 		cwd: bundleRoot,
 		encoding: 'utf8',
 	});
 	if (zip.error?.code === 'ENOENT') {
 		console.warn('zip CLI not found; skipped .zip (folder install still works):', zip.error.message);
+		console.log(`Bundle ready: ${outDir}`);
 	} else if (zip.status !== 0) {
 		console.error(zip.stderr || zip.stdout || `zip exited ${zip.status}`);
 		process.exit(zip.status ?? 1);
-	}
-
-	console.log(`Bundle ready: ${outDir}`);
-	if (!zip.error) {
+	} else {
+		await rmrf(outDir);
 		console.log(`Zip (WP upload): ${zipPath}`);
 	}
 }

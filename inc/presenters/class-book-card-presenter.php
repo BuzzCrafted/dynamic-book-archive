@@ -48,19 +48,23 @@ final class Book_Card_Presenter {
 			$thumb_html = get_the_post_thumbnail(
 				$post,
 				'full',
-				array( 'class' => 'size-full max-h-none object-cover object-center' )
+				array(
+					'class'    => 'size-full max-h-none object-cover object-center',
+					'loading'  => 'lazy',
+					'decoding' => 'async',
+				)
 			);
 			$thumb_html = is_string( $thumb_html ) ? $thumb_html : '';
 		}
 
 		return array(
-			'post_id'         => (int) $post->ID,
-			'permalink'       => $permalink,
-			'title'           => $title,
-			'title_japanese'  => $title_japanese,
+			'post_id'           => (int) $post->ID,
+			'permalink'         => $permalink,
+			'title'             => $title,
+			'title_japanese'    => $title_japanese,
 			'publication_label' => $publication_label,
-			'thumbnail_html'  => $thumb_html,
-			'placeholder_url' => trailingslashit( get_template_directory_uri() ) . 'assets/images/placeholders/no-cover.webp',
+			'thumbnail_html'    => $thumb_html,
+			'placeholder_url'   => trailingslashit( get_template_directory_uri() ) . 'assets/images/placeholders/no-cover.webp',
 		);
 	}
 
@@ -85,8 +89,8 @@ final class Book_Card_Presenter {
 			'title'           => '',
 			'title_japanese'  => '',
 			'publication_label' => '',
-			'thumbnail_html'  => '',
-			'placeholder_url' => trailingslashit( get_template_directory_uri() ) . 'assets/images/placeholders/no-cover.webp',
+			'thumbnail_html'    => '',
+			'placeholder_url'   => trailingslashit( get_template_directory_uri() ) . 'assets/images/placeholders/no-cover.webp',
 		);
 	}
 

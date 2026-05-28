@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+use DBA\Domain\Books\Book_Media_Repository;
+
 if ( ! isset( $args ) || ! is_array( $args ) ) {
 	return;
 }
@@ -36,6 +38,7 @@ endif;
 
 $thumb_limit   = max( 1, $thumb_limit );
 $gallery_count = count( $ids );
+$lightbox_gallery_id = $gallery_count > 1 ? 'book-gallery-' . $post_id : '';
 ?>
 <div class="flex flex-col self-start rounded-md shadow-main" data-book-gallery<?php echo $thumbs_capped ? ' data-book-gallery-thumbs-capped="1"' : ''; ?>>
 	<span id="book-gallery-status-<?php echo esc_attr( (string) $post_id ); ?>" class="sr-only" data-book-gallery-status aria-live="polite"></span>
@@ -54,15 +57,24 @@ $gallery_count = count( $ids );
 			<?php
 			$slide_class = 'absolute inset-0 m-1! z-0 flex items-center justify-center bg-main/30 opacity-0 transition-opacity duration-300 pointer-events-none aria-[hidden=false]:pointer-events-auto aria-[hidden=false]:z aria-[hidden=false]:opacity-100';
 			foreach ( $ids as $idx => $img_id ) {
-				$img_html = wp_get_attachment_image(
+				$aria_label = 1 === $gallery_count
+					? __( 'View cover image', 'dynamic-book-archive' )
+					: sprintf(
+						/* translators: 1: image number (1-based), 2: total image count. */
+						__( 'View image %1$d of %2$d', 'dynamic-book-archive' ),
+						$idx + 1,
+						$gallery_count
+					);
+				$img_html = Book_Media_Repository::render_lightbox_image(
 					(int) $img_id,
 					'full',
-					false,
+					'max-h-full max-w-full h-auto w-auto object-contain object-center',
+					$aria_label,
 					array(
-						'class'    => 'max-h-full max-w-full h-auto w-auto object-contain object-center',
 						'loading'  => 0 === $idx ? 'eager' : 'lazy',
 						'decoding' => 'async',
-					)
+					),
+					$lightbox_gallery_id
 				);
 				if ( '' === $img_html ) {
 					continue;

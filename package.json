@@ -2,6 +2,7 @@
 	"name": "dynamic-book-archive",
 	"private": true,
 	"type": "module",
+	"version": "1.3.0",
 	"scripts": {
 		"build:css": "tailwindcss -i ./src/css/input.css -o ./assets/css/app.min.css --minify",
 		"watch:css": "tailwindcss -i ./src/css/input.css -o ./assets/css/app.min.css --watch",
@@ -15,9 +16,9 @@
 		"bundle": "npm run build:css && npm run build:js && npm run build:images && npm run bundle:composer && node scripts/bundle.mjs"
 	},
 	"devDependencies": {
-		"concurrently": "^9.1.2",
 		"@tailwindcss/cli": "^4.1.0",
 		"@tailwindcss/typography": "^0.5.16",
+		"concurrently": "^9.1.2",
 		"cpx2": "^8.0.2",
 		"esbuild": "^0.25.0",
 		"tailwindcss": "^4.1.0"

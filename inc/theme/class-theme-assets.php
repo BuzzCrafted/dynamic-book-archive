@@ -19,6 +19,7 @@ final class Theme_Assets {
 
 	public static function register_hooks(): void {
 		add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue' ) );
+		add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue_book_lightbox' ), 20 );
 		add_action( 'wpcf7_enqueue_scripts', array( self::class, 'enqueue_cf7_slim_select_assets' ), 20 );
 	}
 
@@ -68,6 +69,41 @@ final class Theme_Assets {
 		if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 			wp_enqueue_script( 'comment-reply' );
 		}
+	}
+
+	/**
+	 * Gallery lightbox on singular book pages — dko-elementor-widgets Smart Lightbox Image bundle.
+	 *
+	 * Runs at priority 20 so Elementor frontend registration has already fired when present.
+	 */
+	public static function enqueue_book_lightbox(): void {
+		if ( ! is_singular( 'book' ) ) {
+			return;
+		}
+
+		self::enqueue_dko_lightbox_bundle();
+	}
+
+	/**
+	 * Register + enqueue the plugin lightbox-image handles (shared with Elementor widgets).
+	 */
+	private static function enqueue_dko_lightbox_bundle(): void {
+		if ( function_exists( 'dko_elementor_widgets_enqueue_lightbox_assets' ) ) {
+			dko_elementor_widgets_enqueue_lightbox_assets();
+			return;
+		}
+
+		if ( ! class_exists( \DKO_Elementor_Widgets_Plugin::class )
+			|| ! class_exists( \DKO_Elementor_Widgets_Asset_Manager::class ) ) {
+			return;
+		}
+
+		$slug   = 'lightbox-image';
+		$assets = \DKO_Elementor_Widgets_Plugin::instance()->assets();
+		$assets->register_widget_assets( $slug );
+
+		wp_enqueue_style( \DKO_Elementor_Widgets_Asset_Manager::style_handle( $slug ) );
+		wp_enqueue_script( \DKO_Elementor_Widgets_Asset_Manager::script_handle( $slug ) );
 	}
 
 	/**

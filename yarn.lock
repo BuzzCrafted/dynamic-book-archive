@@ -291,6 +291,11 @@ get-caller-file@^2.0.5:
   resolved "https://registry.npmjs.org/get-caller-file/-/get-caller-file-2.0.5.tgz"
   integrity sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==
 
+glightbox@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.npmjs.org/glightbox/-/glightbox-3.3.1.tgz"
+  integrity sha512-nXoKfJRnQTDaAFAw5799hjpfAAHx5aLvOLG0SIGudeMCwtHgO3P2/avNYapJ+SL4UEZxO2YNBPtq6pzMhSx42g==
+
 glob@^13.0.0:
   version "13.0.6"
   resolved "https://registry.npmjs.org/glob/-/glob-13.0.6.tgz"

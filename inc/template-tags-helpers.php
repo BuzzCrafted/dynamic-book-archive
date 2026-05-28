@@ -440,6 +440,26 @@ if ( ! function_exists( 'dba_get_inline_icon' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'dba_get_icon_svg_raw' ) ) :
+	/**
+	 * Raw SVG markup from `/assets/images/icons/` (no wrapper element).
+	 *
+	 * @param string $name Icon path (without `.svg`) relative to `/assets/images/icons/`.
+	 */
+	function dba_get_icon_svg_raw( string $name ): string {
+		$wrapped = dba_get_inline_icon( $name );
+		if ( '' === $wrapped ) {
+			return '';
+		}
+
+		if ( preg_match( '/<svg\b[^>]*>.*?<\/svg>/is', $wrapped, $matches ) ) {
+			return $matches[0];
+		}
+
+		return '';
+	}
+endif;
+
 if ( ! function_exists( 'dba_the_inline_icon' ) ) :
 	/**
 	 * Outputs an inline SVG icon from `/assets/images/icons/` wrapped in an `<i>` element.
