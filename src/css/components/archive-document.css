@@ -1,0 +1,337 @@
+/*
+ * Historical document single — document viewer.
+ *
+ * Styles the theme-owned `.dba-doc-viewer` shell, which replaces the plugin's
+ * default shortcode shell on historical_document singular views. All values
+ * reference existing tokens from theme.css; no new variables are introduced.
+ *
+ * The two-column layout (scan image left, translation text right) with a
+ * thumbnail strip at the bottom matches the reference design.
+ */
+
+/* ─── Root container ────────────────────────────────────────────────────── */
+
+.dba-doc-viewer {
+	background: var(--c-ink-950);
+	border: 1px solid var(--color-border-soft);
+	border-radius: 0.5rem;
+	overflow: hidden;
+}
+
+/* ─── Status messages (loading / error / empty) ─────────────────────────── */
+
+.dba-doc-viewer__status {
+	padding: 2rem;
+	font-family: var(--font-main);
+	font-size: 0.875rem;
+	color: var(--color-body);
+	text-align: center;
+}
+
+.dba-doc-viewer__status--error {
+	color: oklch(0.65 0.18 25);
+}
+
+/* ─── Two-column layout ─────────────────────────────────────────────────── */
+
+.dba-doc-viewer__layout {
+	display: grid;
+	grid-template-columns: 1fr;
+	min-height: 26rem;
+}
+
+@media (min-width: 800px) {
+	.dba-doc-viewer__layout {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	}
+}
+
+/* ─── Left column: scan image ───────────────────────────────────────────── */
+
+.dba-doc-viewer__image-col {
+	position: relative;
+	display: flex;
+	align-items: stretch;
+	background: var(--c-ink-950);
+	border-bottom: 1px solid var(--color-border-soft);
+}
+
+@media (min-width: 800px) {
+	.dba-doc-viewer__image-col {
+		border-bottom: none;
+		border-right: 1px solid var(--color-border-soft);
+	}
+}
+
+.dba-doc-viewer__figure {
+	flex: 1;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem 2.75rem;
+}
+
+.dba-doc-viewer__figure img {
+	display: block;
+	max-width: 100%;
+	max-height: 62vh;
+	width: auto;
+	height: auto;
+	object-fit: contain;
+}
+
+/* Overlaid prev/next arrows */
+.dba-doc-viewer__nav {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 1;
+	width: 2.25rem;
+	height: 2.25rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: color-mix(in oklch, var(--color-surface) 85%, transparent);
+	border: 1px solid color-mix(in oklch, var(--color-book-primary) 35%, transparent);
+	border-radius: 50%;
+	color: var(--color-book-primary);
+	font-size: 1.375rem;
+	line-height: 1;
+	cursor: pointer;
+	transition: background 200ms, color 200ms, border-color 200ms;
+}
+
+.dba-doc-viewer__nav--prev { left: 0.5rem; }
+.dba-doc-viewer__nav--next { right: 0.5rem; }
+
+.dba-doc-viewer__nav:hover:not(:disabled) {
+	background: color-mix(in oklch, var(--color-book-primary) 18%, var(--color-surface));
+	color: var(--color-heading);
+	border-color: color-mix(in oklch, var(--color-book-primary) 60%, transparent);
+}
+
+.dba-doc-viewer__nav:disabled {
+	opacity: 0.25;
+	cursor: default;
+}
+
+/* ─── Right column: tabs + content ─────────────────────────────────────── */
+
+.dba-doc-viewer__text-col {
+	display: flex;
+	flex-direction: column;
+	background: var(--color-surface);
+}
+
+/* Tab bar */
+.dba-doc-viewer__tabs-bar {
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+	padding: 0 1rem;
+	border-bottom: 1px solid var(--color-border-soft);
+	gap: 0;
+}
+
+.dba-doc-viewer__tab {
+	padding: 0.75rem 0;
+	margin-right: 1.25rem;
+	background: none;
+	border: none;
+	border-bottom: 2px solid transparent;
+	color: var(--color-body);
+	font-family: var(--font-main);
+	font-size: 0.6875rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: color 150ms, border-color 150ms;
+	white-space: nowrap;
+}
+
+.dba-doc-viewer__tab:hover {
+	color: var(--color-heading);
+}
+
+.dba-doc-viewer__tab.is-active {
+	color: var(--color-heading);
+	border-bottom-color: var(--color-book-primary);
+}
+
+.dba-doc-viewer__counter {
+	margin-left: auto;
+	font-family: var(--font-main);
+	font-size: 0.6875rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--color-body);
+	white-space: nowrap;
+}
+
+/* Panel shared */
+.dba-doc-viewer__panel {
+	flex: 1;
+	overflow-y: auto;
+	padding: 1.5rem;
+	max-height: 62vh;
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-border-soft) transparent;
+}
+
+/* Translation prose */
+.dba-doc-viewer__prose {
+	font-family: var(--font-main);
+	font-size: 0.9375rem;
+	line-height: 1.8;
+	color: var(--color-body);
+	white-space: pre-wrap;
+}
+
+/* Continue reading link */
+.dba-doc-viewer__next-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	margin-top: 1.5rem;
+	font-family: var(--font-main);
+	font-size: 0.6875rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--color-link);
+	text-decoration: none;
+	cursor: pointer;
+	transition: color 150ms;
+}
+
+.dba-doc-viewer__next-link:hover {
+	color: var(--color-link-hover);
+}
+
+/* About panel metadata list */
+.dba-doc-viewer__meta {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 0.625rem 1.25rem;
+	margin: 0;
+}
+
+.dba-doc-viewer__meta dt {
+	font-family: var(--font-main);
+	font-size: 0.6875rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--color-body);
+	padding-top: 0.125rem;
+}
+
+.dba-doc-viewer__meta dd {
+	margin: 0;
+	font-family: var(--font-main);
+	font-size: 0.875rem;
+	color: var(--color-heading);
+}
+
+.dba-doc-viewer__meta dd a {
+	color: var(--color-link);
+	text-decoration: none;
+	transition: color 150ms;
+}
+
+.dba-doc-viewer__meta dd a:hover {
+	color: var(--color-link-hover);
+}
+
+/* ─── Thumbnail strip ───────────────────────────────────────────────────── */
+
+.dba-doc-viewer__thumbs-strip {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.625rem 1rem;
+	border-top: 1px solid var(--color-border-soft);
+	background: var(--c-ink-950);
+	overflow: hidden;
+}
+
+.dba-doc-viewer__thumbs-label {
+	display: flex;
+	align-items: center;
+	gap: 0.375rem;
+	font-family: var(--font-main);
+	font-size: 0.625rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--color-body);
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+.dba-doc-viewer__thumbs-track {
+	display: flex;
+	gap: 0.375rem;
+	overflow-x: auto;
+	flex: 1;
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-border-soft) transparent;
+}
+
+.dba-doc-viewer__thumb {
+	flex-shrink: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.25rem;
+	background: none;
+	border: 2px solid transparent;
+	border-radius: 0.1875rem;
+	cursor: pointer;
+	padding: 0.125rem;
+	transition: border-color 150ms;
+}
+
+.dba-doc-viewer__thumb img {
+	display: block;
+	width: 3.25rem;
+	height: 4.5rem;
+	object-fit: cover;
+}
+
+.dba-doc-viewer__thumb span {
+	font-family: var(--font-main);
+	font-size: 0.625rem;
+	color: var(--color-body);
+}
+
+.dba-doc-viewer__thumb.is-active {
+	border-color: var(--color-book-primary);
+}
+
+.dba-doc-viewer__thumbs-nav {
+	display: flex;
+	gap: 0.5rem;
+	flex-shrink: 0;
+}
+
+.dba-doc-viewer__thumbs-nav button {
+	padding: 0.375rem 0.875rem;
+	background: var(--color-book-primary);
+	color: var(--c-ink-100);
+	border: none;
+	border-radius: 0.25rem;
+	font-family: var(--font-main);
+	font-size: 0.6875rem;
+	letter-spacing: 0.06em;
+	cursor: pointer;
+	transition: background 150ms;
+	white-space: nowrap;
+}
+
+.dba-doc-viewer__thumbs-nav button:hover:not(:disabled) {
+	background: var(--color-book-secondary);
+}
+
+.dba-doc-viewer__thumbs-nav button:disabled {
+	opacity: 0.35;
+	cursor: default;
+}
