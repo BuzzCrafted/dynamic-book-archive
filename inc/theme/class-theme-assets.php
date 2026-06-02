@@ -54,14 +54,7 @@ final class Theme_Assets {
 			file_exists( $app_css ) ? (string) filemtime( $app_css ) : ( defined( 'DBA_VERSION' ) ? DBA_VERSION : '1.0.0' )
 		);
 
-		$nav_js_path = get_template_directory() . '/assets/js/navigation.min.js';
-		wp_enqueue_script(
-			'dba-navigation',
-			get_template_directory_uri() . '/assets/js/navigation.min.js',
-			array(),
-			file_exists( $nav_js_path ) ? (string) filemtime( $nav_js_path ) : ( defined( 'DBA_VERSION' ) ? DBA_VERSION : '1.0.0' ),
-			true
-		);
+		self::enqueue_interactive_bundle();
 
 		self::maybe_enqueue_book_archive_select_assets();
 		self::maybe_enqueue_book_single_gallery();
@@ -107,29 +100,15 @@ final class Theme_Assets {
 	}
 
 	/**
-	 * Gallery prev/next for singular books.
+	 * Gallery localized strings for singular books (bundle is already loaded globally).
 	 */
 	private static function maybe_enqueue_book_single_gallery(): void {
 		if ( ! is_singular( 'book' ) ) {
 			return;
 		}
 
-		$path = get_template_directory() . '/assets/js/book-single-gallery.min.js';
-		$uri  = get_template_directory_uri() . '/assets/js/book-single-gallery.min.js';
-		if ( ! is_readable( $path ) ) {
-			return;
-		}
-
-		wp_enqueue_script(
-			'dba-book-single-gallery',
-			$uri,
-			array(),
-			(string) filemtime( $path ),
-			true
-		);
-
 		wp_localize_script(
-			'dba-book-single-gallery',
+			'dba-interactive',
 			'dbaBookSingleGallery',
 			array(
 				'imageStatus' => __( 'Image %1$s of %2$s', 'dynamic-book-archive' ),
@@ -142,31 +121,8 @@ final class Theme_Assets {
 			return;
 		}
 
-		$dir = get_template_directory();
-		$uri = get_template_directory_uri();
-
-		$init_js = $dir . '/assets/js/book-archive-toolbar-selects.min.js';
-		if ( ! is_readable( $init_js ) ) {
-			return;
-		}
-
-		$slim_handle = self::ensure_slim_select_handle();
-		if ( null === $slim_handle ) {
-			return;
-		}
-
-		$script_deps = array( $slim_handle );
-		if ( wp_script_is( 'books-cpt-archive-filter', 'registered' ) ) {
-			$script_deps[] = 'books-cpt-archive-filter';
-		}
-
-		wp_enqueue_script(
-			'dba-book-archive-selects',
-			$uri . '/assets/js/book-archive-toolbar-selects.min.js',
-			$script_deps,
-			(string) filemtime( $init_js ),
-			true
-		);
+		// Ensure Slim Select is loaded; it is initialized by the interactive bundle's archiveToolbar component.
+		self::ensure_slim_select_handle();
 	}
 
 	/**
@@ -219,6 +175,28 @@ final class Theme_Assets {
 			$uri . '/assets/js/cf7-response-dismiss.min.js',
 			array(),
 			(string) filemtime( $dismiss_js ),
+			true
+		);
+	}
+
+	/**
+	 * Enqueue the single interactive bundle (navigation + gallery + archive toolbar).
+	 * Alpine is bundled directly inside index.min.js — no separate vendor dependency.
+	 */
+	private static function enqueue_interactive_bundle(): void {
+		$dir = get_template_directory();
+		$uri = get_template_directory_uri();
+
+		$bundle_js = $dir . '/assets/js/index.min.js';
+		if ( ! is_readable( $bundle_js ) ) {
+			return;
+		}
+
+		wp_enqueue_script(
+			'dba-interactive',
+			$uri . '/assets/js/index.min.js',
+			array(),
+			(string) filemtime( $bundle_js ),
 			true
 		);
 	}

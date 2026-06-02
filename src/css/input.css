@@ -1,9 +1,13 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
+/* Alpine.js: hide elements with x-cloak before Alpine initializes */
+[x-cloak] { display: none !important; }
+
 @source '../../*.php';
 @source '../../inc/**/*.php';
 @source '../../template-parts/**/*.php';
+@source '../../src/js/**/*.js';
 
 @import './theme.css';
 @import './parts/base.css';

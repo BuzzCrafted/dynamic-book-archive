@@ -46,6 +46,8 @@ $items     = isset( $results['items'] ) && is_array( $results['items'] ) ? $resu
 		id="primary"
 		class="js-book-archive group flex-1"
 		data-book-archive-root
+		x-data="archiveToolbar()"
+		@books-cpt-archive-toolbar-synced="onToolbarSynced()"
 		data-books-cpt-category="<?php echo esc_attr( $category_attr ); ?>"
 		data-books-cpt-category-slug="<?php echo esc_attr( $category_slug ); ?>"
 		data-books-cpt-page="<?php echo esc_attr( (string) $paged ); ?>"

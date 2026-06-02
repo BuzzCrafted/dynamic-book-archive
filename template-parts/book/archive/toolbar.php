@@ -75,9 +75,11 @@ foreach ( $tags as $tag ) {
 		<button
 			type="button"
 			class="js-book-archive-open-sort inline-flex md:min-h-10 md:min-w-30 shrink-0 cursor-pointer items-center gap-2.5 rounded-xl bg-primary bg-filters-background py-2 pl-3 pr-2.5 font-display text-sm text-filters-text shadow-main transition hover:bg-book-secondary/10 hover:shadow-bronze-glow duration-200 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-filters-link/60 [&[aria-expanded='true']>span:last-child]:motion-safe:rotate-180"
+			x-ref="btnSort"
 			aria-haspopup="dialog"
-			aria-expanded="false"
-			aria-controls="book-archive-dialog-sort">
+			:aria-expanded="sortOpen ? 'true' : 'false'"
+			aria-controls="book-archive-dialog-sort"
+			@click="openSort()">
 			<span class="text-heading [&>i]:flex [&>i]:size-4 [&>i]:items-center [&>i]:justify-center" aria-hidden="true"><?php dba_the_inline_icon( 'bx/bx-sort' ); ?></span>
 			<span class="hidden md:inline-block min-w-0 flex-1 text-left leading-none"><?php esc_html_e( 'Sort', 'dynamic-book-archive' ); ?></span>
 			<span class="hidden md:block shrink-0 text-heading motion-safe:transition-transform [&>i]:flex [&>i]:size-4 [&>i]:items-center [&>i]:justify-center" aria-hidden="true"><?php dba_the_inline_icon( 'bx/bx-chevron-down', 'text-current' ); ?></span>
@@ -85,9 +87,11 @@ foreach ( $tags as $tag ) {
 		<button
 			type="button"
 			class="js-book-archive-open-filter inline-flex md:min-h-10 md:min-w-30 shrink-0 cursor-pointer items-center gap-2.5 rounded-xl bg-primary bg-filters-background py-2 pl-3 pr-2.5 font-display text-sm text-filters-text shadow-main transition hover:bg-book-secondary/10 hover:shadow-bronze-glow duration-200 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-filters-link/60 [&[aria-expanded='true']>span:last-child]:motion-safe:rotate-180"
+			x-ref="btnFilter"
 			aria-haspopup="dialog"
-			aria-expanded="false"
-			aria-controls="book-archive-dialog-filter">
+			:aria-expanded="filterOpen ? 'true' : 'false'"
+			aria-controls="book-archive-dialog-filter"
+			@click="openFilter()">
 			<span class="text-heading [&>i]:flex [&>i]:size-4 [&>i]:items-center [&>i]:justify-center" aria-hidden="true"><?php dba_the_inline_icon( 'bx/bx-slider', 'text-current' ); ?></span>
 			<span class="hidden md:inline-block min-w-0 flex-1 text-left leading-none"><?php esc_html_e( 'Filter', 'dynamic-book-archive' ); ?></span>
 			<span class="hidden md:block shrink-0 text-heading motion-safe:transition-transform [&>i]:flex [&>i]:size-4 [&>i]:items-center [&>i]:justify-center" aria-hidden="true"><?php dba_the_inline_icon( 'bx/bx-chevron-down', 'text-current' ); ?></span>
@@ -122,6 +126,7 @@ foreach ( $tags as $tag ) {
 				'label_sr_only' => true,
 				'tabindex'      => '-1',
 				'options'       => $sort_options,
+				'x_ref'         => 'realSort',
 			)
 		);
 
@@ -135,6 +140,7 @@ foreach ( $tags as $tag ) {
 				'label_sr_only' => true,
 				'tabindex'      => '-1',
 				'options'       => $author_options,
+				'x_ref'         => 'realAuthor',
 			)
 		);
 
@@ -148,6 +154,7 @@ foreach ( $tags as $tag ) {
 				'label_sr_only' => true,
 				'tabindex'      => '-1',
 				'options'       => $tag_options,
+				'x_ref'         => 'realTag',
 			)
 		);
 

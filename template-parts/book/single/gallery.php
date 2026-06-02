@@ -39,16 +39,32 @@ endif;
 $thumb_limit   = max( 1, $thumb_limit );
 $gallery_count = count( $ids );
 $lightbox_gallery_id = $gallery_count > 1 ? 'book-gallery-' . $post_id : '';
+
+$alpine_config = wp_json_encode( array(
+	'total'  => $gallery_count,
+	'capped' => $thumbs_capped,
+) );
 ?>
-<div class="flex flex-col self-start rounded-md shadow-main" data-book-gallery<?php echo $thumbs_capped ? ' data-book-gallery-thumbs-capped="1"' : ''; ?>>
-	<span id="book-gallery-status-<?php echo esc_attr( (string) $post_id ); ?>" class="sr-only" data-book-gallery-status aria-live="polite"></span>
+<div class="flex flex-col self-start rounded-md shadow-main"
+	data-book-gallery
+	x-data="bookGallery(<?php echo esc_attr( $alpine_config ); ?>)">
+	<span id="book-gallery-status-<?php echo esc_attr( (string) $post_id ); ?>" class="sr-only" data-book-gallery-status aria-live="polite"
+		x-text="statusText"></span>
 	<div class="relative h-(--book-single-gallery-stage-height) w-full overflow-hidden rounded-md bg-page/50">
 		<?php if ( $gallery_count > 1 ) : ?>
-			<button type="button" class="absolute left-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full shadow-main bg-page/50 text-heading backdrop-blur-sm transition hover:bg-page hover:shadow-bronze-glow hover:text-body disabled:pointer-events-none disabled:opacity-30" data-book-gallery-prev aria-controls="book-gallery-slides-<?php echo esc_attr( (string) $post_id ); ?>">
+			<button type="button" class="absolute left-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full shadow-main bg-page/50 text-heading backdrop-blur-sm transition hover:bg-page hover:shadow-bronze-glow hover:text-body disabled:pointer-events-none disabled:opacity-30"
+				data-book-gallery-prev
+				:disabled="total < 2"
+				@click="prev()"
+				aria-controls="book-gallery-slides-<?php echo esc_attr( (string) $post_id ); ?>">
 				<span class="sr-only"><?php esc_html_e( 'Previous image', 'dynamic-book-archive' ); ?></span>
 				<?php dba_the_inline_icon( 'bx/bx-chevron-left', 'block h-8 w-8' ); ?>
 			</button>
-			<button type="button" class="absolute right-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full shadow-main bg-page/50 text-heading backdrop-blur-sm transition hover:bg-page hover:shadow-bronze-glow hover:text-body disabled:pointer-events-none disabled:opacity-30" data-book-gallery-next aria-controls="book-gallery-slides-<?php echo esc_attr( (string) $post_id ); ?>">
+			<button type="button" class="absolute right-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full shadow-main bg-page/50 text-heading backdrop-blur-sm transition hover:bg-page hover:shadow-bronze-glow hover:text-body disabled:pointer-events-none disabled:opacity-30"
+				data-book-gallery-next
+				:disabled="total < 2"
+				@click="next()"
+				aria-controls="book-gallery-slides-<?php echo esc_attr( (string) $post_id ); ?>">
 				<span class="sr-only"><?php esc_html_e( 'Next image', 'dynamic-book-archive' ); ?></span>
 				<?php dba_the_inline_icon( 'bx/bx-chevron-right', 'block h-8 w-8' ); ?>
 			</button>
@@ -79,11 +95,13 @@ $lightbox_gallery_id = $gallery_count > 1 ? 'book-gallery-' . $post_id : '';
 				if ( '' === $img_html ) {
 					continue;
 				}
+				// Static aria-hidden covers the pre-Alpine state; Alpine's binding takes over once initialized.
 				printf(
-					'<figure class="%s" data-book-gallery-slide="%d" aria-hidden="%s">',
+					'<figure class="%s" data-book-gallery-slide="%d" aria-hidden="%s" :aria-hidden="activeIndex !== %d ? \'true\' : \'false\'">',
 					esc_attr( $slide_class ),
 					(int) $idx,
-					0 === $idx ? 'false' : 'true'
+					0 === $idx ? 'false' : 'true',
+					(int) $idx
 				);
 				echo $img_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image() returns safe HTML.
 				echo '</figure>';
@@ -134,11 +152,14 @@ $lightbox_gallery_id = $gallery_count > 1 ? 'book-gallery-' . $post_id : '';
 							$idx + 1
 						);
 					}
+					// Static aria-pressed covers pre-Alpine state; Alpine's binding takes over once initialized.
 					printf(
-						'<button type="button" class="%s" data-book-gallery-thumb="%d" role="tab" aria-pressed="%s" aria-label="%s">',
+						'<button type="button" class="%s" data-book-gallery-thumb="%d" role="tab" aria-pressed="%s" :aria-pressed="pressedThumbIndex(activeIndex) === %d ? \'true\' : \'false\'" @click="goToSlide(%d)" aria-label="%s">',
 						esc_attr( $thumb_class ),
 						(int) $idx,
 						0 === $idx ? 'true' : 'false',
+						(int) $idx,
+						(int) $idx,
 						esc_attr( $aria_thumb )
 					);
 					echo $thumb_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image() returns safe HTML.

@@ -17,7 +17,10 @@ if ( empty( $sort_options ) ) {
 }
 
 ?>
-<dialog id="book-archive-dialog-sort" class="relative z-50 hidden w-[min(100vw-2rem,24rem)] max-h-[min(90dvh,36rem)] gap-5 overflow-visible rounded-2xl border-0 bg-surface p-6 text-body shadow-main backdrop:bg-page/80 sm:p-7 open:m-0 open:flex open:max-h-[min(90dvh,36rem)] open:flex-col open:fixed open:inset-auto focus:outline-none focus-visible:outline-0" aria-labelledby="book-archive-dialog-sort-title">
+<dialog id="book-archive-dialog-sort" class="relative z-50 hidden w-[min(100vw-2rem,24rem)] max-h-[min(90dvh,36rem)] gap-5 overflow-visible rounded-2xl border-0 bg-surface p-6 text-body shadow-main backdrop:bg-page/80 sm:p-7 open:m-0 open:flex open:max-h-[min(90dvh,36rem)] open:flex-col open:fixed open:inset-auto focus:outline-none focus-visible:outline-0"
+	x-ref="sortDialog"
+	@close="onSortClose()"
+	aria-labelledby="book-archive-dialog-sort-title">
 	<div class="shrink-0">
 		<div class="flex items-start justify-between gap-3 pb-4">
 			<h2 id="book-archive-dialog-sort-title" class="font-display text-lg font-semibold tracking-tight text-heading"><?php esc_html_e( 'Sort books', 'dynamic-book-archive' ); ?></h2>
@@ -40,6 +43,7 @@ if ( empty( $sort_options ) ) {
 						'label'         => '',
 						'label_sr_only' => true,
 						'options'       => $sort_options,
+						'x_ref'         => 'stagingSort',
 					)
 				);
 				?>
@@ -48,7 +52,7 @@ if ( empty( $sort_options ) ) {
 	</div>
 	<div class="shrink-0 pt-5">
 		<div class="flex justify-end">
-			<button type="button" class="js-book-archive-sort-apply cursor-pointer rounded-lg bg-filters-link-background px-6 py-2.5 font-display text-sm font-semibold text-filters-link shadow-sm transition hover:bg-book-secondary/10 hover:text-filters-link-hover hover:shadow-bronze-glow duration-200 ease-out"><?php esc_html_e( 'Apply', 'dynamic-book-archive' ); ?></button>
+			<button type="button" class="js-book-archive-sort-apply cursor-pointer rounded-lg bg-filters-link-background px-6 py-2.5 font-display text-sm font-semibold text-filters-link shadow-sm transition hover:bg-book-secondary/10 hover:text-filters-link-hover hover:shadow-bronze-glow duration-200 ease-out" @click="applySort()"><?php esc_html_e( 'Apply', 'dynamic-book-archive' ); ?></button>
 		</div>
 	</div>
 </dialog>

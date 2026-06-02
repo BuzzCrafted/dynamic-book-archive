@@ -52,12 +52,18 @@ if ( $is_staging ) {
 	$wrap_class .= ' js-staging-year-range mt-3';
 }
 
+$alpine_config = wp_json_encode( array(
+	'floor'    => $year_floor,
+	'ceil'     => $year_ceiling,
+	'labelAny' => $label_any,
+) );
 ?>
 <div
 	class="<?php echo esc_attr( $wrap_class ); ?>"
 	data-year-floor="<?php echo esc_attr( $floor_s ); ?>"
 	data-year-ceil="<?php echo esc_attr( $ceil_s ); ?>"
-	data-label-any="<?php echo esc_attr( $label_any ); ?>">
+	data-label-any="<?php echo esc_attr( $label_any ); ?>"
+	x-data="yearRange(<?php echo esc_attr( $alpine_config ); ?>)">
 	<?php if ( $is_staging ) : ?>
 		<div class="mb-3">
 			<span class="block text-xs font-semibold uppercase tracking-wider text-filters-text/80"><?php esc_html_e( 'Years', 'dynamic-book-archive' ); ?></span>
@@ -73,6 +79,7 @@ if ( $is_staging ) {
 					max="<?php echo esc_attr( $ceil_s ); ?>"
 					value="<?php echo esc_attr( $floor_s ); ?>"
 					step="1"
+					x-model.number="vMin"
 					aria-label="<?php echo esc_attr__( 'From year', 'dynamic-book-archive' ); ?>" />
 				<label class="sr-only" for="<?php echo esc_attr( $input_year_max_id ); ?>"><?php esc_html_e( 'Filter by published year (to)', 'dynamic-book-archive' ); ?></label>
 				<input
@@ -83,8 +90,9 @@ if ( $is_staging ) {
 					max="<?php echo esc_attr( $ceil_s ); ?>"
 					value="<?php echo esc_attr( $ceil_s ); ?>"
 					step="1"
+					x-model.number="vMax"
 					aria-label="<?php echo esc_attr__( 'To year', 'dynamic-book-archive' ); ?>" />
-				<div class="dba-year-range__track" aria-hidden="true"></div>
+				<div class="dba-year-range__track" x-ref="track" aria-hidden="true"></div>
 			</div>
 			<div class="js-year-range-scale mt-0.5 flex w-full items-center text-xs tabular-nums text-filters-text/60" aria-hidden="true">
 				<?php foreach ( $scale_ticks as $i => $tick ) : ?>
@@ -97,13 +105,17 @@ if ( $is_staging ) {
 				<?php endforeach; ?>
 			</div>
 			<div class="pointer-events-none relative mt-2 min-h-[2.125rem]">
-				<span class="js-year-range-tooltip-min dba-year-range__tooltip-min absolute left-0 top-0 z-10 min-w-[2.25rem] rounded-md bg-heading px-2 py-1 text-center text-xs font-bold tabular-nums text-surface shadow-sm" aria-hidden="true"></span>
-				<span class="js-year-range-tooltip-max dba-year-range__tooltip-max pointer-events-none absolute left-0 top-0 z-10 min-w-[2.25rem] rounded-md bg-heading px-2 py-1 text-center text-xs font-bold tabular-nums text-surface shadow-sm" aria-hidden="true"></span>
+				<span class="js-year-range-tooltip-min dba-year-range__tooltip-min absolute left-0 top-0 z-10 min-w-[2.25rem] rounded-md bg-heading px-2 py-1 text-center text-xs font-bold tabular-nums text-surface shadow-sm" aria-hidden="true"
+					x-text="vMin"
+					:style="tooltipMinStyle"></span>
+				<span class="js-year-range-tooltip-max dba-year-range__tooltip-max pointer-events-none absolute left-0 top-0 z-10 min-w-[2.25rem] rounded-md bg-heading px-2 py-1 text-center text-xs font-bold tabular-nums text-surface shadow-sm" aria-hidden="true"
+					x-text="vMax"
+					:style="tooltipMaxStyle"></span>
 			</div>
 		</div>
 	<?php else : ?>
-		<span class="js-book-archive-year-min-label sr-only"></span>
-		<span class="js-book-archive-year-max-label sr-only"></span>
+		<span class="js-book-archive-year-min-label sr-only" x-text="labelMin"></span>
+		<span class="js-book-archive-year-max-label sr-only" x-text="labelMax"></span>
 		<div class="dba-year-range__sliders relative h-5">
 			<label class="sr-only" for="<?php echo esc_attr( $input_year_min_id ); ?>"><?php esc_html_e( 'Filter by published year (from)', 'dynamic-book-archive' ); ?></label>
 			<input
@@ -115,6 +127,7 @@ if ( $is_staging ) {
 				max="<?php echo esc_attr( $ceil_s ); ?>"
 				value="<?php echo esc_attr( $floor_s ); ?>"
 				step="1"
+				x-model.number="vMin"
 				aria-label="<?php echo esc_attr__( 'From year', 'dynamic-book-archive' ); ?>" />
 			<label class="sr-only" for="<?php echo esc_attr( $input_year_max_id ); ?>"><?php esc_html_e( 'Filter by published year (to)', 'dynamic-book-archive' ); ?></label>
 			<input
@@ -126,8 +139,9 @@ if ( $is_staging ) {
 				max="<?php echo esc_attr( $ceil_s ); ?>"
 				value="<?php echo esc_attr( $ceil_s ); ?>"
 				step="1"
+				x-model.number="vMax"
 				aria-label="<?php echo esc_attr__( 'To year', 'dynamic-book-archive' ); ?>" />
-			<div class="dba-year-range__track" aria-hidden="true"></div>
+			<div class="dba-year-range__track" x-ref="track" aria-hidden="true"></div>
 		</div>
 	<?php endif; ?>
 </div>

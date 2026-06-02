@@ -19,6 +19,7 @@ $label = isset( $args['label'] ) && is_string( $args['label'] ) ? $args['label']
 $label_sr_only = isset( $args['label_sr_only'] ) ? (bool) $args['label_sr_only'] : true;
 
 $tabindex = isset( $args['tabindex'] ) && is_scalar( $args['tabindex'] ) ? (string) $args['tabindex'] : null;
+$x_ref    = isset( $args['x_ref'] ) && is_string( $args['x_ref'] ) ? $args['x_ref'] : '';
 
 $options = isset( $args['options'] ) && is_array( $args['options'] ) ? $args['options'] : array();
 
@@ -38,6 +39,9 @@ if ( '' === $id || '' === $class || empty( $options ) ) {
 	class="<?php echo esc_attr( $class ); ?>"
 	<?php if ( null !== $tabindex ) : ?>
 		tabindex="<?php echo esc_attr( $tabindex ); ?>"
+	<?php endif; ?>
+	<?php if ( '' !== $x_ref ) : ?>
+		x-ref="<?php echo esc_attr( $x_ref ); ?>"
 	<?php endif; ?>
 >
 	<?php foreach ( $options as $opt ) : ?>
