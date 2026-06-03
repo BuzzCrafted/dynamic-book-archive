@@ -1,7 +1,7 @@
 ---
-description: Use @apply in component CSS files to express styling via Tailwind utilities
+description: Always prefer @apply over raw CSS declarations in component CSS files
 globs: ["src/css/**/*.css"]
-alwaysApply: false
+alwaysApply: true
 ---
 
 # Use `@apply` in Component CSS Files
@@ -11,7 +11,8 @@ When writing CSS in `src/css/**/*.css`, use Tailwind's `@apply` directive to exp
 ## Rules
 
 - **Always `@apply`**: colours (`text-*`, `bg-*`, `border-*`), font family (`font-main`, etc.), layout (`flex`, `grid`, `overflow-*`), spacing that maps to the scale (`p-*`, `m-*`, `gap-*`), cursor, opacity, z-index, transforms
-- **Keep raw CSS**: `color-mix()` values, non-standard sizes that require arbitrary values (e.g. `0.6875rem`), `transition` with specific durations and properties, `scrollbar-*`, `!important` rules
+- **Keep raw CSS**: `color-mix()` values, non-standard sizes that require arbitrary values (e.g. `0.6875rem`), `transition` with specific durations and properties, `!important` rules
+- **Scrollbars (Tailwind 4.3+)**: use `scrollbar-thin`, `scrollbar-thumb-*`, and `scrollbar-track-*` in `@apply` (theme colours e.g. `scrollbar-thumb-border-soft`); not raw `scrollbar-width` / `scrollbar-color`
 
 ## Examples
 

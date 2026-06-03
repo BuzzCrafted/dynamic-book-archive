@@ -524,6 +524,156 @@ if ( ! function_exists( 'dba_format_archive_publication_line' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'dba_get_carousel_nav_button_classes' ) ) :
+	/**
+	 * Returns the full Tailwind class string for a carousel nav button.
+	 *
+	 * Centralising defaults here means every caller inherits changes automatically.
+	 *
+	 * @param string $position_class Side offset class, e.g. 'left-1' or 'right-1'.
+	 * @param string $size_class     Hit-target classes, e.g. 'h-11 w-11'.
+	 * @param string $extra_class    Optional additional classes merged onto the defaults.
+	 */
+	/**
+	 * @param string $position_class Side offset class (used in 'overlay' variant only), e.g. 'left-1'.
+	 * @param string $size_class     Hit-target classes, e.g. 'h-11 w-11'.
+	 * @param string $extra_class    Optional extra classes merged onto the result.
+	 * @param string $variant        'overlay' (default) — absolute positioned over the container;
+	 *                               'inline'  — normal flow flex/grid sibling, no absolute positioning.
+	 */
+	function dba_get_carousel_nav_button_classes( string $position_class, string $size_class, string $extra_class = '', string $variant = 'overlay' ): string {
+		$visual = 'flex items-center justify-center rounded-full shadow-main bg-page/50 text-heading backdrop-blur-sm transition hover:bg-page hover:shadow-bronze-glow hover:text-body disabled:pointer-events-none disabled:opacity-30';
+
+		if ( 'inline' === $variant ) {
+			$parts = array( $visual, 'flex-shrink-0', $size_class, $extra_class );
+		} else {
+			$parts = array( $visual, 'absolute top-1/2 z-10 -translate-y-1/2', $position_class, $size_class, $extra_class );
+		}
+
+		return implode( ' ', array_filter( $parts ) );
+	}
+endif;
+
+if ( ! function_exists( 'dba_get_carousel_nav_button' ) ) :
+	/**
+	 * Returns the HTML for a single carousel nav button.
+	 *
+	 * Buffers {@see template-parts/ui/carousel-nav-button.php}.
+	 * See that file for the full `$args` reference.
+	 *
+	 * @param array<string, mixed> $args Template args.
+	 */
+	function dba_get_carousel_nav_button( array $args = [] ): string {
+		ob_start();
+		get_template_part( 'template-parts/ui/carousel-nav-button', null, $args );
+		return (string) ob_get_clean();
+	}
+endif;
+
+if ( ! function_exists( 'dba_the_carousel_nav_button' ) ) :
+	/**
+	 * Outputs a single carousel nav button.
+	 *
+	 * Thin `the_`-style wrapper around {@see template-parts/ui/carousel-nav-button.php}.
+	 * See that file for the full `$args` reference.
+	 *
+	 * @param array<string, mixed> $args Template args.
+	 */
+	function dba_the_carousel_nav_button( array $args = [] ): void {
+		get_template_part( 'template-parts/ui/carousel-nav-button', null, $args );
+	}
+endif;
+
+if ( ! function_exists( 'dba_the_carousel_nav_pair' ) ) :
+	/**
+	 * Outputs a prev + next carousel nav button pair.
+	 *
+	 * Callers pass shared config once; per-direction overrides go in
+	 * `alpine_prev` / `alpine_next`, `aria_label_prev` / `aria_label_next`,
+	 * and `data_attr_prev` / `data_attr_next`. Any key valid for
+	 * {@see dba_the_carousel_nav_button()} and prefixed or shared is accepted.
+	 *
+	 * @param array<string, mixed> $args {
+	 *   @type string $aria_controls      Shared aria-controls id for both buttons.
+	 *   @type string $aria_label_prev    SR label for the prev button.
+	 *   @type string $aria_label_next    SR label for the next button.
+	 *   @type array  $alpine_prev        Alpine/x-bind attrs for the prev button.
+	 *   @type array  $alpine_next        Alpine/x-bind attrs for the next button.
+	 *   @type string $data_attr_prev     Boolean data attribute name for prev.
+	 *   @type string $data_attr_next     Boolean data attribute name for next.
+	 *   @type string $class              Extra classes applied to both buttons.
+	 *   @type string $position_class_prev Override left position class for prev.
+	 *   @type string $position_class_next Override right position class for next.
+	 *   @type string $size_class         Hit-target override applied to both.
+	 *   @type string $icon               Icon name override applied to both.
+	 *   @type string $icon_class         Icon wrapper classes applied to both.
+	 *   @type array  $attrs              Extra static HTML attributes for both.
+	 * }
+	 */
+	function dba_the_carousel_nav_pair( array $args = [] ): void {
+		$aria_controls       = isset( $args['aria_controls'] ) && is_string( $args['aria_controls'] ) ? $args['aria_controls'] : '';
+		$aria_label_prev     = isset( $args['aria_label_prev'] ) && is_string( $args['aria_label_prev'] ) ? $args['aria_label_prev'] : '';
+		$aria_label_next     = isset( $args['aria_label_next'] ) && is_string( $args['aria_label_next'] ) ? $args['aria_label_next'] : '';
+		$alpine_prev         = isset( $args['alpine_prev'] ) && is_array( $args['alpine_prev'] ) ? $args['alpine_prev'] : array();
+		$alpine_next         = isset( $args['alpine_next'] ) && is_array( $args['alpine_next'] ) ? $args['alpine_next'] : array();
+		$data_attr_prev      = isset( $args['data_attr_prev'] ) && is_string( $args['data_attr_prev'] ) ? $args['data_attr_prev'] : '';
+		$data_attr_next      = isset( $args['data_attr_next'] ) && is_string( $args['data_attr_next'] ) ? $args['data_attr_next'] : '';
+		$position_class_prev = isset( $args['position_class_prev'] ) && is_string( $args['position_class_prev'] ) ? $args['position_class_prev'] : '';
+		$position_class_next = isset( $args['position_class_next'] ) && is_string( $args['position_class_next'] ) ? $args['position_class_next'] : '';
+
+		$class_prev = isset( $args['class_prev'] ) && is_string( $args['class_prev'] ) ? $args['class_prev'] : '';
+		$class_next = isset( $args['class_next'] ) && is_string( $args['class_next'] ) ? $args['class_next'] : '';
+
+		// Shared keys forwarded verbatim to both buttons.
+		$shared_keys = array( 'class', 'variant', 'size_class', 'icon', 'icon_class', 'attrs' );
+		$shared      = array();
+		foreach ( $shared_keys as $key ) {
+			if ( isset( $args[ $key ] ) ) {
+				$shared[ $key ] = $args[ $key ];
+			}
+		}
+
+		if ( '' !== $aria_controls ) {
+			$shared['aria_controls'] = $aria_controls;
+		}
+
+		$prev_args = array_merge( $shared, array( 'direction' => 'prev' ) );
+		if ( '' !== $aria_label_prev )     { $prev_args['aria_label']     = $aria_label_prev; }
+		if ( '' !== $data_attr_prev )      { $prev_args['data_attr']      = $data_attr_prev; }
+		if ( ! empty( $alpine_prev ) )     { $prev_args['alpine']         = $alpine_prev; }
+		if ( '' !== $position_class_prev ) { $prev_args['position_class'] = $position_class_prev; }
+		if ( '' !== $class_prev ) {
+			$prev_args['class'] = trim( ( isset( $shared['class'] ) ? $shared['class'] . ' ' : '' ) . $class_prev );
+		}
+
+		$next_args = array_merge( $shared, array( 'direction' => 'next' ) );
+		if ( '' !== $aria_label_next )     { $next_args['aria_label']     = $aria_label_next; }
+		if ( '' !== $data_attr_next )      { $next_args['data_attr']      = $data_attr_next; }
+		if ( ! empty( $alpine_next ) )     { $next_args['alpine']         = $alpine_next; }
+		if ( '' !== $position_class_next ) { $next_args['position_class'] = $position_class_next; }
+		if ( '' !== $class_next ) {
+			$next_args['class'] = trim( ( isset( $shared['class'] ) ? $shared['class'] . ' ' : '' ) . $class_next );
+		}
+
+		dba_the_carousel_nav_button( $prev_args );
+		dba_the_carousel_nav_button( $next_args );
+	}
+endif;
+
+if ( ! function_exists( 'dba_the_carousel_image_stage' ) ) :
+	/**
+	 * Outputs a shrink-wrapped image container with optional overlaid nav buttons.
+	 *
+	 * Thin wrapper around {@see template-parts/ui/carousel-image-stage.php}.
+	 * See that file for the full `$args` reference.
+	 *
+	 * @param array<string, mixed> $args Template args.
+	 */
+	function dba_the_carousel_image_stage( array $args = [] ): void {
+		get_template_part( 'template-parts/ui/carousel-image-stage', null, $args );
+	}
+endif;
+
 if ( ! function_exists( 'dba_the_site_logo' ) ) :
 	/**
 	 * Prints the custom logo: home link wrapping the logo image.

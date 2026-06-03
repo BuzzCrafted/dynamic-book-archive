@@ -1,0 +1,37 @@
+:root {
+    --c-bronze-50: #EBDACA;
+    --c-bronze-100: #E6C1AB;
+    --c-bronze-200: #E0C9B7;
+    --c-bronze-300: #D6C9A3;
+    --c-bronze-400: #AF937D;
+    --c-bronze-500: #8B745E;
+    --c-bronze-600: #705B47;
+    --c-bronze-700: #574634;
+    --c-bronze-800: #423222;
+    --c-bronze-900: #2D2012;
+    --c-bronze-950: #24180B;
+
+    --c-ink-50: #0A0A09;
+    --c-ink-100: #0E0E0D;
+    --c-ink-200: #191918;
+    --c-ink-300: #2E2A24;
+    --c-ink-400: #1C1512;
+    --c-ink-500: #1B1612;
+    --c-ink-600: #1A1613;
+    --c-ink-700: #191613;
+    --c-ink-800: #191714;
+    --c-ink-900: #181715;
+    --c-ink-950: #131313;
+
+    --c-gold-50: #FFE19B;
+    --c-gold-100: #A6824A;
+    --c-gold-200: #D0A55F;
+    --c-gold-300: #FFCB77;
+    --c-gold-400: #947342;
+    --c-gold-500: #81643A;
+    --c-gold-600: #705632;
+    --c-gold-700: #5E482B;
+    --c-gold-800: #4D3B23;
+    --c-gold-900: #3D2E1C;
+    --c-gold-950: #352818;
+}

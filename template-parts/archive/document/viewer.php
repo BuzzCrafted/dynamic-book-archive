@@ -53,29 +53,33 @@ if ( $post_id <= 0 ) {
 		x-bind:class="{ 'dba-doc-viewer__layout--single': viewMode !== 'both' }"
 	>
 
-		<!-- Left column: scan image with overlaid prev/next navigation -->
+		<!-- Left column: scan image with prev/next as grid siblings (outside the image, flush against it) -->
 		<div class="dba-doc-viewer__image-col" x-show="viewMode !== 'text'">
-			<button
-				class="dba-doc-viewer__nav dba-doc-viewer__nav--prev"
-				type="button"
-				x-on:click="prev()"
-				x-bind:disabled="index <= 0"
-				aria-label="<?php esc_attr_e( 'Previous page', 'dynamic-book-archive' ); ?>"
-			>&#8249;</button>
 			<figure class="dba-doc-viewer__figure">
+				<?php
+				dba_the_carousel_nav_button( array(
+					'direction'  => 'prev',
+					'variant'    => 'inline',
+					'class'      => 'justify-self-end',
+					'aria_label' => __( 'Previous page', 'dynamic-book-archive' ),
+					'alpine'     => array( 'x-on:click' => 'prev()', 'x-bind:disabled' => 'index <= 0' ),
+				) );
+				?>
 				<img
 					x-bind:src="current ? current.view_url : ''"
 					x-bind:alt="current ? current.title : ''"
 					loading="lazy"
 				/>
+				<?php
+				dba_the_carousel_nav_button( array(
+					'direction'  => 'next',
+					'variant'    => 'inline',
+					'class'      => 'justify-self-start',
+					'aria_label' => __( 'Next page', 'dynamic-book-archive' ),
+					'alpine'     => array( 'x-on:click' => 'next()', 'x-bind:disabled' => 'index >= total - 1' ),
+				) );
+				?>
 			</figure>
-			<button
-				class="dba-doc-viewer__nav dba-doc-viewer__nav--next"
-				type="button"
-				x-on:click="next()"
-				x-bind:disabled="index >= total - 1"
-				aria-label="<?php esc_attr_e( 'Next page', 'dynamic-book-archive' ); ?>"
-			>&#8250;</button>
 		</div>
 
 		<!-- Right column: tab bar + panel content -->

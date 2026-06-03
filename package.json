@@ -16,12 +16,15 @@
 		"bundle": "npm run build:css && npm run build:js && npm run build:images && npm run bundle:composer && node scripts/bundle.mjs"
 	},
 	"devDependencies": {
-		"@tailwindcss/cli": "^4.1.0",
+		"@tailwindcss/cli": "^4.3.0",
 		"@tailwindcss/typography": "^0.5.16",
 		"alpinejs": "^3.15.12",
 		"concurrently": "^9.1.2",
 		"cpx2": "^8.0.2",
 		"esbuild": "^0.25.0",
-		"tailwindcss": "^4.1.0"
+		"tailwindcss": "^4.3.0"
+	},
+	"dependencies": {
+		"@tailwindcss/postcss": "^4.3.0"
 	}
 }

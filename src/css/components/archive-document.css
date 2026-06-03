@@ -10,19 +10,20 @@
  */
 
 /* ─── Root container ────────────────────────────────────────────────────── */
+@import '../colors/components/_doc-viewer.css';
 
 .dba-doc-viewer {
-	@apply overflow-hidden rounded-lg border border-border-soft bg-(--c-ink-950);
+	@apply overflow-hidden rounded-lg border border-border-soft bg-viewer-surface;
 }
 
 /* ─── Status messages (loading / error / empty) ─────────────────────────── */
 
 .dba-doc-viewer__status {
-	@apply p-8 text-center font-main text-sm text-(--color-body);
+	@apply p-8 text-center font-main text-sm text-body;
 }
 
 .dba-doc-viewer__status--error {
-	color: oklch(0.65 0.18 25); /* one-off colour; no theme token */
+	@apply text-viewer-status-error;
 }
 
 /* ─── View mode selector (in document header) ───────────────────────────── */
@@ -32,26 +33,19 @@
 }
 
 .dba-doc-view-btn {
-	@apply cursor-pointer whitespace-nowrap uppercase font-main text-(--color-body);
-	padding: 0.3125rem 0.9375rem;
-	font-size: 0.6875rem;
-	letter-spacing: 0.1em;
-	background: none;
-	border: none;
-	border-left: 1px solid var(--color-border-soft);
-	transition: color 150ms, background 150ms;
+	@apply cursor-pointer border-0 border-l border-border-soft bg-transparent px-3.75 py-1.25 whitespace-nowrap font-main text-xs tracking-widest uppercase text-body transition-colors duration-150;
 }
 
 .dba-doc-view-btn:first-child {
-	border-left: none;
+	@apply border-l-0;
 }
 
 .dba-doc-view-btn:hover:not(.is-active) {
-	@apply text-(--color-heading);
+	@apply text-heading;
 }
 
 .dba-doc-view-btn.is-active {
-	@apply bg-(--c-ink-950) text-(--color-book-primary);
+	@apply bg-book-primary text-page;
 }
 
 /* ─── Two-column layout ─────────────────────────────────────────────────── */
@@ -60,48 +54,23 @@
 	@apply grid min-h-104 grid-cols-1 min-[800px]:grid-cols-2;
 }
 
-/* Force single column when only one panel is visible */
 .dba-doc-viewer__layout--single {
-	grid-template-columns: 1fr !important;
+	@apply grid-cols-1!;
 }
 
 /* ─── Left column: scan image ───────────────────────────────────────────── */
 
 .dba-doc-viewer__image-col {
-	@apply relative flex items-stretch bg-(--c-ink-950) border-b border-border-soft min-[800px]:border-b-0 min-[800px]:border-r;
+	@apply relative flex items-stretch border-b border-border-soft bg-surface min-[800px]:border-b-0 min-[800px]:border-r;
 }
 
+/* grid-cols: [prev 1fr] [image auto] [next 1fr] — buttons sit in the side tracks, never over the image. */
 .dba-doc-viewer__figure {
-	@apply m-0 flex flex-1 items-center justify-center;
-	padding: 1rem 2.75rem;
+	@apply m-0 grid flex-1 grid-cols-[1fr_auto_1fr] items-center p-4 space-x-4;
 }
 
 .dba-doc-viewer__figure img {
-	@apply block h-auto w-auto max-w-full object-contain;
-	max-height: 62vh;
-}
-
-/* Overlaid prev/next arrows */
-.dba-doc-viewer__nav {
-	@apply absolute top-1/2 z-1 flex h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-(--color-book-primary);
-	font-size: 1.375rem;
-	line-height: 1;
-	background: color-mix(in oklch, var(--color-surface) 85%, transparent);
-	border: 1px solid color-mix(in oklch, var(--color-book-primary) 35%, transparent);
-	transition: background 200ms, color 200ms, border-color 200ms;
-}
-
-.dba-doc-viewer__nav--prev { @apply left-2; }
-.dba-doc-viewer__nav--next { @apply right-2; }
-
-.dba-doc-viewer__nav:hover:not(:disabled) {
-	@apply text-(--color-heading);
-	background: color-mix(in oklch, var(--color-book-primary) 18%, var(--color-surface));
-	border-color: color-mix(in oklch, var(--color-book-primary) 60%, transparent);
-}
-
-.dba-doc-viewer__nav:disabled {
-	@apply cursor-default opacity-25;
+	@apply block h-auto w-auto max-h-[62vh] max-w-full object-contain;
 }
 
 /* ─── Right column: tabs + content ─────────────────────────────────────── */
@@ -110,75 +79,50 @@
 	@apply flex flex-col bg-surface;
 }
 
-/* Tab bar */
 .dba-doc-viewer__tabs-bar {
 	@apply flex shrink-0 items-center gap-0 border-b border-border-soft px-4;
 }
 
 .dba-doc-viewer__tab {
-	@apply cursor-pointer whitespace-nowrap uppercase font-main text-(--color-body);
-	padding: 0.75rem 0;
-	margin-right: 1.25rem;
-	font-size: 0.6875rem;
-	letter-spacing: 0.1em;
-	background: none;
-	border: none;
-	border-bottom: 2px solid transparent;
-	transition: color 150ms, border-color 150ms;
+	@apply mr-5 cursor-pointer border-0 border-b-2 border-b-transparent bg-transparent py-3 whitespace-nowrap font-main text-xs tracking-widest uppercase text-body transition-colors duration-150;
 }
 
 .dba-doc-viewer__tab:hover {
-	@apply text-(--color-heading);
+	@apply text-heading;
 }
 
 .dba-doc-viewer__tab.is-active {
-	@apply text-(--color-heading);
-	border-bottom-color: var(--color-book-primary);
+	@apply text-heading border-b-book-primary;
 }
 
 .dba-doc-viewer__counter {
-	@apply ml-auto whitespace-nowrap uppercase font-main text-(--color-body);
-	font-size: 0.6875rem;
-	letter-spacing: 0.1em;
+	@apply ml-auto whitespace-nowrap font-main text-xs tracking-widest uppercase text-body;
 }
 
-/* Panel shared */
 .dba-doc-viewer__panel {
-	@apply flex-1 overflow-y-auto p-6;
-	max-height: 62vh;
-	scrollbar-width: thin;
-	scrollbar-color: var(--color-border-soft) transparent;
+	@apply flex-1 overflow-y-auto p-6 max-h-[62vh] scrollbar-thin scrollbar-thumb-border-soft scrollbar-track-transparent;
 }
 
-/* Prose */
 .dba-doc-viewer__prose {
-	@apply whitespace-pre-wrap font-main text-(--color-body);
-	font-size: 0.9375rem;
-	line-height: 1.8;
+	@apply whitespace-pre-wrap font-main text-base leading-relaxed text-body;
 }
-
+ 
 /* ─── Thumbnail strip ───────────────────────────────────────────────────── */
 
 .dba-doc-viewer__thumbs-strip {
-	@apply flex items-center gap-3 overflow-hidden border-t border-border-soft bg-(--c-ink-950) px-4 py-2.5;
+	@apply flex items-center gap-3 overflow-hidden border-t border-border-soft bg-surface px-4 py-2.5;
 }
 
 .dba-doc-viewer__thumbs-label {
-	@apply flex shrink-0 items-center gap-1.5 whitespace-nowrap uppercase font-main text-(--color-body);
-	font-size: 0.625rem;
-	letter-spacing: 0.1em;
+	@apply flex shrink-0 items-center gap-1.5 whitespace-nowrap font-main text-xxs tracking-widest uppercase text-body;
 }
 
 .dba-doc-viewer__thumbs-track {
-	@apply flex flex-1 gap-1.5 overflow-x-auto;
-	scrollbar-width: thin;
-	scrollbar-color: var(--color-border-soft) transparent;
+	@apply flex flex-1 gap-1.5 overflow-x-auto scrollbar-thin scrollbar-thumb-border-soft scrollbar-track-transparent;
 }
 
 .dba-doc-viewer__thumb {
-	@apply flex shrink-0 cursor-pointer flex-col items-center gap-1 border-2 border-transparent p-0.5 transition-[border-color] duration-150;
-	background: none;
-	border-radius: 0.1875rem;
+	@apply flex shrink-0 cursor-pointer flex-col items-center gap-1 rounded-xs border-2 border-transparent bg-transparent p-0.5 transition-[border-color] duration-150;
 }
 
 .dba-doc-viewer__thumb img {
@@ -186,12 +130,11 @@
 }
 
 .dba-doc-viewer__thumb span {
-	@apply font-main text-(--color-body);
-	font-size: 0.625rem;
+	@apply font-main text-xxs text-body;
 }
 
 .dba-doc-viewer__thumb.is-active {
-	@apply border-(--color-book-primary);
+	@apply border-book-primary;
 }
 
 .dba-doc-viewer__thumbs-nav {
@@ -199,13 +142,11 @@
 }
 
 .dba-doc-viewer__thumbs-nav button {
-	@apply cursor-pointer whitespace-nowrap rounded-sm border-0 font-main bg-(--color-book-primary) text-(--c-ink-100) px-3.5 py-1.5 transition-[background] duration-150;
-	font-size: 0.6875rem;
-	letter-spacing: 0.06em;
+	@apply cursor-pointer whitespace-nowrap rounded-sm border-0 bg-book-primary px-3.5 py-1.5 font-main text-xs tracking-wider text-page transition-colors duration-150;
 }
 
 .dba-doc-viewer__thumbs-nav button:hover:not(:disabled) {
-	@apply bg-(--color-book-secondary);
+	@apply bg-book-secondary;
 }
 
 .dba-doc-viewer__thumbs-nav button:disabled {
