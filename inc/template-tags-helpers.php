@@ -11,6 +11,8 @@ if ( ! defined( 'DBA_BOOK_CATEGORY_TAXONOMY' ) ) {
 	define( 'DBA_BOOK_CATEGORY_TAXONOMY', 'book_category' );
 }
 
+use DBA\Components\Component_Renderer;
+use DBA\Components\Component_Slot_Stack;
 use DBA\Domain\Books\Book_Archive_Filters_Repository;
 use DBA\Domain\Books\Book_Media_Repository;
 use DBA\TemplateTags\Book_Archive_Category_Nav;
@@ -714,5 +716,60 @@ if ( ! function_exists( 'dba_the_site_logo' ) ) :
 			esc_attr( get_bloginfo( 'name', 'display' ) ),
 			esc_attr( $img_class )
 		);
+	}
+endif;
+
+if ( ! function_exists( 'dba_component' ) ) :
+	/**
+	 * Renders a component by name (Laravel-style).
+	 *
+	 * The name is `{type}.{name}` (or `{type}/{name}`), where type is `ui` or
+	 * `container`. The matching controller under `DBA\Components\{Type}` prepares
+	 * the view model; the view lives at `template-parts/components/{type}/{name}.php`.
+	 * Controllers are optional: a view-only component renders with raw params.
+	 *
+	 * @param string               $name   Component name, e.g. `ui.dl-row`.
+	 * @param array<string, mixed> $params Params handed to the controller/view.
+	 * @param string|null          $slot   Captured slot HTML (container components only).
+	 */
+	function dba_component( string $name, array $params = array(), ?string $slot = null ): void {
+		Component_Renderer::render( $name, $params, $slot );
+	}
+endif;
+
+if ( ! function_exists( 'dba_component_buffered' ) ) :
+	/**
+	 * Returns a rendered component as a string.
+	 *
+	 * @param string               $name   Component name, e.g. `ui.dl-row`.
+	 * @param array<string, mixed> $params Params handed to the controller/view.
+	 * @param string|null          $slot   Captured slot HTML (container components only).
+	 */
+	function dba_component_buffered( string $name, array $params = array(), ?string $slot = null ): string {
+		return Component_Renderer::render_buffered( $name, $params, $slot );
+	}
+endif;
+
+if ( ! function_exists( 'dba_component_open' ) ) :
+	/**
+	 * Opens a container component and begins capturing its slot markup.
+	 *
+	 * Pair with {@see dba_component_close()}. Markup echoed between the two calls
+	 * becomes the component's slot. Container calls may be nested.
+	 *
+	 * @param string               $name   Container component name, e.g. `container.card`.
+	 * @param array<string, mixed> $params Params handed to the controller/view.
+	 */
+	function dba_component_open( string $name, array $params = array() ): void {
+		Component_Slot_Stack::open( $name, $params );
+	}
+endif;
+
+if ( ! function_exists( 'dba_component_close' ) ) :
+	/**
+	 * Closes the most recently opened container component and renders it.
+	 */
+	function dba_component_close(): void {
+		Component_Slot_Stack::close();
 	}
 endif;

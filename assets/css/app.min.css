@@ -1295,6 +1295,9 @@
   .rounded-md {
     border-radius: var(--radius-md);
   }
+  .rounded-sm {
+    border-radius: var(--radius-sm);
+  }
   .rounded-xl {
     border-radius: var(--radius-xl);
   }
@@ -1447,6 +1450,9 @@
   }
   .p-4 {
     padding: calc(var(--spacing) * 4);
+  }
+  .p-5 {
+    padding: calc(var(--spacing) * 5);
   }
   .p-6 {
     padding: calc(var(--spacing) * 6);
@@ -1683,6 +1689,9 @@
   }
   .text-\(--color-body\) {
     color: var(--color-body);
+  }
+  .text-\(--color-heading\) {
+    color: var(--color-heading);
   }
   .text-body {
     color: var(--color-body);

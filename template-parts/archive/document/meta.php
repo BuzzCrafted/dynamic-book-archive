@@ -36,9 +36,8 @@ $dd_class  = 'font-main text-book-primary';
 	<dl class="space-y-0">
 		<?php
 		if ( '' !== $publication ) {
-			get_template_part(
-				'template-parts/ui/dl-row',
-				null,
+			dba_component(
+				'ui.dl-row',
 				array(
 					'label'     => __( 'Publication:', 'dynamic-book-archive' ),
 					'value'     => $publication,
@@ -50,9 +49,8 @@ $dd_class  = 'font-main text-book-primary';
 		}
 
 		if ( '' !== $date_label ) {
-			get_template_part(
-				'template-parts/ui/dl-row',
-				null,
+			dba_component(
+				'ui.dl-row',
 				array(
 					'label'     => __( 'Date:', 'dynamic-book-archive' ),
 					'value'     => $date_label,
@@ -64,9 +62,8 @@ $dd_class  = 'font-main text-book-primary';
 		}
 
 		if ( '' !== $language ) {
-			get_template_part(
-				'template-parts/ui/dl-row',
-				null,
+			dba_component(
+				'ui.dl-row',
 				array(
 					'label'     => __( 'Language:', 'dynamic-book-archive' ),
 					'value'     => $language,
@@ -78,9 +75,8 @@ $dd_class  = 'font-main text-book-primary';
 		}
 
 		if ( '' !== $doc_type_name ) {
-			get_template_part(
-				'template-parts/ui/dl-row',
-				null,
+			dba_component(
+				'ui.dl-row',
 				array(
 					'label'     => __( 'Type:', 'dynamic-book-archive' ),
 					'value'     => $doc_type_name,
