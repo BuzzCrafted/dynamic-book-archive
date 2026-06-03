@@ -1,0 +1,57 @@
+---
+description: Use @apply in component CSS files to express styling via Tailwind utilities
+globs: ["src/css/**/*.css"]
+alwaysApply: false
+---
+
+# Use `@apply` in Component CSS Files
+
+When writing CSS in `src/css/**/*.css`, use Tailwind's `@apply` directive to express properties that map to utilities. Raw CSS property declarations are only acceptable when no utility exists.
+
+## Rules
+
+- **Always `@apply`**: colours (`text-*`, `bg-*`, `border-*`), font family (`font-main`, etc.), layout (`flex`, `grid`, `overflow-*`), spacing that maps to the scale (`p-*`, `m-*`, `gap-*`), cursor, opacity, z-index, transforms
+- **Keep raw CSS**: `color-mix()` values, non-standard sizes that require arbitrary values (e.g. `0.6875rem`), `transition` with specific durations and properties, `scrollbar-*`, `!important` rules
+
+## Examples
+
+```css
+/* ❌ BAD */
+.my-block {
+    display: flex;
+    align-items: center;
+    background: var(--color-surface);
+    color: var(--color-body);
+    overflow: hidden;
+}
+
+/* ✅ GOOD */
+.my-block {
+    @apply flex items-center bg-(--color-surface) text-(--color-body) overflow-hidden;
+}
+```
+
+```css
+/* ✅ OK — raw CSS only for what @apply cannot express */
+.my-block {
+    @apply flex cursor-pointer font-main text-(--color-body) uppercase;
+    font-size: 0.6875rem;        /* no matching Tailwind token */
+    letter-spacing: 0.1em;      /* non-standard tracking */
+    transition: color 150ms;    /* specific duration */
+}
+```
+
+## Responsive variants in `@apply`
+
+Use arbitrary breakpoints inline instead of separate `@media` blocks:
+
+```css
+/* ❌ BAD */
+.my-col { border-bottom: 1px solid var(--color-border-soft); }
+@media (min-width: 800px) { .my-col { border-bottom: none; border-right: ...; } }
+
+/* ✅ GOOD */
+.my-col {
+    @apply border-b border-(--color-border-soft) min-[800px]:border-b-0 min-[800px]:border-r;
+}
+```

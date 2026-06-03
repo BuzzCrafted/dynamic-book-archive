@@ -23,13 +23,30 @@ if ( class_exists( $elementor_class ) && (bool) call_user_func( array( $elemento
 	return;
 }
 
+// Build Alpine bootstrap config here so both header (view buttons) and viewer
+// (panels, image) share one Alpine scope rooted at the grid wrapper.
+$viewer_config = wp_json_encode(
+	array(
+		'documentId'    => $post_id,
+		'pagesEndpoint' => esc_url_raw( rest_url( 'archive-cpt/v1/documents/' . $post_id . '/pages' ) ),
+		'nonce'         => wp_create_nonce( 'wp_rest' ),
+	)
+);
+
 ?>
 <article id="post-<?php echo esc_attr( (string) $post_id ); ?>" <?php post_class( 'js-archive-document' ); ?>>
 
 	<?php get_template_part( 'template-parts/archive/document/back-link', null, $args ); ?>
 
-	<div class="grid gap-8 lg:gap-12">
+	<div
+		class="archive-document-viewer grid gap-8 lg:gap-12"
+		data-document-id="<?php echo (int) $post_id; ?>"
+		data-config="<?php echo esc_attr( (string) $viewer_config ); ?>"
+		x-data="Object.assign( archiveDocumentViewer(), { activeTab: 'translation', viewMode: 'both' } )"
+		x-init="init()"
+	>
 		<?php get_template_part( 'template-parts/archive/document/header', null, $args ); ?>
+		<?php get_template_part( 'template-parts/archive/document/view-selector', null, $args ); ?>
 		<?php get_template_part( 'template-parts/archive/document/description', null, $args ); ?>
 		<?php get_template_part( 'template-parts/archive/document/viewer', null, $args ); ?>
 	</div>

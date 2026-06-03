@@ -39,7 +39,6 @@ if ( '' === $title ) {
 $meta_rows = array_filter(
 	array(
 		__( 'Publication', 'dynamic-book-archive' ) => $publication,
-		__( 'Date', 'dynamic-book-archive' )        => $pub_date_label,
 		__( 'Type', 'dynamic-book-archive' )         => $doc_type['name'] ?? '',
 		__( 'Language', 'dynamic-book-archive' )     => $language,
 	)
@@ -69,8 +68,8 @@ $meta_rows = array_filter(
 		</h1>
 
 		<?php if ( '' !== $publication_line ) : ?>
-		<p class="m-0 font-main text-[0.9375rem] text-body">
-			<?php echo esc_html( $publication_line ); ?>
+		<p class="m-0 font-main text-sm text-body">
+			<?php echo esc_html( $pub_date_label ); ?>
 		</p>
 		<?php endif; ?>
 
@@ -117,6 +116,8 @@ $meta_rows = array_filter(
 
 		</dl>
 		<?php endif; ?>
+
+
 
 	</div>
 
