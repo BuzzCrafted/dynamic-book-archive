@@ -4,8 +4,8 @@
 	"type": "module",
 	"version": "1.3.0",
 	"scripts": {
-		"build:css": "tailwindcss -i ./src/css/input.css -o ./assets/css/app.min.css --minify",
-		"watch:css": "tailwindcss -i ./src/css/input.css -o ./assets/css/app.min.css --watch",
+		"build:css": "tailwindcss -i ./src/css/app.css -o ./assets/css/app.min.css --minify",
+		"watch:css": "tailwindcss -i ./src/css/app.css -o ./assets/css/app.min.css --watch",
 		"build:images": "cpx \"src/images/**/*\" assets/images",
 		"watch:images": "cpx \"src/images/**/*\" assets/images --watch",
 		"build:vendor": "composer dump-autoload -o --no-interaction",

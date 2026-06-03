@@ -1,0 +1,6 @@
+/* ─── Single book tokens ──────────────────────────────────────────────────── */
+@theme inline {
+	--color-book-primary:       var(--color-brand);
+	--color-book-secondary:     var(--color-brand-muted);
+	--color-book-primary-light: var(--color-brand-light);
+}

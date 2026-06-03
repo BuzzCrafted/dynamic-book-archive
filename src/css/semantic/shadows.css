@@ -1,0 +1,27 @@
+/* ─── Shadow tokens ───────────────────────────────────────────────────────── */
+@theme inline {
+
+	/* ── Shared shadow color ingredients ─────────────────────────────── */
+	--color-shadow-ring: rgb(from var(--color-brand) r g b / 0.20);
+	--color-shadow-glow: rgb(from var(--color-brand) r g b / 0.22);
+	--color-shadow-deep: rgb(from var(--color-stroke-muted) r g b / 0.75);
+	--color-shadow-mid:  rgb(from var(--color-stroke-muted) r g b / 0.45);
+
+	/* ── Global shadows ───────────────────────────────────────────────── */
+	--shadow-main:
+		0 0 0 1px var(--color-shadow-ring),
+		-24px 30px 60px -15px var(--color-shadow-deep),
+		-12px 14px 24px -8px var(--color-shadow-mid);
+	--shadow-main-hover:
+		-2px 0 2px 0 var(--color-shadow-glow),
+		-24px 30px 60px -15px var(--color-shadow-deep),
+		-12px 14px 24px -8px var(--color-shadow-mid);
+	--shadow-main-top:
+		0 -24px 60px -15px var(--color-shadow-deep),
+		0 -12px 24px -8px var(--color-shadow-mid);
+	--shadow-bronze-glow:
+		0 0 0 1px color-mix(in srgb, var(--color-brand-muted) 70%, transparent),
+		0 0 0 3px color-mix(in srgb, var(--color-brand)       25%, transparent),
+		0 0 30px   color-mix(in srgb, var(--color-brand-muted) 45%, transparent),
+		0 12px 30px color-mix(in srgb, var(--color-stroke-muted) 40%, transparent);
+}

@@ -26,7 +26,8 @@ $collection       = isset( $args['collection'] ) && is_array( $args['collection'
 $people           = isset( $args['people'] ) && is_array( $args['people'] ) ? $args['people'] : array();
 $cover_image      = isset( $args['cover_image'] ) && is_array( $args['cover_image'] ) ? $args['cover_image'] : array();
 
-$has_cover = ! empty( $cover_image['url'] );
+$has_cover      = ! empty( $cover_image['url'] );
+$cover_full_url = isset( $cover_image['full_url'] ) && is_string( $cover_image['full_url'] ) ? $cover_image['full_url'] : '';
 
 $pub_date_label = $pub_date && function_exists( 'dba_format_archive_publication_date_label' )
 	? dba_format_archive_publication_date_label( $pub_date )
@@ -48,14 +49,22 @@ $meta_rows = array_filter(
 	<?php echo $has_cover ? 'grid sm:grid-cols-[auto_1fr]' : ''; ?>">
 
 	<?php if ( $has_cover ) : ?>
-	<div class="flex items-stretch border-b border-border-soft bg-[--c-ink-950] sm:border-b-0 sm:border-r">
+	<div class="flex items-stretch border-b border-border-soft bg-viewer-surface sm:border-b-0 sm:border-r">
 		<figure class="m-0 flex items-center justify-center">
 			<img
-				class="block h-auto w-[clamp(8rem,20vw,13rem)] object-cover object-top"
+				class="block h-auto w-[clamp(8rem,20vw,13rem)] object-cover object-top<?php echo '' !== $cover_full_url ? ' js-doc-zoom-trigger' : ''; ?>"
 				src="<?php echo esc_url( $cover_image['url'] ); ?>"
 				alt="<?php echo esc_attr( $cover_image['alt'] ); ?>"
 				loading="eager"
 				decoding="async"
+				<?php if ( '' !== $cover_full_url ) : ?>
+				data-full-url="<?php echo esc_url( $cover_full_url ); ?>"
+				role="button"
+				tabindex="0"
+				aria-label="<?php esc_attr_e( 'Open image zoom', 'dynamic-book-archive' ); ?>"
+				x-on:click="openZoom($event.currentTarget.dataset.fullUrl)"
+				x-on:keydown="($event.key === 'Enter' || $event.key === ' ') && (openZoom($event.currentTarget.dataset.fullUrl), $event.preventDefault())"
+				<?php endif; ?>
 			/>
 		</figure>
 	</div>

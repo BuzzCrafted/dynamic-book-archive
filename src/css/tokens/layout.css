@@ -1,0 +1,4 @@
+/* ─── Layout sizing tokens ────────────────────────────────────────────────── */
+@theme {
+	--book-single-gallery-stage-height: clamp(16rem, 42vmin, 43.75rem);
+}

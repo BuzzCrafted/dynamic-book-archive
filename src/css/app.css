@@ -1,0 +1,62 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+/* Alpine.js: hide elements with x-cloak before Alpine initializes */
+[x-cloak] { display: none !important; }
+
+@source '../../*.php';
+@source '../../inc/**/*.php';
+@source '../../template-parts/**/*.php';
+@source '../../src/js/**/*.js';
+
+/* ─── Design tokens ───────────────────────────────────────────────────────── */
+/*
+ * Three-layer architecture (import order matters):
+ *
+ *   Layer 1 · tokens/         – Tailwind @theme primitives (color ramps,
+ *                               typography, sizing). Nothing here uses var().
+ *   Layer 2 · semantic/       – @theme inline semantic tokens that reference
+ *                               Layer 1 via var(). Use these in component CSS
+ *                               and utility classes; never raw primitives.
+ *   Layer 3 · semantic/       – @theme inline component-scoped token groups,
+ *             components/       each mapping semantic tokens to a UI concern.
+ *
+ * Developer contract: use semantic utilities only (text-brand, bg-canvas, etc.)
+ * Primitive utilities (text-gold-200, bg-ink-100) are wiring internals.
+ */
+
+/* Layer 1: Primitives */
+@import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/layout.css';
+@import './tokens/legacy.css';
+
+/* Layer 2: Semantic */
+@import './semantic/colors.css';
+@import './semantic/shadows.css';
+@import './semantic/images.css';
+
+/* Layer 3: Component tokens */
+@import './semantic/components/site-navigation.css';
+@import './semantic/components/card.css';
+@import './semantic/components/breadcrumbs.css';
+@import './semantic/components/book-archive-category-nav.css';
+@import './semantic/components/filters.css';
+@import './semantic/components/book.css';
+@import './semantic/components/book-pagination.css';
+@import './semantic/components/doc-viewer.css';
+
+/* ─── Component styles ────────────────────────────────────────────────────── */
+@import './components/base.css';
+@import './components/prose.css';
+@import './components/home.css';
+@import './components/site-navigation.css';
+@import './components/post-navigation.css';
+@import './components/book-archive-ajax.css';
+@import './components/book-archive-toolbar-selects.css';
+@import './components/chain-divider.css';
+@import './components/timeline.css';
+@import './components/cards.css';
+@import './components/photo.css';
+@import './components/cf7.css';
+@import './components/archive-document.css';

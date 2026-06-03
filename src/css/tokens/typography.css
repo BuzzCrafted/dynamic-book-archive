@@ -1,0 +1,7 @@
+/* ─── Typography tokens ───────────────────────────────────────────────────── */
+@theme {
+	--font-display: "EB Garamond", Sans-serif;
+	--font-main: "Lora", Charter, "Bitstream Charter", "Sitka Text", Cambria, serif;
+
+	--text-xxs: .65rem;
+}

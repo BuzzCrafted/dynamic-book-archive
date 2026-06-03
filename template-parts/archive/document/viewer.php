@@ -65,11 +65,17 @@ if ( $post_id <= 0 ) {
 					'alpine'     => array( 'x-on:click' => 'prev()', 'x-bind:disabled' => 'index <= 0' ),
 				) );
 				?>
-				<img
-					x-bind:src="current ? current.view_url : ''"
-					x-bind:alt="current ? current.title : ''"
-					loading="lazy"
-				/>
+			<img
+				class="js-doc-zoom-trigger"
+				x-bind:src="current ? current.view_url : ''"
+				x-bind:alt="current ? current.title : ''"
+				loading="lazy"
+				role="button"
+				tabindex="0"
+				aria-label="<?php esc_attr_e( 'Open image zoom', 'dynamic-book-archive' ); ?>"
+				x-on:click="current && current.full_url && openZoom()"
+				x-on:keydown="($event.key === 'Enter' || $event.key === ' ') && current && current.full_url && (openZoom(), $event.preventDefault())"
+			/>
 				<?php
 				dba_the_carousel_nav_button( array(
 					'direction'  => 'next',
@@ -131,6 +137,51 @@ if ( $post_id <= 0 ) {
 				<div class="dba-doc-viewer__prose" x-text="current ? current.editorial_notes : ''"></div>
 			</div>
 		</div>
+	</div>
+
+	<!-- Fullscreen OpenSeadragon zoom overlay -->
+	<div
+		class="dba-doc-viewer__zoom"
+		x-show="mode === 'zoom'"
+		x-cloak
+		x-on:keydown.escape.window="mode === 'zoom' && closeZoom()"
+		role="dialog"
+		aria-modal="true"
+		aria-label="<?php esc_attr_e( 'Image zoom', 'dynamic-book-archive' ); ?>"
+	>
+		<div class="dba-doc-viewer__zoom-controls">
+
+			<button
+				id="dba-osd-zoom-in-<?php echo (int) $post_id; ?>"
+				class="dba-doc-viewer__zoom-btn"
+				type="button"
+				aria-label="<?php esc_attr_e( 'Zoom in', 'dynamic-book-archive' ); ?>"
+			><?php dba_the_inline_icon( 'bx/bx-zoom-in', 'block h-5 w-5' ); ?></button>
+
+			<button
+				id="dba-osd-zoom-out-<?php echo (int) $post_id; ?>"
+				class="dba-doc-viewer__zoom-btn"
+				type="button"
+				aria-label="<?php esc_attr_e( 'Zoom out', 'dynamic-book-archive' ); ?>"
+			><?php dba_the_inline_icon( 'bx/bx-zoom-out', 'block h-5 w-5' ); ?></button>
+
+			<button
+				id="dba-osd-fullpage-<?php echo (int) $post_id; ?>"
+				class="dba-doc-viewer__zoom-btn"
+				type="button"
+				aria-label="<?php esc_attr_e( 'Full screen', 'dynamic-book-archive' ); ?>"
+			><?php dba_the_inline_icon( 'bx/bx-fullscreen', 'block h-5 w-5' ); ?></button>
+
+			<button
+				class="dba-doc-viewer__zoom-btn"
+				type="button"
+				x-on:click="closeZoom()"
+				aria-label="<?php esc_attr_e( 'Close zoom', 'dynamic-book-archive' ); ?>"
+			><?php dba_the_inline_icon( 'bx/bx-x', 'block h-5 w-5' ); ?></button>
+
+		</div>
+
+		<div class="dba-doc-viewer__zoom-stage" x-ref="osd"></div>
 	</div>
 
 	<!-- Thumbnail strip (only shown when there are multiple pages) -->

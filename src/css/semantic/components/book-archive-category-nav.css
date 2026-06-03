@@ -1,0 +1,25 @@
+/* ─── Book archive category nav tokens ───────────────────────────────────── */
+@theme inline {
+	--color-book-archive-category-nav-link:           var(--color-brand);
+	--color-book-archive-category-nav-link-hover:     var(--color-brand-muted);
+	--color-book-archive-category-nav-text:           var(--color-brand-muted);
+	--color-book-archive-category-nav-current-text:   var(--color-content-inverse);
+	--color-book-archive-category-nav-current-border:
+		color-mix(in oklch, var(--color-brand) 78%, var(--color-brand-muted) 22%);
+
+	--image-book-archive-category-nav-current:
+		linear-gradient(to right,
+			var(--color-brand-muted) 0%,
+			var(--color-brand) 50%,
+			var(--color-brand-muted) 100%);
+	--image-book-archive-category-nav-current-hover:
+		linear-gradient(to right,
+			var(--color-brand-muted) 0%,
+			color-mix(in oklch, var(--color-brand-light) 85%, white) 50%,
+			var(--color-brand-muted) 100%);
+
+	--shadow-book-archive-category-nav-current:
+		0 2px 8px 0 color-mix(in oklch, var(--color-brand) 60%, transparent);
+	--shadow-book-archive-category-nav-current-hover:
+		0 2px 10px 0 color-mix(in oklch, var(--color-brand) 65%, transparent);
+}

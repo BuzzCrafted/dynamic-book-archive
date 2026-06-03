@@ -1,0 +1,9 @@
+/* ─── Document viewer tokens ──────────────────────────────────────────────── */
+@theme inline {
+	--color-viewer-surface:              var(--color-ink-950);
+	--color-viewer-status-error:         var(--color-danger);
+	--color-viewer-toolbar-button:       var(--color-brand-muted);
+	--color-viewer-toolbar-button-hover: var(--color-brand);
+	--color-viewer-button-primary:       var(--color-brand-light);
+	--color-viewer-button-primary-hover: var(--color-brand);
+}

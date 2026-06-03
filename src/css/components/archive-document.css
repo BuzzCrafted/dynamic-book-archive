@@ -10,7 +10,6 @@
  */
 
 /* ─── Root container ────────────────────────────────────────────────────── */
-@import '../colors/components/_doc-viewer.css';
 
 .dba-doc-viewer {
 	@apply overflow-hidden rounded-lg border border-border-soft bg-viewer-surface;
@@ -45,7 +44,7 @@
 }
 
 .dba-doc-view-btn.is-active {
-	@apply bg-book-primary text-page;
+	@apply bg-viewer-button-primary text-page;
 }
 
 /* ─── Two-column layout ─────────────────────────────────────────────────── */
@@ -92,7 +91,7 @@
 }
 
 .dba-doc-viewer__tab.is-active {
-	@apply text-heading border-b-book-primary;
+	@apply text-heading border-b-viewer-button-primary;
 }
 
 .dba-doc-viewer__counter {
@@ -106,7 +105,7 @@
 .dba-doc-viewer__prose {
 	@apply whitespace-pre-wrap font-main text-base leading-relaxed text-body;
 }
- 
+
 /* ─── Thumbnail strip ───────────────────────────────────────────────────── */
 
 .dba-doc-viewer__thumbs-strip {
@@ -134,21 +133,50 @@
 }
 
 .dba-doc-viewer__thumb.is-active {
-	@apply border-book-primary;
+	@apply border-viewer-button-primary;
 }
 
 .dba-doc-viewer__thumbs-nav {
-	@apply flex shrink-0 gap-2;
+	@apply grid shrink-0 grid-cols-2 gap-2;
 }
 
 .dba-doc-viewer__thumbs-nav button {
-	@apply cursor-pointer whitespace-nowrap rounded-sm border-0 bg-book-primary px-3.5 py-1.5 font-main text-xs tracking-wider text-page transition-colors duration-150;
+	@apply cursor-pointer whitespace-nowrap rounded-sm border-0 bg-viewer-button-primary px-3.5 py-1.5 text-center font-main text-xs tracking-wider text-page transition-colors duration-150;
 }
 
 .dba-doc-viewer__thumbs-nav button:hover:not(:disabled) {
-	@apply bg-book-secondary;
+	@apply bg-viewer-button-primary-hover;
 }
 
 .dba-doc-viewer__thumbs-nav button:disabled {
 	@apply cursor-default opacity-35;
+}
+
+/* ─── Zoomable image trigger ────────────────────────────────────────────── */
+
+.js-doc-zoom-trigger {
+	@apply cursor-zoom-in;
+}
+
+.js-doc-zoom-trigger:hover {
+	@apply opacity-90;
+}
+
+/* ─── Fullscreen OSD zoom overlay ───────────────────────────────────────── */
+
+.dba-doc-viewer__zoom {
+	@apply fixed inset-0 z-50 flex flex-col bg-viewer-surface p-4;
+}
+
+.dba-doc-viewer__zoom-stage {
+	@apply relative min-h-0 flex-1 w-full;
+}
+
+/* Toolbar — top-left, above OSD canvas. */
+.dba-doc-viewer__zoom-controls {
+	@apply absolute left-4 top-4 z-20 flex gap-1;
+}
+
+.dba-doc-viewer__zoom-btn {
+	@apply flex h-8 w-8 cursor-pointer items-center justify-center rounded-xs border-0 text-viewer-toolbar-button hover:text-viewer-toolbar-button-hover transition-colors duration-150;
 }

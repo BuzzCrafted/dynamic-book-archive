@@ -1,0 +1,68 @@
+/* ─── Semantic color tokens ───────────────────────────────────────────────── */
+/*
+ * Maps primitive ramps (tokens/colors.css) to named design roles.
+ * Use these token names in component CSS and Tailwind utilities; never
+ * reference raw gold/ink/bronze ramps directly in component code.
+ */
+@theme inline {
+
+	/* ── Brand (warm antique gold) ───────────────────────────────────── */
+	--color-brand:       var(--color-gold-200);
+	--color-brand-muted: var(--color-gold-100);
+	--color-brand-light: var(--color-gold-300);
+
+	/* ── Accent (warm peachy bronze) ─────────────────────────────────── */
+	--color-accent:       var(--color-bronze-100);
+	--color-accent-muted: var(--color-bronze-200);
+
+	/* ── Surfaces ────────────────────────────────────────────────────── */
+	--color-canvas:        var(--color-ink-100);
+	--color-surface:       var(--color-ink-400);
+	--color-surface-muted: var(--color-ink-200);
+
+	/* ── Content ─────────────────────────────────────────────────────── */
+	--color-content:         var(--color-brand);
+	--color-content-muted:   var(--color-neutral-100);
+	--color-content-inverse: var(--color-ink-100);
+
+	/* ── Links ───────────────────────────────────────────────────────── */
+	--color-link:       var(--color-brand);
+	--color-link-hover: var(--color-brand-muted);
+
+	/* ── Strokes ─────────────────────────────────────────────────────── */
+	--color-stroke:       var(--color-brand);
+	--color-stroke-muted: var(--color-ink-300);
+
+	/* ── State — success ─────────────────────────────────────────────── */
+	--color-success:       var(--color-green-500);
+	--color-success-muted: var(--color-green-700);
+	--color-success-light: var(--color-green-300);
+
+	/* ── State — warning ─────────────────────────────────────────────── */
+	--color-warning:       var(--color-yellow-500);
+	--color-warning-muted: var(--color-yellow-700);
+	--color-warning-light: var(--color-yellow-300);
+
+	/* ── State — info ────────────────────────────────────────────────── */
+	--color-info:       var(--color-sky-500);
+	--color-info-muted: var(--color-sky-700);
+	--color-info-light: var(--color-sky-300);
+
+	/* ── State — danger ──────────────────────────────────────────────── */
+	--color-danger:       var(--color-red-500);
+	--color-danger-muted: var(--color-red-700);
+	--color-danger-light: var(--color-red-300);
+
+	/* ── Backward-compat aliases ──────────────────────────────────────── */
+	/* Maps old token names so existing component CSS compiles unchanged. */
+	/* Remove aliases once all usages migrate to the semantic names above. */
+	--color-page:               var(--color-canvas);
+	--color-body:               var(--color-brand-muted);
+	--color-heading:            var(--color-content);
+	--color-neutral:            var(--color-content-muted);
+	--color-link-special:       var(--color-accent);
+	--color-link-special-hover: var(--color-accent-muted);
+	--color-border-main:        var(--color-stroke);
+	--color-border-secondary:   var(--color-brand-muted);
+	--color-border-soft:        var(--color-stroke-muted);
+}

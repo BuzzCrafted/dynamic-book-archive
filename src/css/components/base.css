@@ -1,0 +1,18 @@
+@layer base {
+	body {
+		@apply bg-page text-body antialiased font-main;
+	}
+
+	a {
+		@apply text-link underline-offset-2 hover:text-link-hover hover:underline;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply text-heading;
+	}
+}

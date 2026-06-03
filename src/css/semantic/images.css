@@ -1,0 +1,6 @@
+/* ─── Image / gradient tokens ─────────────────────────────────────────────── */
+@theme inline {
+	--image-card-highlight: linear-gradient(to right,
+		var(--color-card-highlight) 0%,
+		transparent 25%);
+}

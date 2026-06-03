@@ -1,0 +1,6 @@
+/* ─── Breadcrumbs tokens ──────────────────────────────────────────────────── */
+@theme inline {
+	--color-breadcrumbs-link:       var(--color-brand-light);
+	--color-breadcrumbs-link-hover: var(--color-brand);
+	--color-breadcrumbs-text:       var(--color-brand);
+}

@@ -1,0 +1,5 @@
+/* ─── Card tokens ─────────────────────────────────────────────────────────── */
+@theme inline {
+	--color-card-text:      var(--color-brand-muted);
+	--color-card-highlight: rgb(from var(--color-bronze-300) r g b / 0.85);
+}

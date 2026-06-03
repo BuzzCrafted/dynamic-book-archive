@@ -86,7 +86,7 @@ final class Historical_Document_Single_Presenter {
 	 * @return array{url: string, alt: string}
 	 */
 	private static function resolve_cover_image( int $post_id ): array {
-		$empty = array( 'url' => '', 'alt' => '' );
+		$empty = array( 'url' => '', 'full_url' => '', 'alt' => '' );
 
 		$url = get_the_post_thumbnail_url( $post_id, 'large' );
 		if ( ! is_string( $url ) || '' === $url ) {
@@ -95,14 +95,17 @@ final class Historical_Document_Single_Presenter {
 
 		$thumb_id = (int) get_post_thumbnail_id( $post_id );
 		$alt      = '';
+		$full_url = '';
 		if ( $thumb_id > 0 ) {
 			$alt = (string) get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
 			if ( '' === $alt ) {
 				$alt = (string) get_the_title( $thumb_id );
 			}
+			$full_url_raw = wp_get_attachment_image_url( $thumb_id, 'full' );
+			$full_url     = is_string( $full_url_raw ) ? $full_url_raw : '';
 		}
 
-		return array( 'url' => $url, 'alt' => $alt );
+		return array( 'url' => $url, 'full_url' => $full_url, 'alt' => $alt );
 	}
 
 	/**

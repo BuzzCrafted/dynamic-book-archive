@@ -1,0 +1,48 @@
+/* ─── Primitive color ramps ───────────────────────────────────────────────── */
+/*
+ * Tailwind @theme registrations for the site's custom color scales.
+ * All other files reference these; nothing downstream should hard-code hex.
+ */
+@theme {
+	/* Gold — warm antique gold brand ramp */
+	--color-gold-50:  #FFE19B;
+	--color-gold-100: #A6824A;
+	--color-gold-200: #D0A55F;
+	--color-gold-300: #FFCB77;
+	--color-gold-400: #947342;
+	--color-gold-500: #81643A;
+	--color-gold-600: #705632;
+	--color-gold-700: #5E482B;
+	--color-gold-800: #4D3B23;
+	--color-gold-900: #3D2E1C;
+	--color-gold-950: #352818;
+
+	/* Ink — near-black warm dark backgrounds */
+	--color-ink-50:  #0A0A09;
+	--color-ink-100: #0E0E0D;
+	--color-ink-200: #191918;
+	--color-ink-300: #2E2A24;
+	--color-ink-400: #1C1512;
+	--color-ink-500: #1B1612;
+	--color-ink-600: #1A1613;
+	--color-ink-700: #191613;
+	--color-ink-800: #191714;
+	--color-ink-900: #181715;
+	--color-ink-950: #131313;
+
+	/* Bronze — warm peachy accent ramp */
+	--color-bronze-50:  #EBDACA;
+	--color-bronze-100: #E6C1AB;
+	--color-bronze-200: #E0C9B7;
+	--color-bronze-300: #D6C9A3;
+	--color-bronze-400: #AF937D;
+	--color-bronze-500: #8B745E;
+	--color-bronze-600: #705B47;
+	--color-bronze-700: #574634;
+	--color-bronze-800: #423222;
+	--color-bronze-900: #2D2012;
+	--color-bronze-950: #24180B;
+
+	/* Neutral — warm gray tertiary text */
+	--color-neutral-100: #B8B4AB;
+}

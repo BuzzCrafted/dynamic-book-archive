@@ -1,0 +1,8 @@
+/* ─── Filters tokens ──────────────────────────────────────────────────────── */
+@theme inline {
+	--color-filters-link:            var(--color-content-inverse);
+	--color-filters-link-hover:      var(--color-brand-muted);
+	--color-filters-text:            var(--color-brand);
+	--color-filters-background:      var(--color-surface-muted);
+	--color-filters-link-background: var(--color-brand);
+}
