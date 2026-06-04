@@ -30,7 +30,7 @@ if ( '' === $permalink ) {
 ?>
 
 <article id="post-<?php echo esc_attr( (string) $post_id ); ?>" class="group flex relative min-h-0 w-full p-2 rounded-lg bg-surface transition-shadow duration-300 shadow-main hover:shadow-main-hover before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:p-px before:content-[''] before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100 before:bg-(image:--image-card-highlight) before:mask-[linear-gradient(#000,#000),linear-gradient(#000,#000)] before:[-webkit-mask-image:linear-gradient(#000,#000),linear-gradient(#000,#000)] before:[mask-clip:content-box,border-box] before:[-webkit-mask-clip:content-box,border-box] before:mask-exclude">
-	<a href="<?php echo esc_url( $permalink ); ?>" class="flex w-full min-h-0 items-stretch text-card-text no-underline">
+	<a href="<?php echo esc_url( $permalink ); ?>" class="flex w-full min-h-0 items-stretch text-brand-muted no-underline">
 		<div class="relative min-w-0 flex-1 self-center aspect-3/4 overflow-hidden">
 			<div class="absolute inset-0">
 				<?php

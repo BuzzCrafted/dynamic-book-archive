@@ -27,7 +27,7 @@ declare(strict_types=1);
 		</a>
 
 		<header id="masthead" class="site-header shadow-[0_0_1px_1px_rgba(214,201,163,0.30)] py-4 px-2 md:px-4 lg:px-0">
-			<div class="max-w-[1440px] lg:px-30 flex justify-between mx-auto items-center text-heading">
+			<div class="max-w-[1440px] lg:px-30 flex justify-between mx-auto items-center text-content">
 				<div class="flex items-center gap-4 px-1 md:px-0">
 					<div class="w-16 md:w-20 shrink-0">
 						<?php dba_the_site_logo(); ?>
@@ -45,7 +45,7 @@ declare(strict_types=1);
 				<nav id="site-navigation" class="flex flex-wrap items-center justify-end gap-x-10 gap-y-2 text-[11px] tracking-[0.2em]"
 					x-data="mobileNav()"
 					@keydown.escape.window="close()">
-					<button type="button" class="inline-flex items-center rounded-md border bg-primary px-3 py-2 font-medium text-site-navigation-secondary md:hidden"
+					<button type="button" class="inline-flex items-center rounded-md border bg-primary px-3 py-2 font-medium text-brand-muted md:hidden"
 						x-ref="menuToggle"
 						aria-controls="primary-menu-panel"
 						:aria-expanded="open ? 'true' : 'false'"
@@ -55,7 +55,7 @@ declare(strict_types=1);
 					</button>
 					<div id="primary-menu-panel" class="primary-menu-panel hidden md:flex md:flex-row md:items-center md:gap-6"
 						:class="{ 'hidden': !open }">
-						<button type="button" class="md:hidden inline-flex cursor-pointer items-center justify-center rounded-md border-0 bg-transparent p-2 text-heading transition-opacity hover:opacity-80 max-md:fixed max-md:top-[max(0.5rem,env(safe-area-inset-top,0px))] max-md:end-[max(0.5rem,env(safe-area-inset-right,0px))] max-md:z-[60] max-md:min-h-11 max-md:min-w-11" aria-label="<?php esc_attr_e('Close menu', 'dynamic-book-archive'); ?>"
+						<button type="button" class="md:hidden inline-flex cursor-pointer items-center justify-center rounded-md border-0 bg-transparent p-2 text-content transition-opacity hover:opacity-80 max-md:fixed max-md:top-[max(0.5rem,env(safe-area-inset-top,0px))] max-md:end-[max(0.5rem,env(safe-area-inset-right,0px))] max-md:z-[60] max-md:min-h-11 max-md:min-w-11" aria-label="<?php esc_attr_e('Close menu', 'dynamic-book-archive'); ?>"
 							x-ref="menuClose"
 							@click.stop="close()">
 							<?php dba_the_inline_icon('bx/bx-x', 'flex size-10 shrink-0 items-center justify-center text-current [&>svg]:block [&>svg]:size-full'); ?>

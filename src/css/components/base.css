@@ -1,6 +1,6 @@
 @layer base {
 	body {
-		@apply bg-page text-body antialiased font-main;
+		@apply bg-canvas text-brand-muted antialiased font-main;
 	}
 
 	a {
@@ -13,6 +13,6 @@
 	h4,
 	h5,
 	h6 {
-		@apply text-heading;
+		@apply text-content;
 	}
 }

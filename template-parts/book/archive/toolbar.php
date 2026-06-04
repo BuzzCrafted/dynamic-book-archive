@@ -74,27 +74,27 @@ foreach ( $tags as $tag ) {
 	<div class="flex w-full items-center justify-end gap-2">
 		<button
 			type="button"
-			class="js-book-archive-open-sort inline-flex md:min-h-10 md:min-w-30 shrink-0 cursor-pointer items-center gap-2.5 rounded-xl bg-primary bg-filters-background py-2 pl-3 pr-2.5 font-display text-sm text-filters-text shadow-main transition hover:bg-book-secondary/10 hover:shadow-bronze-glow duration-200 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-filters-link/60 [&[aria-expanded='true']>span:last-child]:motion-safe:rotate-180"
+			class="js-book-archive-open-sort inline-flex md:min-h-10 md:min-w-30 shrink-0 cursor-pointer items-center gap-2.5 rounded-xl bg-primary bg-filters-background py-2 pl-3 pr-2.5 font-display text-sm text-brand shadow-main transition hover:bg-book-secondary/10 hover:shadow-bronze-glow duration-200 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-filters-link/60 [&[aria-expanded='true']>span:last-child]:motion-safe:rotate-180"
 			x-ref="btnSort"
 			aria-haspopup="dialog"
 			:aria-expanded="sortOpen ? 'true' : 'false'"
 			aria-controls="book-archive-dialog-sort"
 			@click="openSort()">
-			<span class="text-heading [&>i]:flex [&>i]:size-4 [&>i]:items-center [&>i]:justify-center" aria-hidden="true"><?php dba_the_inline_icon( 'bx/bx-sort' ); ?></span>
+			<span class="text-content [&>i]:flex [&>i]:size-4 [&>i]:items-center [&>i]:justify-center" aria-hidden="true"><?php dba_the_inline_icon( 'bx/bx-sort' ); ?></span>
 			<span class="hidden md:inline-block min-w-0 flex-1 text-left leading-none"><?php esc_html_e( 'Sort', 'dynamic-book-archive' ); ?></span>
-			<span class="hidden md:block shrink-0 text-heading motion-safe:transition-transform [&>i]:flex [&>i]:size-4 [&>i]:items-center [&>i]:justify-center" aria-hidden="true"><?php dba_the_inline_icon( 'bx/bx-chevron-down', 'text-current' ); ?></span>
+			<span class="hidden md:block shrink-0 text-content motion-safe:transition-transform [&>i]:flex [&>i]:size-4 [&>i]:items-center [&>i]:justify-center" aria-hidden="true"><?php dba_the_inline_icon( 'bx/bx-chevron-down', 'text-current' ); ?></span>
 		</button>
 		<button
 			type="button"
-			class="js-book-archive-open-filter inline-flex md:min-h-10 md:min-w-30 shrink-0 cursor-pointer items-center gap-2.5 rounded-xl bg-primary bg-filters-background py-2 pl-3 pr-2.5 font-display text-sm text-filters-text shadow-main transition hover:bg-book-secondary/10 hover:shadow-bronze-glow duration-200 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-filters-link/60 [&[aria-expanded='true']>span:last-child]:motion-safe:rotate-180"
+			class="js-book-archive-open-filter inline-flex md:min-h-10 md:min-w-30 shrink-0 cursor-pointer items-center gap-2.5 rounded-xl bg-primary bg-filters-background py-2 pl-3 pr-2.5 font-display text-sm text-brand shadow-main transition hover:bg-book-secondary/10 hover:shadow-bronze-glow duration-200 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-filters-link/60 [&[aria-expanded='true']>span:last-child]:motion-safe:rotate-180"
 			x-ref="btnFilter"
 			aria-haspopup="dialog"
 			:aria-expanded="filterOpen ? 'true' : 'false'"
 			aria-controls="book-archive-dialog-filter"
 			@click="openFilter()">
-			<span class="text-heading [&>i]:flex [&>i]:size-4 [&>i]:items-center [&>i]:justify-center" aria-hidden="true"><?php dba_the_inline_icon( 'bx/bx-slider', 'text-current' ); ?></span>
+			<span class="text-content [&>i]:flex [&>i]:size-4 [&>i]:items-center [&>i]:justify-center" aria-hidden="true"><?php dba_the_inline_icon( 'bx/bx-slider', 'text-current' ); ?></span>
 			<span class="hidden md:inline-block min-w-0 flex-1 text-left leading-none"><?php esc_html_e( 'Filter', 'dynamic-book-archive' ); ?></span>
-			<span class="hidden md:block shrink-0 text-heading motion-safe:transition-transform [&>i]:flex [&>i]:size-4 [&>i]:items-center [&>i]:justify-center" aria-hidden="true"><?php dba_the_inline_icon( 'bx/bx-chevron-down', 'text-current' ); ?></span>
+			<span class="hidden md:block shrink-0 text-content motion-safe:transition-transform [&>i]:flex [&>i]:size-4 [&>i]:items-center [&>i]:justify-center" aria-hidden="true"><?php dba_the_inline_icon( 'bx/bx-chevron-down', 'text-current' ); ?></span>
 		</button>
 
 		<div class="js-book-archive-search-wrap relative w-full min-w-48 max-w-md sm:w-auto sm:max-w-xs md:max-w-xs group-aria-busy:pointer-events-none">
@@ -104,11 +104,11 @@ foreach ( $tags as $tag ) {
 				inputmode="search"
 				enterkeyhint="search"
 				id="book-archive-toolbar-search"
-				class="js-book-archive-search search-cancel-themed w-full rounded-full shadow-main bg-filters-background py-2 pl-3 pr-10 text-sm text-filters-text placeholder:text-filters-text/50 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-filters-link"
+				class="js-book-archive-search search-cancel-themed w-full rounded-full shadow-main bg-filters-background py-2 pl-3 pr-10 text-sm text-brand placeholder:text-brand/50 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-filters-link"
 				placeholder="<?php echo esc_attr( __( 'Search books…', 'dynamic-book-archive' ) ); ?>"
 				value="<?php echo esc_attr( $search_value ); ?>"
 				autocomplete="off" />
-			<span class="js-book-archive-search-submit pointer-events-auto absolute right-3 top-1/2 -translate-y-1/2 text-heading" aria-hidden="true">
+			<span class="js-book-archive-search-submit pointer-events-auto absolute right-3 top-1/2 -translate-y-1/2 text-content" aria-hidden="true">
 				<?php dba_the_inline_icon( 'search-icon', 'h-4 w-4' ); ?>
 			</span>
 		</div>

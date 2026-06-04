@@ -1,9 +1,5 @@
 /* ─── Book archive category nav tokens ───────────────────────────────────── */
 @theme inline {
-	--color-book-archive-category-nav-link:           var(--color-brand);
-	--color-book-archive-category-nav-link-hover:     var(--color-brand-muted);
-	--color-book-archive-category-nav-text:           var(--color-brand-muted);
-	--color-book-archive-category-nav-current-text:   var(--color-content-inverse);
 	--color-book-archive-category-nav-current-border:
 		color-mix(in oklch, var(--color-brand) 78%, var(--color-brand-muted) 22%);
 

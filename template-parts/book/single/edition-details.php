@@ -19,8 +19,8 @@ if ( $post_id <= 0 || empty( $lines ) ) {
 }
 
 $row_class = 'grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-1 text-base sm:grid-cols-[9rem_1fr]';
-$dt_class  = 'font-main tracking-wider text-book-secondary';
-$dd_class  = 'font-main text-book-primary';
+$dt_class  = 'font-main tracking-wider text-brand-muted';
+$dd_class  = 'font-main text-brand';
 
 ?>
 <section aria-labelledby="book-edition-heading-<?php echo esc_attr( (string) $post_id ); ?>">
@@ -78,6 +78,6 @@ $dd_class  = 'font-main text-book-primary';
 			?>
 		<?php endforeach; ?>
 	</dl>
-	<hr class="mt-4 h-px w-full shrink-0 border-0 bg-linear-to-r from-transparent from-0% via-book-primary/85 via-38% to-transparent to-100% [box-shadow:0_0_12px_color-mix(in_oklch,var(--color-book-primary)_35%,transparent)]" role="presentation" />
+	<hr class="mt-4 h-px w-full shrink-0 border-0 bg-linear-to-r from-transparent from-0% via-brand/85 via-38% to-transparent to-100% [box-shadow:0_0_12px_color-mix(in_oklch,var(--color-brand)_35%,transparent)]" role="presentation" />
 </section>
 

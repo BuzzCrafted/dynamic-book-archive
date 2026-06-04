@@ -20,7 +20,7 @@ if ( '' === $url || '' === $label ) {
 }
 
 ?>
-<a class="font-main my-2 md:my-4 lg:my-6 inline-flex items-center gap-1 md:gap-2 text-sm font-medium tracking-widest text-book-primary no-underline transition hover:text-book-secondary" href="<?php echo esc_url( $url ); ?>">
+<a class="font-main my-2 md:my-4 lg:my-6 inline-flex items-center gap-1 md:gap-2 text-sm font-medium tracking-widest text-brand no-underline transition hover:text-brand-muted" href="<?php echo esc_url( $url ); ?>">
 	<span aria-hidden="true">←</span>
 	<?php echo esc_html( $label ); ?>
 </a>

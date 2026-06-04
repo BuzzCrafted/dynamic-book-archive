@@ -66,7 +66,7 @@ $alpine_config = wp_json_encode( array(
 	x-data="yearRange(<?php echo esc_attr( $alpine_config ); ?>)">
 	<?php if ( $is_staging ) : ?>
 		<div class="mb-3">
-			<span class="block text-xs font-semibold uppercase tracking-wider text-filters-text/80"><?php esc_html_e( 'Years', 'dynamic-book-archive' ); ?></span>
+			<span class="block text-xs font-semibold uppercase tracking-wider text-brand/80"><?php esc_html_e( 'Years', 'dynamic-book-archive' ); ?></span>
 		</div>
 		<div class="dba-year-range__sliders relative px-1 pb-2 sm:px-2">
 			<div class="relative z-10 h-5">
@@ -94,7 +94,7 @@ $alpine_config = wp_json_encode( array(
 					aria-label="<?php echo esc_attr__( 'To year', 'dynamic-book-archive' ); ?>" />
 				<div class="dba-year-range__track" x-ref="track" aria-hidden="true"></div>
 			</div>
-			<div class="js-year-range-scale mt-0.5 flex w-full items-center text-xs tabular-nums text-filters-text/60" aria-hidden="true">
+			<div class="js-year-range-scale mt-0.5 flex w-full items-center text-xs tabular-nums text-brand/60" aria-hidden="true">
 				<?php foreach ( $scale_ticks as $i => $tick ) : ?>
 					<?php if ( $i > 0 ) : ?>
 				<span class="flex min-h-3 min-w-0 flex-1 items-center justify-center">
@@ -105,10 +105,10 @@ $alpine_config = wp_json_encode( array(
 				<?php endforeach; ?>
 			</div>
 			<div class="pointer-events-none relative mt-2 min-h-[2.125rem]">
-				<span class="js-year-range-tooltip-min dba-year-range__tooltip-min absolute left-0 top-0 z-10 min-w-[2.25rem] rounded-md bg-heading px-2 py-1 text-center text-xs font-bold tabular-nums text-surface shadow-sm" aria-hidden="true"
+				<span class="js-year-range-tooltip-min dba-year-range__tooltip-min absolute left-0 top-0 z-10 min-w-[2.25rem] rounded-md bg-canvas-inverse px-2 py-1 text-center text-xs font-bold tabular-nums text-surface shadow-sm" aria-hidden="true"
 					x-text="vMin"
 					:style="tooltipMinStyle"></span>
-				<span class="js-year-range-tooltip-max dba-year-range__tooltip-max pointer-events-none absolute left-0 top-0 z-10 min-w-[2.25rem] rounded-md bg-heading px-2 py-1 text-center text-xs font-bold tabular-nums text-surface shadow-sm" aria-hidden="true"
+				<span class="js-year-range-tooltip-max dba-year-range__tooltip-max pointer-events-none absolute left-0 top-0 z-10 min-w-[2.25rem] rounded-md bg-canvas-inverse px-2 py-1 text-center text-xs font-bold tabular-nums text-surface shadow-sm" aria-hidden="true"
 					x-text="vMax"
 					:style="tooltipMaxStyle"></span>
 			</div>

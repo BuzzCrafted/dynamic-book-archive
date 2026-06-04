@@ -27,11 +27,11 @@ final class Archive_Cpt_Breadcrumbs {
 
 	/**
 	 * When on a single `historical_document`, build a collection-aware breadcrumb
-	 * trail: Home > Collections > [Collection] > Document.
+	 * trail: Home > Collections > [Collection A] > [Collection B] > … > Document.
 	 *
 	 * The generic fallback in Breadcrumb_Trail::get_items() would produce
 	 * "Home > Historical Documents > Title" — correct structurally but not useful
-	 * for navigation when the document belongs to a specific collection.
+	 * for navigation when the document belongs to one or more specific collections.
 	 *
 	 * @param array<int, array{label: string, url: string}> $items Auto-generated items.
 	 * @return array<int, array{label: string, url: string}>
@@ -61,17 +61,20 @@ final class Archive_Cpt_Breadcrumbs {
 			);
 		}
 
-		// Parent collection segment (when set).
-		$collection_id = (int) get_post_meta( $post->ID, '_archive_collection_id', true );
-		if ( $collection_id > 0 ) {
+		// One segment per linked collection (multi-row since archive-cpt plugin update).
+		$collection_ids_raw = get_post_meta( $post->ID, '_archive_collection_id', false );
+		$collection_ids     = array_values( array_filter( array_map( 'intval', is_array( $collection_ids_raw ) ? $collection_ids_raw : array() ) ) );
+
+		foreach ( $collection_ids as $collection_id ) {
 			$collection = get_post( $collection_id );
-			if ( $collection instanceof WP_Post && 'collection' === $collection->post_type ) {
-				$collection_url = get_permalink( $collection_id );
-				$new_items[]    = array(
-					'label' => (string) get_the_title( $collection ),
-					'url'   => is_string( $collection_url ) && '' !== $collection_url ? $collection_url : '',
-				);
+			if ( ! $collection instanceof WP_Post || 'collection' !== $collection->post_type ) {
+				continue;
 			}
+			$collection_url = get_permalink( $collection_id );
+			$new_items[]    = array(
+				'label' => (string) get_the_title( $collection ),
+				'url'   => is_string( $collection_url ) && '' !== $collection_url ? $collection_url : '',
+			);
 		}
 
 		// Current document — last crumb has no URL (rendered as aria-current="page").

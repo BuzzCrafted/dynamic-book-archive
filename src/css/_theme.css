@@ -62,8 +62,8 @@
 	--color-breadcrumbs-text: var(--c-gold-200);
 
 	/* Book archive category nav */
-	--color-book-archive-category-nav-link: var(--c-gold-200);
-	--color-book-archive-category-nav-link-hover: var(--c-gold-100);
+	--color-brand: var(--c-gold-200);
+	--color-brand-muted: var(--c-gold-100);
 	--color-book-archive-category-nav-text: var(--c-gold-100);
 
 	/* Book archive category nav */

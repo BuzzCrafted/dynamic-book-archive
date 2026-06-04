@@ -33,7 +33,7 @@ if ( $post_id <= 0 || empty( $tags ) ) {
 				continue;
 			}
 			?>
-			<a class="inline-flex rounded-md shadow-main px-4 py-1.5 text-sm font-medium text-book-primary no-underline transition hover:bg-book-secondary/10 hover:shadow-bronze-glow duration-200 ease-out" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $name ); ?></a>
+			<a class="inline-flex rounded-md shadow-main px-4 py-1.5 text-sm font-medium text-brand no-underline transition hover:bg-brand-muted/10 hover:shadow-bronze-glow duration-200 ease-out" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $name ); ?></a>
 		<?php endforeach; ?>
 	</div>
 </section>

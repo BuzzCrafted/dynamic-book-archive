@@ -544,7 +544,7 @@ if ( ! function_exists( 'dba_get_carousel_nav_button_classes' ) ) :
 	 *                               'inline'  — normal flow flex/grid sibling, no absolute positioning.
 	 */
 	function dba_get_carousel_nav_button_classes( string $position_class, string $size_class, string $extra_class = '', string $variant = 'overlay' ): string {
-		$visual = 'flex items-center justify-center rounded-full shadow-main bg-page/50 text-heading backdrop-blur-sm transition hover:bg-page hover:shadow-bronze-glow hover:text-body disabled:pointer-events-none disabled:opacity-30';
+		$visual = 'flex items-center justify-center rounded-full shadow-main bg-canvas/50 text-content backdrop-blur-sm transition hover:bg-canvas hover:shadow-bronze-glow hover:text-brand-muted disabled:pointer-events-none disabled:opacity-30';
 
 		if ( 'inline' === $variant ) {
 			$parts = array( $visual, 'flex-shrink-0', $size_class, $extra_class );

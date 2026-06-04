@@ -1,0 +1,12 @@
+@layer utilities {
+	/*
+	 * Book single: force typography plugin prose tokens to book palette.
+	 * Ensures `strong`, etc. don't fall back to library colors inside the single-book description.
+	 */
+	body.single-book .prose,
+	body.post-type-book .prose,
+	.entry-content.prose {
+		--tw-prose-counters: var(--color-brand);
+		--tw-prose-bullets: var(--color-brand);
+	}
+}

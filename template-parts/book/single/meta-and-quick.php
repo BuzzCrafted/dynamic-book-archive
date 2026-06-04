@@ -20,8 +20,8 @@ $category_label   = isset( $meta['category_label'] ) && is_string( $meta['catego
 $collection_label = isset( $meta['collection_label'] ) && is_string( $meta['collection_label'] ) ? $meta['collection_label'] : '';
 
 $row_class = 'grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-1 text-base sm:grid-cols-[9rem_1fr]';
-$dt_class  = 'font-main tracking-wider text-book-secondary';
-$dd_class  = 'font-main text-book-primary';
+$dt_class  = 'font-main tracking-wider text-brand-muted';
+$dd_class  = 'font-main text-brand';
 
 /**
  * Filters the icon for a quick item on single book pages.
@@ -37,7 +37,7 @@ $icon_html = static function ( string $icon ): string {
 	);
 
 	if ( isset( $icons[ $icon ] ) ) {
-		return dba_get_inline_icon( $icons[ $icon ], 'h-5 w-5 shrink-0 text-book-secondary' );
+		return dba_get_inline_icon( $icons[ $icon ], 'h-5 w-5 shrink-0 text-brand-muted' );
 	}
 	return '';
 };
@@ -90,11 +90,11 @@ $icon_html = static function ( string $icon ): string {
 			}
 			?>
 		</dl>
-		<hr class="h-px w-full shrink-0 border-0 bg-linear-to-r from-transparent from-0% via-book-primary/85 via-38% to-transparent to-100% [box-shadow:0_0_12px_color-mix(in_oklch,var(--color-book-primary-light)_35%,transparent)]" role="presentation" />
+		<hr class="h-px w-full shrink-0 border-0 bg-linear-to-r from-transparent from-0% via-brand/85 via-38% to-transparent to-100% [box-shadow:0_0_12px_color-mix(in_oklch,var(--color-brand)_35%,transparent)]" role="presentation" />
 	</div>
 
 	<?php if ( count( $quick_items ) > 0 ) : ?>
-		<aside class="mt-4 self-start rounded-lg border border-book-secondary/50 p-4 text-book-primary md:mt-0" aria-label="<?php esc_attr_e( 'Quick facts', 'dynamic-book-archive' ); ?>">
+		<aside class="mt-4 self-start rounded-lg border border-brand-muted/50 p-4 text-brand md:mt-0" aria-label="<?php esc_attr_e( 'Quick facts', 'dynamic-book-archive' ); ?>">
 			<h2 class="mb-3 font-display text-sm font-semibold uppercase tracking-[0.2em] text-book-secondary"><?php esc_html_e( 'Quick info', 'dynamic-book-archive' ); ?></h2>
 			<ul class="m-0 flex list-none flex-col gap-2 p-0">
 				<?php foreach ( $quick_items as $item ) : ?>
@@ -108,9 +108,9 @@ $icon_html = static function ( string $icon ): string {
 						continue;
 					}
 					?>
-					<li class="flex place-items-center gap-2 text-sm leading-relaxed text-book-primary">
+					<li class="flex place-items-center gap-2 text-sm leading-relaxed text-brand">
 						<?php echo $icon_html( $icon ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wrapper returns safe HTML. ?>
-						<span class="text-book-primary"><?php echo esc_html( $text ); ?></span>
+						<span class="text-brand"><?php echo esc_html( $text ); ?></span>
 					</li>
 				<?php endforeach; ?>
 			</ul>

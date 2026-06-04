@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 ?>
 <div class="my-4 flex items-center  justify-center gap-3">
-    <span class="font-main text-xs uppercase tracking-widest text-body">
+    <span class="font-main text-xs uppercase tracking-widest text-brand-muted">
         <?php esc_html_e('View:', 'dynamic-book-archive'); ?>
     </span>
     <div class="dba-doc-view-seg" role="group" aria-label="<?php esc_attr_e('View mode', 'dynamic-book-archive'); ?>">

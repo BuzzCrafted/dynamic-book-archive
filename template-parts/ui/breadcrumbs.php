@@ -28,8 +28,8 @@ if ( count( $breadcrumb_items ) < 2 ) {
 
 ?>
 
-		<nav class="breadcrumbs py-3 px-2 md:px-4 lg:px-0" aria-label="<?php esc_attr_e( 'Breadcrumb', 'dynamic-book-archive' ); ?>">
-			<ol class="m-0 flex list-none flex-wrap items-center gap-y-1 p-0 text-sm text-breadcrumbs-text">
+		<nav class="py-3 px-2 md:px-4 lg:px-0" aria-label="<?php esc_attr_e( 'Breadcrumb', 'dynamic-book-archive' ); ?>">
+			<ol class="m-0 flex list-none flex-wrap items-center gap-y-1 p-0 text-sm text-brand">
 				<?php
 				$last_index = count( $breadcrumb_items ) - 1;
 				foreach ( $breadcrumb_items as $i => $item ) {
@@ -40,11 +40,11 @@ if ( count( $breadcrumb_items ) < 2 ) {
 						<?php if ( $is_last ) : ?>
 							<span class="font-medium " aria-current="page"><?php echo esc_html( $label ); ?></span>
 						<?php else : ?>
-							<a class="text-breadcrumbs-link no-underline hover:text-breadcrumbs-link-hover hover:underline" href="<?php echo esc_url( $item['url'] ); ?>"><?php echo esc_html( $label ); ?></a>
+							<a class="text-brand-light no-underline hover:text-brand hover:underline" href="<?php echo esc_url( $item['url'] ); ?>"><?php echo esc_html( $label ); ?></a>
 							<span class="mx-2" aria-hidden="true">></span>
 						<?php endif; ?>
 					</li>
-					<?php
+					<?php 
 				}
 				?>
 			</ol>

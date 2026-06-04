@@ -47,7 +47,7 @@
 		}
 
 		a {
-			@apply inline-flex items-center text-link-special hover:text-link-special-hover underline-offset-2 hover:underline;
+			@apply inline-flex items-center text-accent hover:text-accent-muted underline-offset-2 hover:underline;
 		}
 	}
 }

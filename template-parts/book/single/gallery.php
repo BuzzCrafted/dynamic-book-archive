@@ -50,9 +50,9 @@ $alpine_config = wp_json_encode( array(
 	x-data="bookGallery(<?php echo esc_attr( $alpine_config ); ?>)">
 	<span id="book-gallery-status-<?php echo esc_attr( (string) $post_id ); ?>" class="sr-only" data-book-gallery-status aria-live="polite"
 		x-text="statusText"></span>
-	<div class="relative h-(--book-single-gallery-stage-height) w-full overflow-hidden rounded-md bg-page/50">
+	<div class="relative h-(--book-single-gallery-stage-height) w-full overflow-hidden rounded-md bg-canvas/50">
 		<?php if ( $gallery_count > 1 ) : ?>
-			<button type="button" class="absolute left-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full shadow-main bg-page/50 text-heading backdrop-blur-sm transition hover:bg-page hover:shadow-bronze-glow hover:text-body disabled:pointer-events-none disabled:opacity-30"
+			<button type="button" class="absolute left-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full shadow-main bg-canvas/50 text-content backdrop-blur-sm transition hover:bg-canvas hover:shadow-bronze-glow hover:text-brand-muted disabled:pointer-events-none disabled:opacity-30"
 				data-book-gallery-prev
 				:disabled="total < 2"
 				@click="prev()"
@@ -60,7 +60,7 @@ $alpine_config = wp_json_encode( array(
 				<span class="sr-only"><?php esc_html_e( 'Previous image', 'dynamic-book-archive' ); ?></span>
 				<?php dba_the_inline_icon( 'bx/bx-chevron-left', 'block h-8 w-8' ); ?>
 			</button>
-			<button type="button" class="absolute right-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full shadow-main bg-page/50 text-heading backdrop-blur-sm transition hover:bg-page hover:shadow-bronze-glow hover:text-body disabled:pointer-events-none disabled:opacity-30"
+			<button type="button" class="absolute right-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full shadow-main bg-canvas/50 text-content backdrop-blur-sm transition hover:bg-canvas hover:shadow-bronze-glow hover:text-brand-muted disabled:pointer-events-none disabled:opacity-30"
 				data-book-gallery-next
 				:disabled="total < 2"
 				@click="next()"
@@ -117,7 +117,7 @@ $alpine_config = wp_json_encode( array(
 			?>
 			<div class="<?php echo esc_attr( $tablist_class ); ?>" role="tablist" aria-label="<?php esc_attr_e( 'Book images', 'dynamic-book-archive' ); ?>">
 				<?php
-				$thumb_class = 'relative h-30 w-22 m-1 shrink-0 hover:z-20 overflow-hidden rounded border-2 border-transparent bg-page/25 opacity-80 transition hover:opacity-100 hover:shadow-bronze-glow hover:border-none duration-200 ease-out hover:scale-120 aria-pressed:border-book-secondary aria-pressed:opacity-100 aria-pressed:ring-1 aria-pressed:ring-heading/40';
+				$thumb_class = 'relative h-30 w-22 m-1 shrink-0 hover:z-20 overflow-hidden rounded border-2 border-transparent bg-canvas/25 opacity-80 transition hover:opacity-100 hover:shadow-bronze-glow hover:border-none duration-200 ease-out hover:scale-120 aria-pressed:border-book-secondary aria-pressed:opacity-100 aria-pressed:ring-1 aria-pressed:ring-heading/40';
 				$thumb_count = min( $thumb_limit, $gallery_count );
 				for ( $idx = 0; $idx < $thumb_count; $idx++ ) {
 					$img_id = (int) $ids[ $idx ];

@@ -42,9 +42,9 @@ if ( array() === $nav_items ) {
 			if ( '' === $label || '' === $url ) {
 				continue;
 			}
-			$link_class = 'inline-flex min-h-10 items-center justify-center rounded-md shadow-main border border-transparent px-4 py-2 text-center text-base tracking-wide text-book-archive-category-nav-text no-underline transition-[color,background-color,border-color,box-shadow] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-book-archive-category-nav-link hover:text-book-archive-category-nav-current-text hover:border-book-archive-category-nav-current-border hover:bg-(image:--image-book-archive-category-nav-current) hover:shadow-book-archive-category-nav-current aria-[current=page]:text-book-archive-category-nav-current-text aria-[current=page]:border-book-archive-category-nav-current-border aria-[current=page]:bg-(image:--image-book-archive-category-nav-current) aria-[current=page]:shadow-book-archive-category-nav-current aria-[current=page]:hover:bg-(image:--image-book-archive-category-nav-current-hover) aria-[current=page]:hover:shadow-book-archive-category-nav-current-hover';
+			$link_class = 'inline-flex min-h-10 items-center justify-center rounded-md shadow-main border border-transparent px-4 py-2 text-center text-base tracking-wide text-brand-muted no-underline transition-[color,background-color,border-color,box-shadow] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand hover:text-content-inverse hover:border-book-archive-category-nav-current-border hover:bg-(image:--image-book-archive-category-nav-current) hover:shadow-book-archive-category-nav-current aria-[current=page]:text-content-inverse aria-[current=page]:border-book-archive-category-nav-current-border aria-[current=page]:bg-(image:--image-book-archive-category-nav-current) aria-[current=page]:shadow-book-archive-category-nav-current aria-[current=page]:hover:bg-(image:--image-book-archive-category-nav-current-hover) aria-[current=page]:hover:shadow-book-archive-category-nav-current-hover';
 			if ( $current ) {
-				$link_class .= ' js-book-archive-category-nav-link-current';
+				$link_class .= ' js-brand-current';
 			}
 			$books_nav_cat  = '';
 			$books_nav_slug = isset( $item['slug'] ) ? (string) $item['slug'] : '';

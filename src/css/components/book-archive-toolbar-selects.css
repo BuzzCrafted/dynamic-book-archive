@@ -28,22 +28,22 @@
 
 	dialog#book-archive-dialog-sort .ss-main .ss-arrow path,
 	dialog#book-archive-dialog-filter .ss-main .ss-arrow path {
-		@apply stroke-filters-text!;
+		@apply stroke-brand!;
 	}
 
 	dialog#book-archive-dialog-sort .ss-list .ss-option,
 	dialog#book-archive-dialog-filter .ss-list .ss-option {
-		@apply text-filters-text!;
+		@apply text-brand!;
 	}
 
 	dialog#book-archive-dialog-sort .ss-list .ss-option:hover,
 	dialog#book-archive-dialog-filter .ss-list .ss-option:hover {
-		@apply bg-filters-link-background! text-filters-link!;
+		@apply bg-brand! text-content-inverse!;
 	}
 
 	dialog#book-archive-dialog-sort .ss-list .ss-option:not(.ss-disabled).ss-selected,
 	dialog#book-archive-dialog-filter .ss-list .ss-option:not(.ss-disabled).ss-selected {
-		@apply bg-filters-link-background! text-filters-link!;
+		@apply bg-brand! text-content-inverse!;
 	}
 
 	/* Dual publication-year range: gradient track + stacked range inputs. */

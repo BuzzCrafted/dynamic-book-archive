@@ -23,7 +23,7 @@
 			padding-block: max(1.5rem, env(safe-area-inset-top, 0px)) max(1.25rem, env(safe-area-inset-bottom, 0px));
 			padding-inline: max(1.75rem, env(safe-area-inset-left, 0px)) max(1.25rem, env(safe-area-inset-right, 0px));
 			background-color: var(--color-surface);
-			color: var(--color-site-navigation-primary);
+			color: var(--color-brand);
 			box-shadow: var(--shadow-main);
 			background-image:
 				repeating-linear-gradient(
@@ -55,7 +55,7 @@
 			}
 
 			a {
-				@apply text-heading no-underline;
+				@apply text-content no-underline;
 				font-size: clamp(1.875rem, 7.5vw, 3rem);
 				line-height: 1.12;
 			}

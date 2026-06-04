@@ -23,7 +23,7 @@ if ( $post_id <= 0 || '' === trim( $content ) ) {
 	<h2 id="doc-desc-heading-<?php echo esc_attr( (string) $post_id ); ?>" class="font-display text-sm font-semibold uppercase tracking-[0.25em] text-book-secondary mb-2">
 		<?php esc_html_e( 'Description', 'dynamic-book-archive' ); ?>
 	</h2>
-	<div class="prose prose-invert prose-headings:font-display prose-headings:text-book-primary prose-p:my-2 lg:prose-p:my-3 prose-strong:text-book-primary prose-em:text-book-primary prose-li:text-book-primary prose-blockquote:text-book-primary prose-a:text-book-secondary mt-1 max-w-none font-main text-base leading-relaxed md:leading-[1.75] text-book-primary">
+	<div class="prose prose-invert prose-headings:font-display prose-headings:text-brand prose-p:my-2 lg:prose-p:my-3 prose-strong:text-brand prose-em:text-brand prose-li:text-brand prose-blockquote:text-brand prose-a:text-brand-muted mt-1 max-w-none font-main text-base leading-relaxed md:leading-[1.75] text-brand">
 		<?php the_content(); ?>
 	</div>
 </section>

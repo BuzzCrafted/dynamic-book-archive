@@ -1,16 +1,7 @@
 /* ─── Book pagination tokens ──────────────────────────────────────────────── */
 @theme inline {
-	--color-book-pagination-link-hover:        oklch(0.8302 0.109 84.92);
-	--color-book-pagination-surface-glow:      oklch(0.42 0.08 48 / 0.35);
-	--color-book-pagination-shadow-inset-edge: oklch(0.45 0.03 55 / 0.15);
-	--color-book-pagination-shadow-ring:       oklch(0.55 0.1  55 / 0.25);
-	--color-book-pagination-shadow-glow:       oklch(0.58 0.14 58 / 0.35);
-	--color-book-pagination-shadow-inset-soft: oklch(0.65 0.12 60 / 0.12);
-
-	--shadow-book-pagination-edge:
-		inset 0 1px 0 0 var(--color-book-pagination-shadow-inset-edge);
-	--shadow-book-pagination-page-current:
-		0 0 0 1px var(--color-book-pagination-shadow-ring),
-		0 0 8px 3px var(--color-book-pagination-shadow-glow),
-		inset 0 0 20px var(--color-book-pagination-shadow-inset-soft);
+	--shadow-page-current:
+		0 0 0 1px var(--color-gold-400),
+		0 0 4px 2px var(--color-gold-100),
+		inset 0 0 4px var(--color-gold-100);
 }

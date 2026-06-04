@@ -32,11 +32,11 @@ if ( '' === $prev_html && '' === $next_html && array() === $numbers ) {
 	return;
 }
 
-$edge_link_tw = 'inline-flex min-h-10 items-center justify-center rounded-lg shadow-main px-4 py-2 text-sm font-medium text-card-text no-underline transition-colors shadow-book-pagination-edge hover:border-book-pagination-link-hover/45 hover:text-book-pagination-link-hover';
+$edge_link_tw = 'inline-flex min-h-10 items-center justify-center rounded-lg shadow-main px-4 py-2 text-sm font-medium text-brand-muted no-underline transition-colors hover:border-brand-light/45 hover:text-brand-light';
 
-$number_link_tw    = 'min-w-9 px-2 py-1.5 text-center text-sm text-card-text no-underline transition-[color,background-color,box-shadow] duration-200 hover:rounded-md hover:font-medium hover:text-book-pagination-link-hover hover:bg-book-pagination-surface-glow hover:shadow-book-pagination-page-current';
-$number_current_tw = 'min-w-9 px-2 py-1.5 text-center text-sm rounded-md font-medium text-book-pagination-link-hover bg-book-pagination-surface-glow shadow-book-pagination-page-current';
-$number_dots_tw    = 'px-1 text-card-text';
+$number_link_tw    = 'min-w-9 px-2 py-1.5 text-center text-sm text-brand-muted no-underline transition-all duration-200 hover:rounded-md hover:font-medium hover:text-brand-light hover:bg-surface hover:shadow-page-current focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-0';
+$number_current_tw = 'min-w-9 px-2 py-1.5 text-center text-sm rounded-md font-medium text-brand-light bg-surface shadow-page-current';
+$number_dots_tw    = 'px-1 text-brand-muted';
 
 if ( '' !== $prev_html ) {
 	$prev_html = str_replace( 'class="prev page-numbers"', 'class="prev page-numbers ' . $edge_link_tw . '"', $prev_html );
@@ -58,7 +58,7 @@ $numbers = array_map(
 	$numbers
 );
 
-$edge_disabled_tw = 'inline-flex min-h-10 items-center justify-center rounded-lg shadow-main px-4 py-2 text-sm font-medium text-heading';
+$edge_disabled_tw = 'inline-flex min-h-10 items-center justify-center rounded-lg shadow-main px-4 py-2 text-sm font-medium text-content';
 $page_item_tw     = 'inline-flex items-center justify-center';
 ?>
 

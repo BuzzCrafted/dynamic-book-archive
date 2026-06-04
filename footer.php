@@ -32,7 +32,7 @@ $book_categories_list = array_map(
 );
 
 ?>
-<footer class="site-footer py-2 px-2 md:px-4 lg:px-0 text-heading bg-surface">
+<footer class="site-footer py-2 px-2 md:px-4 lg:px-0 text-content bg-surface">
 	<div class="max-w-[1440px] lg:px-2 mx-auto pb-4">
 		<div class="flex flex-col md:flex-row md:justify-start items-stretch gap-x-16">
 			<div class="flex justify-center md:justify-start items-center gap-2">
@@ -67,7 +67,7 @@ $book_categories_list = array_map(
 	<div class="max-w-[1440px] lg:px-2 mx-auto pt-2">
 		<div class="flex flex-col gap-1">
 			<span class="inline-flex text-xs md:text-sm justify-center md:justify-start not-italic leading-[normal] tracking-[0.24px]"> &copy; 2002–<?php echo date('Y'); ?> Robert C. Gruzanski. All rights reserved.</span>
-			<span class="inline-flex text-xxs justify-center md:justify-start text-heading/65 not-italic leading-[normal] tracking-[0.24px]">Content may not be reproduced or used without permission.</span>
+			<span class="inline-flex text-xxs justify-center md:justify-start text-content/65 not-italic leading-[normal] tracking-[0.24px]">Content may not be reproduced or used without permission.</span>
 		</div>
 	</div>
 </footer>

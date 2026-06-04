@@ -28,8 +28,8 @@ if ( '' === $publication && '' === $date_label && '' === $language && '' === $do
 }
 
 $row_class = 'grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-1 text-base sm:grid-cols-[9rem_1fr]';
-$dt_class  = 'font-main tracking-wider text-book-secondary';
-$dd_class  = 'font-main text-book-primary';
+$dt_class  = 'font-main tracking-wider text-brand-muted';
+$dd_class  = 'font-main text-brand';
 
 ?>
 <section aria-label="<?php esc_attr_e( 'Document details', 'dynamic-book-archive' ); ?>">
@@ -107,7 +107,7 @@ $dd_class  = 'font-main text-book-primary';
 						}
 						if ( '' !== $person_url ) {
 							printf(
-								'<a class="text-book-primary underline underline-offset-2 hover:text-book-secondary" href="%1$s">%2$s</a>',
+								'<a class="text-brand underline underline-offset-2 hover:text-brand-muted" href="%1$s">%2$s</a>',
 								esc_url( $person_url ),
 								esc_html( $person_title )
 							);

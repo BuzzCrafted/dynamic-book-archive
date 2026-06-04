@@ -12,27 +12,27 @@
 /* ─── Root container ────────────────────────────────────────────────────── */
 
 .dba-doc-viewer {
-	@apply overflow-hidden rounded-lg border border-border-soft bg-viewer-surface;
+	@apply overflow-hidden rounded-lg border border-stroke-muted bg-surface;
 }
 
 /* ─── Status messages (loading / error / empty) ─────────────────────────── */
 
 .dba-doc-viewer__status {
-	@apply p-8 text-center font-main text-sm text-body;
+	@apply p-8 text-center font-main text-sm text-brand-muted;
 }
 
 .dba-doc-viewer__status--error {
-	@apply text-viewer-status-error;
+	@apply text-danger;
 }
 
 /* ─── View mode selector (in document header) ───────────────────────────── */
 
 .dba-doc-view-seg {
-	@apply inline-flex overflow-hidden rounded-sm border border-border-soft;
+	@apply inline-flex overflow-hidden rounded-sm border border-stroke-muted;
 }
 
 .dba-doc-view-btn {
-	@apply cursor-pointer border-0 border-l border-border-soft bg-transparent px-3.75 py-1.25 whitespace-nowrap font-main text-xs tracking-widest uppercase text-body transition-colors duration-150;
+	@apply cursor-pointer border-0 border-l border-stroke-muted bg-transparent px-3.75 py-1.25 whitespace-nowrap font-main text-xs tracking-widest uppercase text-brand-muted transition-colors duration-150;
 }
 
 .dba-doc-view-btn:first-child {
@@ -40,11 +40,11 @@
 }
 
 .dba-doc-view-btn:hover:not(.is-active) {
-	@apply text-heading;
+	@apply text-content;
 }
 
 .dba-doc-view-btn.is-active {
-	@apply bg-viewer-button-primary text-page;
+	@apply bg-brand-light text-content-inverse;
 }
 
 /* ─── Two-column layout ─────────────────────────────────────────────────── */
@@ -60,7 +60,7 @@
 /* ─── Left column: scan image ───────────────────────────────────────────── */
 
 .dba-doc-viewer__image-col {
-	@apply relative flex items-stretch border-b border-border-soft bg-surface min-[800px]:border-b-0 min-[800px]:border-r;
+	@apply relative flex items-stretch border-b border-stroke-muted bg-surface min-[800px]:border-b-0 min-[800px]:border-r;
 }
 
 /* grid-cols: [prev 1fr] [image auto] [next 1fr] — buttons sit in the side tracks, never over the image. */
@@ -79,45 +79,45 @@
 }
 
 .dba-doc-viewer__tabs-bar {
-	@apply flex shrink-0 items-center gap-0 border-b border-border-soft px-4;
+	@apply flex shrink-0 items-center gap-0 border-b border-stroke-muted px-4;
 }
 
 .dba-doc-viewer__tab {
-	@apply mr-5 cursor-pointer border-0 border-b-2 border-b-transparent bg-transparent py-3 whitespace-nowrap font-main text-xs tracking-widest uppercase text-body transition-colors duration-150;
+	@apply mr-5 cursor-pointer border-0 border-b-2 border-b-transparent bg-transparent py-3 whitespace-nowrap font-main text-xs tracking-widest uppercase text-brand-muted transition-colors duration-150;
 }
 
 .dba-doc-viewer__tab:hover {
-	@apply text-heading;
+	@apply text-content;
 }
 
 .dba-doc-viewer__tab.is-active {
-	@apply text-heading border-b-viewer-button-primary;
+	@apply text-content border-b-brand-light;
 }
 
 .dba-doc-viewer__counter {
-	@apply ml-auto whitespace-nowrap font-main text-xs tracking-widest uppercase text-body;
+	@apply ml-auto whitespace-nowrap font-main text-xs tracking-widest uppercase text-brand-muted;
 }
 
 .dba-doc-viewer__panel {
-	@apply flex-1 overflow-y-auto p-6 max-h-[62vh] scrollbar-thin scrollbar-thumb-border-soft scrollbar-track-transparent;
+	@apply flex-1 overflow-y-auto p-6 max-h-[62vh] scrollbar-thin scrollbar-thumb-stroke-muted scrollbar-track-transparent;
 }
 
 .dba-doc-viewer__prose {
-	@apply whitespace-pre-wrap font-main text-base leading-relaxed text-body;
+	@apply whitespace-pre-wrap font-main text-base leading-relaxed text-brand-muted;
 }
 
 /* ─── Thumbnail strip ───────────────────────────────────────────────────── */
 
 .dba-doc-viewer__thumbs-strip {
-	@apply flex items-center gap-3 overflow-hidden border-t border-border-soft bg-surface px-4 py-2.5;
+	@apply flex items-center gap-3 overflow-hidden border-t border-stroke-muted bg-surface px-4 py-2.5;
 }
 
 .dba-doc-viewer__thumbs-label {
-	@apply flex shrink-0 items-center gap-1.5 whitespace-nowrap font-main text-xxs tracking-widest uppercase text-body;
+	@apply flex shrink-0 items-center gap-1.5 whitespace-nowrap font-main text-xxs tracking-widest uppercase text-brand-muted;
 }
 
 .dba-doc-viewer__thumbs-track {
-	@apply flex flex-1 gap-1.5 overflow-x-auto scrollbar-thin scrollbar-thumb-border-soft scrollbar-track-transparent;
+	@apply flex flex-1 gap-1.5 overflow-x-auto scrollbar-thin scrollbar-thumb-stroke-muted scrollbar-track-transparent;
 }
 
 .dba-doc-viewer__thumb {
@@ -129,11 +129,11 @@
 }
 
 .dba-doc-viewer__thumb span {
-	@apply font-main text-xxs text-body;
+	@apply font-main text-xxs text-brand-muted;
 }
 
 .dba-doc-viewer__thumb.is-active {
-	@apply border-viewer-button-primary;
+	@apply border-brand-light;
 }
 
 .dba-doc-viewer__thumbs-nav {
@@ -141,11 +141,11 @@
 }
 
 .dba-doc-viewer__thumbs-nav button {
-	@apply cursor-pointer whitespace-nowrap rounded-sm border-0 bg-viewer-button-primary px-3.5 py-1.5 text-center font-main text-xs tracking-wider text-page transition-colors duration-150;
+	@apply cursor-pointer whitespace-nowrap rounded-sm border-0 bg-brand-light px-3.5 py-1.5 text-center font-main text-xs tracking-wider text-content-inverse transition-colors duration-150;
 }
 
 .dba-doc-viewer__thumbs-nav button:hover:not(:disabled) {
-	@apply bg-viewer-button-primary-hover;
+	@apply bg-brand;
 }
 
 .dba-doc-viewer__thumbs-nav button:disabled {
@@ -165,7 +165,7 @@
 /* ─── Fullscreen OSD zoom overlay ───────────────────────────────────────── */
 
 .dba-doc-viewer__zoom {
-	@apply fixed inset-0 z-50 flex flex-col bg-viewer-surface p-4;
+	@apply fixed inset-0 z-50 flex flex-col bg-surface p-4;
 }
 
 .dba-doc-viewer__zoom-stage {
@@ -178,5 +178,5 @@
 }
 
 .dba-doc-viewer__zoom-btn {
-	@apply flex h-8 w-8 cursor-pointer items-center justify-center rounded-xs border-0 text-viewer-toolbar-button hover:text-viewer-toolbar-button-hover transition-colors duration-150;
+	@apply flex h-8 w-8 cursor-pointer items-center justify-center rounded-xs border-0 text-brand-muted hover:text-brand transition-colors duration-150;
 }

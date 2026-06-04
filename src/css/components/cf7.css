@@ -1,7 +1,7 @@
 /* Contact Form 7 — Antique Japanese Archive Style */
 
 .wpcf7 {
-  @apply text-neutral m-auto w-full max-w-8/12 bg-transparent border border-border-secondary rounded-md;
+  @apply text-content-muted m-auto w-full max-w-8/12 bg-transparent border border-stroke-light rounded-md;
 
   input[type="text"],
   input[type="email"],
@@ -11,7 +11,7 @@
   input[type="date"],
   select,
   textarea {
-    @apply text-neutral m-auto w-full min-h-4 px-3 py-2 border border-border-secondary rounded-md outline-hidden font-[inherit] text-base leading-relaxed transition-colors duration-300 ease-in-out;
+    @apply text-content-muted m-auto w-full min-h-4 px-3 py-2 border border-stroke-light rounded-md outline-hidden font-[inherit] text-base leading-relaxed transition-colors duration-300 ease-in-out;
 
   }
 
@@ -21,13 +21,13 @@
 
   input::placeholder,
   textarea::placeholder {
-    @apply text-neutral/90;
+    @apply text-content-muted/90;
   }
 
   input:focus,
   select:focus,
   textarea:focus {
-    @apply border-border-main;
+    @apply border-stroke;
   }
 
   select {
@@ -35,7 +35,7 @@
   }
 
   input[type="submit"] {
-    @apply text-heading bg-transparent px-6 py-2 border border-border-soft  hover:border-border-main rounded-xs transition-colors duration-300 ease-in-out uppercase cursor-pointer tracking-wider;
+    @apply text-content bg-transparent px-6 py-2 border border-stroke-muted  hover:border-stroke rounded-xs transition-colors duration-300 ease-in-out uppercase cursor-pointer tracking-wider;
   }
 
   .wpcf7-spinner {
@@ -43,22 +43,22 @@
   }
 
   .wpcf7-not-valid-tip {
-    @apply text-link-special text-sm leading-relaxed mt-2;
+    @apply text-accent text-sm leading-relaxed mt-2;
   }
 
   form {
     .wpcf7-response-output {
-      @apply mt-8! px-5! py-4! border! border-border-secondary! rounded-md! bg-page/40! text-heading! text-xl! leading-relaxed! transition-all duration-500 ease-in-out;
+      @apply mt-8! px-5! py-4! border! border-stroke-light! rounded-md! bg-canvas/40! text-content! text-xl! leading-relaxed! transition-all duration-500 ease-in-out;
     }
 
     &.sent .wpcf7-response-output {
-      @apply border-border-main text-neutral bg-page/50
+      @apply border-stroke text-content-muted bg-canvas/50
     }
 
     &.invalid .wpcf7-response-output,
     &.failed .wpcf7-response-output,
     &.aborted .wpcf7-response-output {
-      @apply border-border-secondary text-book-primary bg-page/50;
+      @apply border-stroke-light text-brand bg-canvas/50;
     }
 
     .wpcf7-response-output.is-hiding {
@@ -89,12 +89,12 @@
 
 .cf7-field {
   label {
-    @apply block mb-2 text-book-primary text-sm font-medium tracking-wider uppercase;
+    @apply block mb-2 text-brand text-sm font-medium tracking-wider uppercase;
   }
 }
 
 .cf7-note {
-  @apply mt-2 mb-8 px-4 py-3 border border-border-secondary rounded-md outline-hidden font-[inherit] text-base leading-relaxed shadow-[inset_0_0_18px_#000000]/45 transition-colors duration-300 ease-in-out;
+  @apply mt-2 mb-8 px-4 py-3 border border-stroke-light rounded-md outline-hidden font-[inherit] text-base leading-relaxed shadow-[inset_0_0_18px_#000000]/45 transition-colors duration-300 ease-in-out;
 }
 
 .cf7-submit-wrap {
@@ -102,36 +102,36 @@
 }
 
 .cf7-submit-info {
-  @apply text-sm text-neutral/80 italic;
+  @apply text-sm text-content-muted/80 italic;
 }
 
 .ss-main.wpcf7-select {
-  @apply text-neutral bg-transparent border border-border-secondary rounded-md min-h-4 py-2 px-3;
+  @apply text-content-muted bg-transparent border border-stroke-light rounded-md min-h-4 py-2 px-3;
 
   &:focus-within {
-    @apply border-border-main;
+    @apply border-stroke;
   }
   .ss-arrow path {
-    @apply stroke-neutral;
+    @apply stroke-content-muted;
   }
 }
 
 .ss-content.wpcf7-select {
 
-    @apply border border-border-secondary rounded-md;
+    @apply border border-stroke-light rounded-md;
   
 
   &:focus-within {
-    @apply border-border-main;
+    @apply border-stroke;
   }
 
   .ss-list .ss-option {
-    @apply text-neutral bg-page;
+    @apply text-content-muted bg-canvas;
   }
 
   .ss-list .ss-option:hover,
   .ss-list .ss-option:not(.ss-disabled).ss-selected {
-    @apply bg-heading text-page;
+    @apply bg-canvas-inverse text-content-inverse;
   }
 
 }
