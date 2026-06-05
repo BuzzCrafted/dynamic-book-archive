@@ -2,7 +2,7 @@
 	"name": "dynamic-book-archive",
 	"private": true,
 	"type": "module",
-	"version": "1.4.1",
+	"version": "1.4.2",
 	"scripts": {
 		"build:css": "tailwindcss -i ./src/css/app.css -o ./assets/css/app.min.css --minify",
 		"watch:css": "tailwindcss -i ./src/css/app.css -o ./assets/css/app.min.css --watch",

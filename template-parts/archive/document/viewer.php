@@ -166,6 +166,13 @@ if ( $post_id <= 0 ) {
 			><?php dba_the_inline_icon( 'bx/bx-zoom-out', 'block h-5 w-5' ); ?></button>
 
 			<button
+				id="dba-osd-home-<?php echo (int) $post_id; ?>"
+				class="dba-doc-viewer__zoom-btn"
+				type="button"
+				aria-label="<?php esc_attr_e( 'Reset zoom', 'dynamic-book-archive' ); ?>"
+			><?php dba_the_inline_icon( 'bx/bx-home', 'block h-5 w-5' ); ?></button>
+
+			<button
 				id="dba-osd-fullpage-<?php echo (int) $post_id; ?>"
 				class="dba-doc-viewer__zoom-btn"
 				type="button"
