@@ -52,6 +52,9 @@ final class Historical_Document_Single_Presenter {
 		$editor    = trim( (string) get_post_meta( $post_id, '_archive_editor', true ) );
 		$publisher = trim( (string) get_post_meta( $post_id, '_archive_publisher', true ) );
 
+		$original_japanese_title = trim( (string) get_post_meta( $post_id, '_archive_original_japanese_title', true ) );
+		$notes                   = trim( (string) get_post_meta( $post_id, '_archive_notes', true ) );
+
 		// Document type — plugin enforces 1:1; take the first term.
 		$doc_type_terms = get_the_terms( $post_id, 'document_type' );
 		$document_type  = array();
@@ -89,9 +92,11 @@ final class Historical_Document_Single_Presenter {
 			'collections'      => $collections,
 			'authors'          => $authors,
 			'translators'      => $translators,
-			'editor'           => $editor,
-			'publisher'        => $publisher,
-			'people'           => $people,
+			'editor'                   => $editor,
+			'publisher'                => $publisher,
+			'original_japanese_title'  => $original_japanese_title,
+			'notes'                    => $notes,
+			'people'                   => $people,
 			'cover_image'      => self::resolve_cover_image( $post_id ),
 		);
 	}

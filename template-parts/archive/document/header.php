@@ -25,9 +25,11 @@ $doc_type         = isset( $args['document_type'] ) && is_array( $args['document
 $collections      = isset( $args['collections'] ) && is_array( $args['collections'] ) ? $args['collections'] : array();
 $authors          = isset( $args['authors'] ) && is_array( $args['authors'] ) ? $args['authors'] : array();
 $translators      = isset( $args['translators'] ) && is_array( $args['translators'] ) ? $args['translators'] : array();
-$editor           = isset( $args['editor'] ) && is_string( $args['editor'] ) ? $args['editor'] : '';
-$publisher        = isset( $args['publisher'] ) && is_string( $args['publisher'] ) ? $args['publisher'] : '';
-$people           = isset( $args['people'] ) && is_array( $args['people'] ) ? $args['people'] : array();
+$editor                  = isset( $args['editor'] ) && is_string( $args['editor'] ) ? $args['editor'] : '';
+$publisher               = isset( $args['publisher'] ) && is_string( $args['publisher'] ) ? $args['publisher'] : '';
+$original_japanese_title = isset( $args['original_japanese_title'] ) && is_string( $args['original_japanese_title'] ) ? $args['original_japanese_title'] : '';
+$notes                   = isset( $args['notes'] ) && is_string( $args['notes'] ) ? $args['notes'] : '';
+$people                  = isset( $args['people'] ) && is_array( $args['people'] ) ? $args['people'] : array();
 $cover_image      = isset( $args['cover_image'] ) && is_array( $args['cover_image'] ) ? $args['cover_image'] : array();
 
 $has_cover      = ! empty( $cover_image['url'] );
@@ -51,7 +53,7 @@ $meta_rows = array_filter(
 	)
 );
 
-$has_meta = ! empty( $meta_rows ) || ! empty( $collections ) || ! empty( $authors ) || ! empty( $translators ) || ! empty( $people );
+$has_meta = ! empty( $meta_rows ) || '' !== $original_japanese_title || ! empty( $collections ) || ! empty( $authors ) || ! empty( $translators ) || ! empty( $people );
 ?>
 <header class="overflow-hidden rounded-lg border border-stroke-muted bg-surface
 	<?php echo $has_cover ? 'grid sm:grid-cols-[auto_1fr]' : ''; ?>">
@@ -93,11 +95,20 @@ $has_meta = ! empty( $meta_rows ) || ! empty( $collections ) || ! empty( $author
 		<?php if ( $has_meta ) : ?>
 		<dl class="mt-2 grid grid-cols-[auto_1fr] items-baseline gap-x-6 gap-y-1.5">
 
+			<?php if ( '' !== $original_japanese_title ) : ?>
+			<dt class="whitespace-nowrap font-main text-xs uppercase tracking-wide text-brand-muted after:content-[':']">
+				<?php esc_html_e( 'Japanese title', 'dynamic-book-archive' ); ?>
+			</dt>
+			<dd class="m-0 flex items-baseline gap-1.5 font-main text-sm text-content">
+				<?php echo esc_html( $original_japanese_title ); ?>
+			</dd>
+			<?php endif; ?>
+
 			<?php foreach ( $meta_rows as $label => $value ) : ?>
 			<dt class="whitespace-nowrap font-main text-xs uppercase tracking-wide text-brand-muted after:content-[':']">
 				<?php echo esc_html( $label ); ?>
 			</dt>
-			<dd class="m-0 flex items-baseline gap-1.5 font-main text-sm text-content before:shrink-0 before:text-brand-muted before:content-['·']">
+			<dd class="m-0 flex items-baseline gap-1.5 font-main text-sm text-content">
 				<?php echo esc_html( $value ); ?>
 			</dd>
 			<?php endforeach; ?>
@@ -106,7 +117,7 @@ $has_meta = ! empty( $meta_rows ) || ! empty( $collections ) || ! empty( $author
 			<dt class="whitespace-nowrap font-main text-xs uppercase tracking-wide text-brand-muted after:content-[':']">
 				<?php esc_html_e( 'Collection', 'dynamic-book-archive' ); ?>
 			</dt>
-			<dd class="m-0 flex flex-wrap items-baseline gap-1.5 font-main text-sm text-content before:shrink-0 before:text-brand-muted before:content-['·']">
+			<dd class="m-0 flex flex-wrap items-baseline gap-1.5 font-main text-sm text-content">
 				<?php foreach ( $collections as $idx => $col ) : ?>
 				<?php if ( $idx > 0 ) : ?><span class="text-brand-muted">,</span><?php endif; ?>
 				<?php if ( ! empty( $col['url'] ) ) : ?>
@@ -122,7 +133,7 @@ $has_meta = ! empty( $meta_rows ) || ! empty( $collections ) || ! empty( $author
 			<dt class="whitespace-nowrap font-main text-xs uppercase tracking-wide text-brand-muted after:content-[':']">
 				<?php esc_html_e( 'Authors', 'dynamic-book-archive' ); ?>
 			</dt>
-			<dd class="m-0 flex flex-wrap items-baseline gap-1.5 font-main text-sm text-content before:shrink-0 before:text-brand-muted before:content-['·']">
+			<dd class="m-0 flex flex-wrap items-baseline gap-1.5 font-main text-sm text-content">
 				<?php foreach ( $authors as $idx => $author ) : ?>
 				<?php if ( $idx > 0 ) : ?><span class="text-brand-muted">,</span><?php endif; ?>
 				<?php echo esc_html( $author ); ?>
@@ -134,7 +145,7 @@ $has_meta = ! empty( $meta_rows ) || ! empty( $collections ) || ! empty( $author
 			<dt class="whitespace-nowrap font-main text-xs uppercase tracking-wide text-brand-muted after:content-[':']">
 				<?php esc_html_e( 'Translators', 'dynamic-book-archive' ); ?>
 			</dt>
-			<dd class="m-0 flex flex-wrap items-baseline gap-1.5 font-main text-sm text-content before:shrink-0 before:text-brand-muted before:content-['·']">
+			<dd class="m-0 flex flex-wrap items-baseline gap-1.5 font-main text-sm text-content">
 				<?php foreach ( $translators as $idx => $translator ) : ?>
 				<?php if ( $idx > 0 ) : ?><span class="text-brand-muted">,</span><?php endif; ?>
 				<?php echo esc_html( $translator ); ?>
@@ -146,7 +157,7 @@ $has_meta = ! empty( $meta_rows ) || ! empty( $collections ) || ! empty( $author
 			<dt class="whitespace-nowrap font-main text-xs uppercase tracking-wide text-brand-muted after:content-[':']">
 				<?php esc_html_e( 'People', 'dynamic-book-archive' ); ?>
 			</dt>
-			<dd class="m-0 flex flex-wrap items-baseline gap-1.5 font-main text-sm text-content before:shrink-0 before:text-brand-muted before:content-['·']">
+			<dd class="m-0 flex flex-wrap items-baseline gap-1.5 font-main text-sm text-content">
 				<?php foreach ( $people as $idx => $person ) : ?>
 				<?php if ( $idx > 0 ) : ?><span class="text-brand-muted">,</span><?php endif; ?>
 				<?php if ( ! empty( $person['url'] ) ) : ?>
@@ -159,6 +170,15 @@ $has_meta = ! empty( $meta_rows ) || ! empty( $collections ) || ! empty( $author
 			<?php endif; ?>
 
 		</dl>
+		<?php endif; ?>
+
+		<?php if ( '' !== $notes ) : ?>
+		<div class="border-t border-stroke-muted pt-4">
+			<p class="m-0 mb-1.5 font-main text-xs uppercase tracking-wide text-brand-muted">
+				<?php esc_html_e( 'Notes', 'dynamic-book-archive' ); ?>
+			</p>
+			<p class="m-0 whitespace-pre-wrap font-main text-sm italic text-content"><?php echo esc_html( $notes ); ?></p>
+		</div>
 		<?php endif; ?>
 
 	</div>
