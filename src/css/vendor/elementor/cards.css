@@ -1,0 +1,47 @@
+.elementor {
+    & .card {
+        @apply border border-stroke-light flex flex-col flex-1 justify-start items-stretch hover:border-stroke;
+
+        & .card-header,  & .card-header .elementor-heading-title {
+            @apply min-h-4 font-main font-medium text-base text-brand uppercase inline-flex items-center mt-2;
+        }
+
+        & .card-article {
+            @apply font-main font-normal text-base text-content leading-normal text-start flex-auto items-start self-start;
+        }
+
+        & .card-image-box {
+            @apply w-full h-auto min-h-0 aspect-video p-0 block flex-col shrink-0 grow-0 items-start self-start;
+
+            & img {
+                @apply h-full object-cover;
+            }
+        }
+
+        & .card-content {
+            @apply static flex flex-col gap-y-2 flex-auto justify-center items-start;
+        }
+
+        & .card-button {
+            a {
+                @apply font-main text-brand bg-transparent border border-stroke-light uppercase hover:border-stroke;
+            }
+        }
+    }
+
+    & .people-card {
+        & .card-image-box {
+            & img {
+                @apply object-top;
+            }
+        }
+
+        & .card-header {
+            @apply w-full justify-center;
+
+            & h1 {
+                @apply text-center;
+            }
+        }
+    }
+}

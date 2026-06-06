@@ -1,0 +1,20 @@
+.timeline {
+  & .e-con-inner {
+    @apply relative pt-5! max-md:gap-10! max-md:pt-0! max-md:pl-12!;
+
+    &::before {
+      @apply content-[''] absolute top-[0.3rem] left-0 right-0 h-1 z-1 bg-linear-to-r from-gold-100 to-gold-200 shadow-sm max-md:top-1.5! max-md:bottom-0! max-md:left-4! max-md:right-auto! max-md:w-[2px]! max-md:h-auto!;
+    }
+  }
+}
+
+
+.timeline-card {
+  @apply relative z-2;
+
+  &::before {
+    @apply content-['']! absolute! -top-5! left-1/2! -translate-x-1/2! w-3! h-3! rounded-full! bg-canvas-inverse! z-3! max-md:top-1.5! max-md:left-9! max-md:transform-none! border-stroke-light! shadow-sm!;
+    border: 1px solid rgba(230, 215, 194, 0.22) !important;
+    box-shadow: 0 0 0 2px var(--c-ink-100), 0 0 2px rgba(208, 165, 95, 0.12) !important;
+  }
+} 
