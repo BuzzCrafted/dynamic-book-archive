@@ -16,7 +16,6 @@ $tags    = isset( $args['tags'] ) && is_array( $args['tags'] ) ? $args['tags'] :
 
 $year_floor   = isset( $args['year_floor'] ) ? (int) $args['year_floor'] : 1900;
 $year_ceiling = isset( $args['year_ceiling'] ) ? (int) $args['year_ceiling'] : (int) gmdate( 'Y' );
-$search_value = isset( $args['search'] ) && is_string( $args['search'] ) ? $args['search'] : '';
 
 $sort_options = isset( $args['sort_options'] ) && is_array( $args['sort_options'] ) ? $args['sort_options'] : array();
 if ( empty( $sort_options ) ) {
@@ -97,20 +96,26 @@ foreach ( $tags as $tag ) {
 			<span class="hidden md:block shrink-0 text-content motion-safe:transition-transform [&>i]:flex [&>i]:size-4 [&>i]:items-center [&>i]:justify-center" aria-hidden="true"><?php dba_the_inline_icon( 'bx/bx-chevron-down', 'text-current' ); ?></span>
 		</button>
 
-		<div class="js-book-archive-search-wrap relative w-full min-w-48 max-w-md sm:w-auto sm:max-w-xs md:max-w-xs group-aria-busy:pointer-events-none">
+		<div class="relative w-full min-w-48 max-w-md sm:w-auto sm:max-w-xs md:max-w-xs group-aria-busy:pointer-events-none">
 			<label class="sr-only" for="book-archive-toolbar-search"><?php esc_html_e( 'Search books', 'dynamic-book-archive' ); ?></label>
 			<input
 				type="text"
 				inputmode="search"
 				enterkeyhint="search"
 				id="book-archive-toolbar-search"
+				x-ref="searchInput"
+				x-model="searchQuery"
+				@keydown.enter.prevent="submitSearch()"
 				class="js-book-archive-search search-cancel-themed w-full rounded-full shadow-main bg-filters-background py-2 pl-3 pr-10 text-sm text-brand placeholder:text-brand/50 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-filters-link"
 				placeholder="<?php echo esc_attr( __( 'Search books…', 'dynamic-book-archive' ) ); ?>"
-				value="<?php echo esc_attr( $search_value ); ?>"
 				autocomplete="off" />
-			<span class="js-book-archive-search-submit pointer-events-auto absolute right-3 top-1/2 -translate-y-1/2 text-content" aria-hidden="true">
+			<button
+				type="button"
+				class="pointer-events-auto absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer items-center justify-center border-0 bg-transparent p-0 text-content focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-filters-link"
+				aria-label="<?php echo esc_attr( __( 'Search books', 'dynamic-book-archive' ) ); ?>"
+				@click="submitSearch()">
 				<?php dba_the_inline_icon( 'search-icon', 'h-4 w-4' ); ?>
-			</span>
+			</button>
 		</div>
 	</div>
 

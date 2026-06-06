@@ -14,6 +14,7 @@
  *   x-ref="stagingSort"   on <select id="book-archive-toolbar-sort-staging">
  *   x-ref="stagingAuthor" on <select id="book-archive-toolbar-author-staging">
  *   x-ref="stagingTag"    on <select id="book-archive-toolbar-tag-staging">
+ *   x-ref="searchInput"   on <input id="book-archive-toolbar-search">
  *
  * Year inputs are inside nested yearRange x-data scopes so $refs cannot reach
  * them. They are accessed by ID via document.getElementById instead.
@@ -120,8 +121,13 @@ export function archiveToolbar() {
 	return {
 		sortOpen: false,
 		filterOpen: false,
+		searchQuery: '',
 
 		init() {
+			const initialSearch = this.$el.getAttribute('data-books-cpt-search');
+			this.searchQuery =
+				typeof initialSearch === 'string' ? initialSearch : '';
+
 			// Initialize staging values from real controls on mount.
 			this._syncSortStagingFromReal();
 			this._syncFilterStagingFromReal(false);
@@ -232,6 +238,18 @@ export function archiveToolbar() {
 
 			realAuthor.dispatchEvent(new Event('change', { bubbles: true }));
 			this.$refs.filterDialog?.close();
+		},
+
+		submitSearch() {
+			const { realSort, searchInput } = this.$refs;
+			if (searchInput instanceof HTMLInputElement) {
+				const query = String(searchInput.value).trim();
+				this.searchQuery = query;
+				searchInput.value = query;
+			}
+			if (realSort instanceof HTMLSelectElement) {
+				realSort.dispatchEvent(new Event('change', { bubbles: true }));
+			}
 		},
 
 		resetFilter() {
