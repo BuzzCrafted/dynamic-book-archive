@@ -95,7 +95,9 @@ final class Book_Single_Presenter {
 			if ( ! $term instanceof WP_Term ) {
 				continue;
 			}
-			$link = get_term_link( $term );
+			$link = function_exists( 'dba_get_book_archive_tag_filter_url' )
+				? dba_get_book_archive_tag_filter_url( $term )
+				: get_term_link( $term );
 			if ( is_wp_error( $link ) || ! is_string( $link ) ) {
 				continue;
 			}

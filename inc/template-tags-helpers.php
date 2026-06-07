@@ -312,6 +312,34 @@ if ( ! function_exists( 'dba_get_book_archive_distinct_tags' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'dba_get_book_archive_tag_filter_url' ) ) :
+	/**
+	 * Public URL for the Library filtered by a `post_tag` term.
+	 *
+	 * Produces `/book/?tag={slug}` (or `/book/page/N/?tag={slug}` for paged views).
+	 *
+	 * @param WP_Term $term  The `post_tag` term to filter by.
+	 * @param int     $paged Page number (min 1).
+	 */
+	function dba_get_book_archive_tag_filter_url( WP_Term $term, int $paged = 1 ): string {
+		$paged = max( 1, $paged );
+		$base  = dba_get_book_post_type_archive_url();
+		if ( ! is_string( $base ) || '' === $base ) {
+			return home_url( '/' );
+		}
+
+		$archive_root = user_trailingslashit( untrailingslashit( $base ) );
+
+		if ( $paged > 1 ) {
+			$url = $archive_root . user_trailingslashit( 'page/' . (string) $paged );
+		} else {
+			$url = $archive_root;
+		}
+
+		return add_query_arg( 'tag', $term->slug, $url );
+	}
+endif;
+
 if ( ! function_exists( 'dba_the_book_archive_intro' ) ) :
 	/**
 	 * Book archive intro (default tagline or category description): {@see template-parts/book/archive/intro.php}.
