@@ -162,21 +162,21 @@
 	@apply opacity-90;
 }
 
-/* ─── Fullscreen OSD zoom overlay ───────────────────────────────────────── */
+/* ─── Fullscreen OSD zoom overlay (shared dko-osd-zoom contract) ─────────── */
 
-.dba-doc-viewer__zoom {
+.dko-osd-zoom {
 	@apply fixed inset-0 z-50 flex flex-col bg-surface p-4;
 }
 
-.dba-doc-viewer__zoom-stage {
+.dko-osd-zoom__stage {
 	@apply relative min-h-0 flex-1 w-full;
 }
 
-/* Toolbar — top-left, above OSD canvas. */
-.dba-doc-viewer__zoom-controls {
+/* Toolbar — absolute so it floats above the OSD canvas. */
+.dko-osd-zoom__controls {
 	@apply absolute left-4 top-4 z-20 flex gap-1;
 }
 
-.dba-doc-viewer__zoom-btn {
+.dko-osd-zoom__btn {
 	@apply flex h-8 w-8 cursor-pointer items-center justify-center rounded-xs border-0 text-brand-muted hover:text-brand transition-colors duration-150;
 }

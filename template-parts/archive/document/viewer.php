@@ -139,9 +139,9 @@ if ( $post_id <= 0 ) {
 		</div>
 	</div>
 
-	<!-- Fullscreen OpenSeadragon zoom overlay -->
+	<!-- Fullscreen OpenSeadragon zoom overlay — visibility owned by Alpine (mode === 'zoom'). -->
 	<div
-		class="dba-doc-viewer__zoom"
+		class="dko-osd-zoom"
 		x-show="mode === 'zoom'"
 		x-cloak
 		x-on:keydown.escape.window="mode === 'zoom' && closeZoom()"
@@ -149,38 +149,38 @@ if ( $post_id <= 0 ) {
 		aria-modal="true"
 		aria-label="<?php esc_attr_e( 'Image zoom', 'dynamic-book-archive' ); ?>"
 	>
-		<div class="dba-doc-viewer__zoom-controls">
+		<div class="dko-osd-zoom__controls" data-dko-osd-controls>
 
 			<button
-				id="dba-osd-zoom-in-<?php echo (int) $post_id; ?>"
-				class="dba-doc-viewer__zoom-btn"
+				class="dko-osd-zoom__btn"
 				type="button"
+				data-dko-osd-action="zoom-in"
 				aria-label="<?php esc_attr_e( 'Zoom in', 'dynamic-book-archive' ); ?>"
 			><?php dba_the_inline_icon( 'bx/bx-zoom-in', 'block h-5 w-5' ); ?></button>
 
 			<button
-				id="dba-osd-zoom-out-<?php echo (int) $post_id; ?>"
-				class="dba-doc-viewer__zoom-btn"
+				class="dko-osd-zoom__btn"
 				type="button"
+				data-dko-osd-action="zoom-out"
 				aria-label="<?php esc_attr_e( 'Zoom out', 'dynamic-book-archive' ); ?>"
 			><?php dba_the_inline_icon( 'bx/bx-zoom-out', 'block h-5 w-5' ); ?></button>
 
 			<button
-				id="dba-osd-home-<?php echo (int) $post_id; ?>"
-				class="dba-doc-viewer__zoom-btn"
+				class="dko-osd-zoom__btn"
 				type="button"
+				data-dko-osd-action="home"
 				aria-label="<?php esc_attr_e( 'Reset zoom', 'dynamic-book-archive' ); ?>"
 			><?php dba_the_inline_icon( 'bx/bx-home', 'block h-5 w-5' ); ?></button>
 
 			<button
-				id="dba-osd-fullpage-<?php echo (int) $post_id; ?>"
-				class="dba-doc-viewer__zoom-btn"
+				class="dko-osd-zoom__btn"
 				type="button"
+				data-dko-osd-action="fullscreen"
 				aria-label="<?php esc_attr_e( 'Full screen', 'dynamic-book-archive' ); ?>"
 			><?php dba_the_inline_icon( 'bx/bx-fullscreen', 'block h-5 w-5' ); ?></button>
 
 			<button
-				class="dba-doc-viewer__zoom-btn"
+				class="dko-osd-zoom__btn"
 				type="button"
 				x-on:click="closeZoom()"
 				aria-label="<?php esc_attr_e( 'Close zoom', 'dynamic-book-archive' ); ?>"
@@ -188,7 +188,7 @@ if ( $post_id <= 0 ) {
 
 		</div>
 
-		<div class="dba-doc-viewer__zoom-stage" x-ref="osd"></div>
+		<div class="dko-osd-zoom__stage" x-ref="osd"></div>
 	</div>
 
 	<!-- Thumbnail strip (only shown when there are multiple pages) -->
