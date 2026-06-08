@@ -29,7 +29,6 @@ $viewer_config = wp_json_encode(
 	array(
 		'documentId'    => $post_id,
 		'pagesEndpoint' => esc_url_raw( rest_url( 'archive-cpt/v1/documents/' . $post_id . '/pages' ) ),
-		'nonce'         => wp_create_nonce( 'wp_rest' ),
 	)
 );
 
