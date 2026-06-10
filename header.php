@@ -69,7 +69,7 @@ declare(strict_types=1);
 								'theme_location' => 'menu-1',
 								'menu_id'        => 'primary-menu',
 								'container'      => false,
-								'menu_class'     => 'primary-menu-panel__list flex flex-col gap-6 md:flex-row md:items-center md:gap-6 md:text-sm md:px-4',
+								'menu_class'     => 'primary-menu-panel__list flex flex-col gap-6 md:flex-row md:items-center md:gap-6 md:text-sm md:px-4 [&_a]:no-underline',
 								'fallback_cb'    => false,
 							)
 						);

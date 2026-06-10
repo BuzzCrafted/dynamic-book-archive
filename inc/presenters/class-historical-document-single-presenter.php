@@ -13,7 +13,7 @@ use WP_Post;
 use WP_Term;
 
 /**
- * Builds an args-only view model for `template-parts/archive/document/page.php`.
+ * Builds an args-only view model for `template-parts/historical-document/single/page.php`.
  */
 final class Historical_Document_Single_Presenter {
 

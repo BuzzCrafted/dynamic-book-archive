@@ -1,6 +1,6 @@
 <?php
 /**
- * Single historical document page (args-only composition root).
+ * Single historical document page — Newspaper document type.
  *
  * @package Dynamic_Book_Archive
  */

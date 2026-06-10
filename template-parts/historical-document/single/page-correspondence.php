@@ -1,6 +1,6 @@
 <?php
 /**
- * Single historical document page (args-only composition root).
+ * Single historical document page — Correspondence document type.
  *
  * @package Dynamic_Book_Archive
  */
@@ -44,7 +44,7 @@ $viewer_config = wp_json_encode(
 		x-data="Object.assign( archiveDocumentViewer(), { activeTab: 'translation', viewMode: 'both' } )"
 		x-init="init()"
 	>
-		<?php get_template_part( 'template-parts/historical-document/single/header', null, $args ); ?>
+		<?php get_template_part( 'template-parts/historical-document/single/header', 'correspondence', $args ); ?>
 		<?php get_template_part( 'template-parts/historical-document/single/view-selector', null, $args ); ?>
 		<?php get_template_part( 'template-parts/historical-document/single/description', null, $args ); ?>
 		<?php get_template_part( 'template-parts/historical-document/single/viewer', null, $args ); ?>

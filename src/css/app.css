@@ -52,7 +52,7 @@
 @import './components/chain-divider.css';
 @import './components/cards.css';
 @import './components/cf7.css';
-@import './components/archive-document.css';
+@import './components/historical-document.css';
 
 /* ─── Utilities ────────────────────────────────────────────────────── */
 @import './utilities/prose.css';

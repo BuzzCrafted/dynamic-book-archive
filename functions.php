@@ -10,7 +10,7 @@ declare(strict_types=1);
 use DBA\Theme\Theme_Bootstrap;
 
 if ( ! defined( 'DBA_VERSION' ) ) {
-	define( 'DBA_VERSION', '1.4.7' );
+	define( 'DBA_VERSION', '1.5.1' );
 }
 
 $dba_autoload = get_template_directory() . '/vendor/autoload.php';
