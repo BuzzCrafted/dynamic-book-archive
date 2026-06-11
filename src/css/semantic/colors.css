@@ -14,6 +14,7 @@
 	/* ── Accent (warm peachy bronze) ─────────────────────────────────── */
 	--color-accent: var(--color-bronze-100);
 	--color-accent-muted: var(--color-bronze-200);
+	--color-accent-light: var(--color-bronze-50);
 
 	/* ── Surfaces ────────────────────────────────────────────────────── */
 	--color-canvas: var(--color-ink-100);
@@ -28,7 +29,7 @@
 
 	/* ── Links ───────────────────────────────────────────────────────── */
 	--color-link: var(--color-gold-200);
-	--color-link-hover: var(--color-gold-100);
+	--color-link-hover: var(--color-gold-300);
 
 	/* ── Strokes ─────────────────────────────────────────────────────── */
 	--color-stroke: var(--color-gold-200);

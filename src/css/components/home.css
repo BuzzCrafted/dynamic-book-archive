@@ -18,14 +18,12 @@
 		&::after {
 			@apply content-[''] absolute w-px h-full right-0 top-0;
 
-			background: linear-gradient(
-				to bottom,
-				transparent 0%,
-				rgba(230, 190, 150, 0.15) 20%,
-				rgba(230, 190, 150, 0.9) 50%,
-				rgba(230, 190, 150, 0.15) 80%,
-				transparent 100%
-			);
+			background: linear-gradient(to bottom,
+					transparent 0%,
+					rgba(230, 190, 150, 0.15) 20%,
+					rgba(230, 190, 150, 0.9) 50%,
+					rgba(230, 190, 150, 0.15) 80%,
+					transparent 100%);
 
 			box-shadow:
 				0 0 1px rgba(230, 190, 150, 0.6),
@@ -47,19 +45,22 @@
 		}
 
 		a {
-			@apply inline-flex items-center text-accent hover:text-accent-muted underline-offset-2 hover:underline;
+			@apply inline-flex items-center text-accent hover:text-accent-light;
 		}
 	}
 }
 
 .home-heading {
+
 	&::before,
 	&::after {
 		@apply content-[''] absolute top-1/2 w-4 md:w-72 h-px bg-linear-to-r from-transparent via-[#c8a97e] to-transparent;
 	}
+
 	&::before {
 		@apply right-full mr-1;
 	}
+
 	&::after {
 		@apply left-full ml-1;
 	}
