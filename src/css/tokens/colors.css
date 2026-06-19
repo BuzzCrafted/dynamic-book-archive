@@ -4,18 +4,25 @@
  * All other files reference these; nothing downstream should hard-code hex.
  */
 @theme {
-	/* Gold — warm antique gold brand ramp */
+	/*
+	 * Gold — warm antique gold brand ramp (light → dark).
+	 * Anchors: 50 #FFE19B, 300 #FFCB77, 500 #D0A55F.
+	 *
+	 * Old → new step mapping (same hex where noted):
+	 *   50→50  100→600  200→500  300→300  400→700  500→800
+	 *   600→900  700→950  800/900/950→950 (nearest)
+	 */
 	--color-gold-50:  #FFE19B;
-	--color-gold-100: #A6824A;
-	--color-gold-200: #D0A55F;
+	--color-gold-100: #FFDD94;
+	--color-gold-200: #FFD485;
 	--color-gold-300: #FFCB77;
-	--color-gold-400: #947342;
-	--color-gold-500: #81643A;
-	--color-gold-600: #705632;
-	--color-gold-700: #5E482B;
-	--color-gold-800: #4D3B23;
-	--color-gold-900: #3D2E1C;
-	--color-gold-950: #352818;
+	--color-gold-400: #E8B86B;
+	--color-gold-500: #D0A55F;
+	--color-gold-600: #A6824A;
+	--color-gold-700: #947342;
+	--color-gold-800: #81643A;
+	--color-gold-900: #705632;
+	--color-gold-950: #5E482B;
 
 	/* Ink — near-black warm dark backgrounds */
 	--color-ink-50:  #0A0A09;

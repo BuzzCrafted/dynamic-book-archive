@@ -55,7 +55,7 @@ $book_categories_list = array_map(
 						'theme_location' => 'menu-1',
 						'menu_id'        => 'footer-menu',
 						'container'      => false,
-						'menu_class'     => 'footer-menu flex flex-row gap-6 text-base tracking-[0.2em] uppercase items-center [&_a]:no-underline',
+						'menu_class'     => 'footer-menu flex flex-row gap-6 text-base tracking-[0.2em] uppercase items-center [&_a]:no-underline [&_a]:font-bold [&_a]:text-brand [&_a]:hover:text-link-hover',
 						'fallback_cb'    => false,
 					)
 				);

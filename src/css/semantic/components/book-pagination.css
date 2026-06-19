@@ -1,7 +1,7 @@
 /* ─── Book pagination tokens ──────────────────────────────────────────────── */
 @theme inline {
 	--shadow-page-current:
-		0 0 0 1px var(--color-gold-400),
-		0 0 4px 2px var(--color-gold-100),
-		inset 0 0 4px var(--color-gold-100);
+		0 0 0 1px var(--color-gold-700),
+		0 0 4px 2px var(--color-gold-600),
+		inset 0 0 4px var(--color-gold-600);
 }

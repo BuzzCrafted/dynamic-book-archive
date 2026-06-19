@@ -3,7 +3,7 @@
     @apply relative pt-5! max-md:gap-10! max-md:pt-0! max-md:pl-12!;
 
     &::before {
-      @apply content-[''] absolute top-[0.3rem] left-0 right-0 h-1 z-1 bg-linear-to-r from-gold-100 to-gold-200 shadow-sm max-md:top-1.5! max-md:bottom-0! max-md:left-4! max-md:right-auto! max-md:w-[2px]! max-md:h-auto!;
+      @apply content-[''] absolute top-[0.3rem] left-0 right-0 h-1 z-1 bg-linear-to-r from-gold-600 to-gold-500 shadow-sm max-md:top-1.5! max-md:bottom-0! max-md:left-4! max-md:right-auto! max-md:w-[2px]! max-md:h-auto!;
     }
   }
 }

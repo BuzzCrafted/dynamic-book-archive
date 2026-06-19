@@ -4,7 +4,7 @@
 	}
 
 	a {
-		@apply text-link no-underline underline-offset-2 hover:text-link-hover;
+		@apply text-link font-medium no-underline underline-offset-2 hover:text-link-hover;
 	}
 
 	h1,

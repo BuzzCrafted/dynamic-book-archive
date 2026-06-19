@@ -7,8 +7,8 @@
 @theme inline {
 
 	/* ── Brand (warm antique gold) ───────────────────────────────────── */
-	--color-brand: var(--color-gold-200);
-	--color-brand-muted: var(--color-gold-100);
+	--color-brand: var(--color-gold-500);
+	--color-brand-muted: var(--color-gold-600);
 	--color-brand-light: var(--color-gold-300);
 
 	/* ── Accent (warm peachy bronze) ─────────────────────────────────── */
@@ -18,22 +18,22 @@
 
 	/* ── Surfaces ────────────────────────────────────────────────────── */
 	--color-canvas: var(--color-ink-100);
-	--color-canvas-inverse: var(--color-gold-200);
+	--color-canvas-inverse: var(--color-gold-500);
 	--color-surface: var(--color-ink-400);
 	--color-surface-muted: var(--color-ink-200);
 
 	/* ── Content ─────────────────────────────────────────────────────── */
-	--color-content: var(--color-gold-200);
+	--color-content: var(--color-gold-500);
 	--color-content-muted: var(--color-stone-400);
 	--color-content-inverse: var(--color-ink-100);
 
 	/* ── Links ───────────────────────────────────────────────────────── */
-	--color-link: var(--color-gold-200);
-	--color-link-hover: var(--color-gold-300);
+	--color-link: var(--color-gold-300);
+	--color-link-hover: var(--color-gold-50);
 
 	/* ── Strokes ─────────────────────────────────────────────────────── */
-	--color-stroke: var(--color-gold-200);
-	--color-stroke-light: var(--color-gold-100);
+	--color-stroke: var(--color-gold-500);
+	--color-stroke-light: var(--color-gold-600);
 	--color-stroke-muted: var(--color-ink-300);
 
 	/* ── State — success ─────────────────────────────────────────────── */
