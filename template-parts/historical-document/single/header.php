@@ -120,7 +120,7 @@ $has_meta = ! empty( $meta_rows ) || '' !== $original_japanese_title || ! empty(
 			<dd class="m-0 flex flex-wrap items-baseline gap-1.5 font-main text-sm text-content">
 				<?php foreach ( $collections as $idx => $col ) : ?>
 				<?php if ( $idx > 0 ) : ?><span class="text-brand-muted">,</span><?php endif; ?>
-				<?php if ( ! empty( $col['url'] ) ) : ?>
+				<?php if ( ! empty( $col['url'] ) && 'publish' === ( $col['post_status'] ?? '' ) ) : ?>
 				<a href="<?php echo esc_url( $col['url'] ); ?>"><?php echo esc_html( $col['title'] ); ?></a>
 				<?php else : ?>
 				<?php echo esc_html( $col['title'] ); ?>
@@ -160,7 +160,7 @@ $has_meta = ! empty( $meta_rows ) || '' !== $original_japanese_title || ! empty(
 			<dd class="m-0 flex flex-wrap items-baseline gap-1.5 font-main text-sm text-content">
 				<?php foreach ( $people as $idx => $person ) : ?>
 				<?php if ( $idx > 0 ) : ?><span class="text-brand-muted">,</span><?php endif; ?>
-				<?php if ( ! empty( $person['url'] ) ) : ?>
+				<?php if ( ! empty( $person['url'] ) && 'publish' === ( $person['post_status'] ?? '' ) ) : ?>
 				<a href="<?php echo esc_url( $person['url'] ); ?>"><?php echo esc_html( $person['title'] ); ?></a>
 				<?php else : ?>
 				<?php echo esc_html( $person['title'] ); ?>

@@ -134,10 +134,10 @@ final class Historical_Document_Single_Presenter {
 	 * Resolve the parent collection into a display array.
 	 *
 	 * @param int $collection_id Collection post ID (0 when not set).
-	 * @return array{id: int, title: string, url: string}
+	 * @return array{id: int, title: string, url: string, post_status: string}
 	 */
 	private static function resolve_collection( int $collection_id ): array {
-		$empty = array( 'id' => 0, 'title' => '', 'url' => '' );
+		$empty = array( 'id' => 0, 'title' => '', 'url' => '', 'post_status' => '' );
 		if ( $collection_id <= 0 ) {
 			return $empty;
 		}
@@ -147,9 +147,10 @@ final class Historical_Document_Single_Presenter {
 		}
 		$url = get_permalink( $collection_id );
 		return array(
-			'id'    => $collection_id,
-			'title' => (string) get_the_title( $post ),
-			'url'   => is_string( $url ) && '' !== $url ? $url : '',
+			'id'          => $collection_id,
+			'title'       => (string) get_the_title( $post ),
+			'url'         => is_string( $url ) && '' !== $url ? $url : '',
+			'post_status' => $post->post_status,
 		);
 	}
 
@@ -157,7 +158,7 @@ final class Historical_Document_Single_Presenter {
 	 * Resolve multiple collection IDs to display arrays, skipping invalid posts.
 	 *
 	 * @param array<int, int> $collection_ids Collection post IDs.
-	 * @return array<int, array{id: int, title: string, url: string}>
+	 * @return array<int, array{id: int, title: string, url: string, post_status: string}>
 	 */
 	private static function resolve_collections( array $collection_ids ): array {
 		$collections = array();
@@ -174,7 +175,7 @@ final class Historical_Document_Single_Presenter {
 	 * Resolve person IDs to display arrays.
 	 *
 	 * @param array<int, int> $person_ids Person post IDs.
-	 * @return array<int, array{id: int, title: string, url: string}>
+	 * @return array<int, array{id: int, title: string, url: string, post_status: string}>
 	 */
 	private static function resolve_people( array $person_ids ): array {
 		$people = array();
@@ -185,9 +186,10 @@ final class Historical_Document_Single_Presenter {
 			}
 			$url      = get_permalink( $pid );
 			$people[] = array(
-				'id'    => $pid,
-				'title' => (string) get_the_title( $person ),
-				'url'   => is_string( $url ) && '' !== $url ? $url : '',
+				'id'          => $pid,
+				'title'       => (string) get_the_title( $person ),
+				'url'         => is_string( $url ) && '' !== $url ? $url : '',
+				'post_status' => $person->post_status,
 			);
 		}
 		return $people;
@@ -199,12 +201,12 @@ final class Historical_Document_Single_Presenter {
 	 * For documents belonging to multiple collections the first ID (in meta storage order) is used
 	 * for navigation consistency; all collections are shown in the header.
 	 *
-	 * @param array<int, array{id: int, title: string, url: string}> $collections Resolved collections.
+	 * @param array<int, array{id: int, title: string, url: string, post_status: string}> $collections Resolved collections.
 	 * @return array{url: string, label: string}
 	 */
 	private static function build_back_link( array $collections ): array {
 		$first = ! empty( $collections ) ? $collections[0] : null;
-		if ( null !== $first && $first['id'] > 0 && '' !== $first['url'] ) {
+		if ( null !== $first && $first['id'] > 0 && '' !== $first['url'] && 'publish' === $first['post_status'] ) {
 			return array(
 				'url'   => $first['url'],
 				/* translators: %s: Collection title. */

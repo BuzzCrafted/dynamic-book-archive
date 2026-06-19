@@ -97,15 +97,16 @@ $dd_class  = 'font-main text-brand';
 						if ( ! is_array( $person ) ) {
 							continue;
 						}
-						$person_title = isset( $person['title'] ) && is_string( $person['title'] ) ? $person['title'] : '';
-						$person_url   = isset( $person['url'] ) && is_string( $person['url'] ) ? $person['url'] : '';
+						$person_title  = isset( $person['title'] ) && is_string( $person['title'] ) ? $person['title'] : '';
+						$person_url    = isset( $person['url'] ) && is_string( $person['url'] ) ? $person['url'] : '';
+						$person_status = isset( $person['post_status'] ) && is_string( $person['post_status'] ) ? $person['post_status'] : '';
 						if ( '' === $person_title ) {
 							continue;
 						}
 						if ( $i > 0 ) {
 							echo ', ';
 						}
-						if ( '' !== $person_url ) {
+						if ( '' !== $person_url && 'publish' === $person_status ) {
 							printf(
 								'<a class="text-brand underline underline-offset-2 hover:text-brand-muted" href="%1$s">%2$s</a>',
 								esc_url( $person_url ),
