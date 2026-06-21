@@ -179,16 +179,22 @@ final class Historical_Document_Single_Presenter {
 	 */
 	private static function resolve_people( array $person_ids ): array {
 		$people = array();
+		$plugin = $GLOBALS['archive_cpt_plugin'] ?? null;
 		foreach ( $person_ids as $pid ) {
 			$person = get_post( $pid );
 			if ( ! $person instanceof WP_Post || 'person' !== $person->post_type ) {
 				continue;
 			}
-			$url      = get_permalink( $pid );
+			if ( null !== $plugin ) {
+				$url = $plugin->make( \DKO\Archive\Model\Person_Meta_Model::class )->get_link_url( $pid );
+			} else {
+				$permalink = get_permalink( $pid );
+				$url       = is_string( $permalink ) ? $permalink : '';
+			}
 			$people[] = array(
 				'id'          => $pid,
 				'title'       => (string) get_the_title( $person ),
-				'url'         => is_string( $url ) && '' !== $url ? $url : '',
+				'url'         => '' !== $url ? $url : '',
 				'post_status' => $person->post_status,
 			);
 		}
