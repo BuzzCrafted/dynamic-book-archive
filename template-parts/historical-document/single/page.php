@@ -37,11 +37,19 @@ $viewer_config = wp_json_encode(
 
 	<?php get_template_part( 'template-parts/historical-document/single/back-link', null, $args ); ?>
 
+	<?php
+	if ( function_exists( 'archive_cpt_print_document_viewer_stub' ) ) {
+		archive_cpt_print_document_viewer_stub();
+	}
+	?>
+
 	<div
 		class="archive-document-viewer grid gap-8 lg:gap-12"
 		data-document-id="<?php echo (int) $post_id; ?>"
 		data-config="<?php echo esc_attr( (string) $viewer_config ); ?>"
-		x-data="Object.assign( archiveDocumentViewer(), { activeTab: 'translation', viewMode: 'both' } )"
+		data-active-tab="translation"
+		data-view-mode="both"
+		x-data="archiveDocumentViewer()"
 		x-init="init()"
 	>
 		<?php get_template_part( 'template-parts/historical-document/single/header', null, $args ); ?>
