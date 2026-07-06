@@ -14,6 +14,7 @@ use DBA\Domain\Books\Book_Archive_Filters_Repository;
 use DBA\Integration\Archive_Cpt_Breadcrumbs;
 use DBA\Integration\Books_Cpt_Archive_Rest;
 use DBA\Media\Svg_Upload;
+use DBA\Security\Api_Security;
 use DBA\TemplateTags\Breadcrumb_Presenter;
 
 /**
@@ -34,6 +35,7 @@ final class Theme_Bootstrap {
 		Book_Archive_Canonical_Redirect::register_hooks();
 		Book_Archive_Template_Routing::register_hooks();
 		Books_Cpt_Archive_Rest::register_hooks();
+		Api_Security::register_hooks();
 		Archive_Cpt_Breadcrumbs::register_hooks();
 		Svg_Upload::register_hooks();
 		Theme_Customizer::register_hooks();
