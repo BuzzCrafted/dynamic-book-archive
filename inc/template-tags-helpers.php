@@ -504,6 +504,34 @@ if ( ! function_exists( 'dba_the_inline_icon' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'dba_format_publication_date_label' ) ) :
+	/**
+	 * Formats a calendar publication date for display (no timezone shift).
+	 *
+	 * Returns only the year for YYYY-only strings; otherwise uses the site date format.
+	 * Returns an empty string when the input is empty or unparseable.
+	 *
+	 * @param string $raw ISO date string (e.g. `1960` or `1960-03-15`).
+	 */
+	function dba_format_publication_date_label( string $raw ): string {
+		$raw = trim( $raw );
+		if ( '' === $raw ) {
+			return '';
+		}
+		if ( (bool) preg_match( '/^\d{4}$/', $raw ) ) {
+			return $raw;
+		}
+		if ( ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', $raw ) ) {
+			return '';
+		}
+		$dt = \DateTimeImmutable::createFromFormat( '!Y-m-d', $raw, new \DateTimeZone( 'UTC' ) );
+		if ( false === $dt ) {
+			return '';
+		}
+		return wp_date( (string) get_option( 'date_format' ), $dt->getTimestamp(), new \DateTimeZone( 'UTC' ) );
+	}
+endif;
+
 if ( ! function_exists( 'dba_format_archive_publication_date_label' ) ) :
 	/**
 	 * Formats an ISO publication date for display.
@@ -514,18 +542,7 @@ if ( ! function_exists( 'dba_format_archive_publication_date_label' ) ) :
 	 * @param string $iso_date ISO date string (e.g. `1960` or `1960-03-15`).
 	 */
 	function dba_format_archive_publication_date_label( string $iso_date ): string {
-		$iso_date = trim( $iso_date );
-		if ( '' === $iso_date ) {
-			return '';
-		}
-		$ts = strtotime( $iso_date );
-		if ( false === $ts ) {
-			return '';
-		}
-		if ( (bool) preg_match( '/^\d{4}$/', $iso_date ) ) {
-			return date_i18n( 'Y', $ts );
-		}
-		return date_i18n( (string) get_option( 'date_format' ), $ts );
+		return dba_format_publication_date_label( $iso_date );
 	}
 endif;
 

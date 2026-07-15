@@ -101,20 +101,9 @@ final class Book_Card_Presenter {
 	 * @return string The formatted publication date label.
 	 */
 	private static function format_publication_date_label( string $raw ): string {
-		$raw = trim( $raw );
-		if ( '' === $raw ) {
-			return '';
-		}
-
-		$ts = strtotime( $raw );
-		if ( false === $ts ) {
-			return '';
-		}
-
-		$is_year_only = (bool) preg_match( '/^\\d{4}$/', $raw );
-		return $is_year_only
-			? date_i18n( 'Y', (int) $ts )
-			: date_i18n( (string) get_option( 'date_format' ), (int) $ts );
+		return function_exists( 'dba_format_publication_date_label' )
+			? dba_format_publication_date_label( $raw )
+			: '';
 	}
 }
 
