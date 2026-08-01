@@ -19,7 +19,7 @@ $author_display   = isset( $meta['author_display'] ) && is_string( $meta['author
 $category_label   = isset( $meta['category_label'] ) && is_string( $meta['category_label'] ) ? $meta['category_label'] : '';
 $collection_label = isset( $meta['collection_label'] ) && is_string( $meta['collection_label'] ) ? $meta['collection_label'] : '';
 
-$row_class = 'grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-1 text-base sm:grid-cols-[9rem_1fr]';
+$row_class = 'grid grid-cols-[minmax(0,7.5rem)_1fr] gap-x-2 gap-y-1 py-1 text-base sm:grid-cols-[5.5rem_1fr]';
 $dt_class  = 'font-main tracking-wider text-brand-muted';
 $dd_class  = 'font-main text-brand';
 
