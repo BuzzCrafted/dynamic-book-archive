@@ -7,7 +7,8 @@
 		--ss-bg-color: var(--color-filters-background);
 		--ss-font-color: var(--color-filters-text);
 		--ss-font-placeholder-color: rgb(from var(--color-filters-text) r g b / 0.55);
-		--ss-border-color: var(--color-border-main);
+		/* border-main was dropped in the token migration; filters-text matches stroke. */
+		--ss-border-color: var(--color-filters-text);
 		--ss-primary-color: var(--color-filters-link-background);
 		--ss-focus-color: rgb(from var(--color-filters-link-background) r g b / 0.75);
 	}
@@ -19,6 +20,16 @@
 		--ss-main-height: auto;
 		--ss-content-height: min(16rem, 40vh);
 		--ss-border-radius: 0.375rem;
+	}
+
+	/*
+	 * Full-width controls sit in overflow-y-auto; outer shadow rings get clipped
+	 * on the left/right. Use an inset border instead of shadow-main's 1px ring.
+	 */
+	dialog#book-archive-dialog-sort .ss-main,
+	dialog#book-archive-dialog-filter .ss-main {
+		@apply border border-stroke!;
+		box-shadow: none;
 	}
 
 	dialog#book-archive-dialog-filter .ss-content,
@@ -51,8 +62,9 @@
 	.dba-year-range {
 		--dba-year-range-track: rgb(from var(--color-filters-text) r g b / 0.22);
 		--dba-year-range-fill: var(--color-filters-link-background);
-		--dba-year-range-thumb: var(--color-filters-link-background); 
-		--dba-year-range-thumb-ring: var(--color-filters-link-background);
+		/* Dark thumb on gold fill so handles stay visible at full range. */
+		--dba-year-range-thumb: var(--color-filters-link);
+		--dba-year-range-thumb-ring: var(--color-filters-text);
 	}
 
 	.dba-year-range__tooltip-min::before,
@@ -66,7 +78,7 @@
 		transform: translateX(-50%);
 		border-width: 0 5px 6px 5px;
 		border-style: solid;
-		border-color: transparent transparent var(--color-heading) transparent;
+		border-color: transparent transparent var(--color-filters-link-background) transparent;
 	}
 
 	.dba-year-range__sliders {

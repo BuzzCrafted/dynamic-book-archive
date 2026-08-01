@@ -39,7 +39,7 @@ if ( empty( $sort_options ) ) {
 					null,
 					array(
 						'id'            => 'book-archive-toolbar-sort-staging',
-						'class'         => 'mt-0 w-full appearance-auto rounded-lg bg-filters-background px-3 py-2.5! text-sm text-brand shadow-main! border-none! focus:outline-none focus-visible:ring-0 focus-visible:ring-filters-link/50',
+						'class'         => 'mt-0 w-full appearance-auto rounded-lg border border-stroke bg-filters-background px-3 py-2.5! text-sm text-brand focus:outline-none focus-visible:ring-0 focus-visible:ring-filters-link/50',
 						'label'         => '',
 						'label_sr_only' => true,
 						'options'       => $sort_options,
@@ -52,7 +52,7 @@ if ( empty( $sort_options ) ) {
 	</div>
 	<div class="shrink-0 pt-5">
 		<div class="flex justify-end">
-			<button type="button" class="js-book-archive-sort-apply cursor-pointer rounded-lg bg-filters-link-background px-6 py-2.5 font-display text-sm font-semibold text-filters-link shadow-sm transition hover:bg-book-secondary/10 hover:text-filters-link-hover hover:shadow-bronze-glow duration-200 ease-out" @click="applySort()"><?php esc_html_e( 'Apply', 'dynamic-book-archive' ); ?></button>
+			<button type="button" class="js-book-archive-sort-apply cursor-pointer rounded-lg bg-filters-link-background px-6 py-2.5 font-display text-sm font-semibold text-filters-link shadow-sm transition hover:bg-filters-background hover:text-brand hover:shadow-bronze-glow duration-200 ease-out" @click="applySort()"><?php esc_html_e( 'Apply', 'dynamic-book-archive' ); ?></button>
 		</div>
 	</div>
 </dialog>

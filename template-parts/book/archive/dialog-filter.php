@@ -31,11 +31,11 @@ $year_ceiling = isset( $args['year_ceiling'] ) ? (int) $args['year_ceiling'] : (
 		<div class="flex flex-col gap-5">
 			<div class="flex flex-col">
 				<label class="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand/80" for="book-archive-toolbar-author-staging"><?php esc_html_e( 'Author', 'dynamic-book-archive' ); ?></label>
-				<select id="book-archive-toolbar-author-staging" x-ref="stagingAuthor" class="mt-0 w-full appearance-auto rounded-lg bg-filters-background px-3 py-2.5! text-sm text-brand shadow-main! border-none! focus:outline-none focus-visible:ring-0 focus-visible:ring-filters-link/50"></select>
+				<select id="book-archive-toolbar-author-staging" x-ref="stagingAuthor" class="mt-0 w-full appearance-auto rounded-lg border border-stroke bg-filters-background px-3 py-2.5! text-sm text-brand focus:outline-none focus-visible:ring-0 focus-visible:ring-filters-link/50"></select>
 			</div>
 			<div class="flex flex-col">
 				<label class="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand/80" for="book-archive-toolbar-tag-staging"><?php esc_html_e( 'Tags', 'dynamic-book-archive' ); ?></label>
-				<select id="book-archive-toolbar-tag-staging" x-ref="stagingTag" class="mt-0 w-full appearance-auto rounded-lg bg-filters-background px-3 py-2.5! text-sm text-brand shadow-main! border-none! focus:outline-none focus-visible:ring-0 focus-visible:ring-filters-link/50"></select>
+				<select id="book-archive-toolbar-tag-staging" x-ref="stagingTag" class="mt-0 w-full appearance-auto rounded-lg border border-stroke bg-filters-background px-3 py-2.5! text-sm text-brand focus:outline-none focus-visible:ring-0 focus-visible:ring-filters-link/50"></select>
 			</div>
 			<div class="flex flex-col">
 				<?php
@@ -60,7 +60,7 @@ $year_ceiling = isset( $args['year_ceiling'] ) ? (int) $args['year_ceiling'] : (
 	<div class="shrink-0 pt-5">
 		<div class="flex flex-wrap items-center justify-between gap-3">
 			<button type="button" class="js-book-archive-filter-reset cursor-pointer bg-transparent px-0 py-2 font-display text-xs font-semibold uppercase tracking-wider text-brand/65 hover:text-filters-link-hover hover:[text-shadow:0_0_6px_rgba(230,215,194,0.6)]" @click="resetFilter()"><?php esc_html_e( 'Reset filters', 'dynamic-book-archive' ); ?></button>
-			<button type="button" class="js-book-archive-filter-apply cursor-pointer rounded-lg bg-filters-link-background px-6 py-2.5 font-display text-sm font-semibold text-filters-link shadow-sm transition hover:bg-book-secondary/10 hover:text-filters-link-hover hover:shadow-bronze-glow duration-200 ease-out" @click="applyFilter()"><?php esc_html_e( 'Apply', 'dynamic-book-archive' ); ?></button>
+			<button type="button" class="js-book-archive-filter-apply cursor-pointer rounded-lg bg-filters-link-background px-6 py-2.5 font-display text-sm font-semibold text-filters-link shadow-sm transition hover:bg-filters-background hover:text-brand hover:shadow-bronze-glow duration-200 ease-out" @click="applyFilter()"><?php esc_html_e( 'Apply', 'dynamic-book-archive' ); ?></button>
 		</div>
 	</div>
 </dialog>
