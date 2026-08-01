@@ -39,7 +39,9 @@
 /* Layer 3: Component tokens */
 @import './semantic/components/site-navigation.css';
 @import './semantic/components/card.css';
+@import './semantic/components/book.css';
 @import './semantic/components/book-archive-category-nav.css';
+@import './semantic/components/book-archive-filters.css';
 @import './semantic/components/book-pagination.css';
 
 

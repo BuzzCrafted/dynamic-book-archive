@@ -1,0 +1,13 @@
+/* ─── Book archive filter / sort dialog tokens ───────────────────────────── */
+/*
+ * Restores --color-filters-* used by archive toolbar utilities and
+ * book-archive-toolbar-selects.css (Slim Select + year-range).
+ * Not @theme inline: component CSS reads these via var(--color-filters-*).
+ */
+@theme {
+	--color-filters-link: var(--color-ink-900);
+	--color-filters-link-hover: var(--color-gold-600);
+	--color-filters-text: var(--color-gold-500);
+	--color-filters-background: var(--color-ink-200);
+	--color-filters-link-background: var(--color-gold-500);
+}

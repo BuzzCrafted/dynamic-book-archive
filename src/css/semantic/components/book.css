@@ -1,0 +1,9 @@
+/* ─── Book UI tokens ─────────────────────────────────────────────────────── */
+/*
+ * Restores --color-book-* used by archive/single templates (lost in theme
+ * migration). Not @theme inline so opacity modifiers like /10 resolve.
+ */
+@theme {
+	--color-book-primary: var(--color-gold-500);
+	--color-book-secondary: var(--color-gold-600);
+}
