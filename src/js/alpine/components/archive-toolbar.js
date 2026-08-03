@@ -178,6 +178,10 @@ export function archiveToolbar() {
 			this._syncSortStagingFromReal();
 			openAnchoredDialog(this.$refs.sortDialog, this.$refs.btnSort);
 			this.sortOpen = true;
+
+			if (!slimInitialized) {
+				this.$nextTick(() => this._initSlimSelect());
+			}
 		},
 
 		applySort() {
